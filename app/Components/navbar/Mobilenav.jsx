@@ -1,0 +1,46 @@
+"use client";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "./navbar.module.css";
+import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import configurations from "@/_data/config";
+import Link from "next/link";
+
+export default function Mobilenav() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNav = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <>
+      <button onClick={toggleNav} className={styles.mobilenavbutton}>
+        <FontAwesomeIcon className={styles.icon} icon={faBars} />
+      </button>
+
+      <aside className={isOpen ? styles.mobileAsideOpen : styles.mobileAside}>
+        <span className={styles.closeButton}>
+          <p>Menu</p>
+          <button onClick={toggleNav}>
+            <FontAwesomeIcon className={styles.icon} icon={faCircleXmark} />
+          </button>
+        </span>
+        {configurations.mainRoutes.map((route) => (
+          <Link className={styles.asideLink} key={route.route} href={route.url}>
+            <span onClick={toggleNav}>
+              <FontAwesomeIcon icon={route.icon} /> <p>{route.route}</p>
+            </span>
+          </Link>
+        ))}
+        {configurations.authRoutes.map((route) => (
+          <Link className={styles.asideLink} key={route.route} href={route.url}>
+            <span onClick={toggleNav}>
+              <FontAwesomeIcon icon={route.icon} /> <p>{route.route}</p>
+            </span>
+          </Link>
+        ))}
+      </aside>
+    </>
+  );
+}
