@@ -6,11 +6,14 @@ const configurations = {
     title: 'Job Bunny © ',
     description: 'Embark on your career journey with Job Bunny, the ultimate web app for job seekers. Effortlessly search for jobs, automate your applications, receive instant alerts on new opportunities, and track all your applications in one convenient place. Simplify your job hunt and find your perfect match with Job Bunny!',
     keywords: ['Job Search', 'Employment Opportunities', 'Job Alerts', 'Job Seeker'],
-    author: 'Job Bunny Corporation',
+    authors: [{name: 'Job Bunny Co'}, {name: 'Virtue Technologies and Development'}] ,
     baseUrl: 'https://www.jobbunny.co',
+    canonical: '/',
     language: 'en',
     socialLinks: [],
-    icon: '',
+    icons: {
+        icon: '@app/favicon.ico'
+    },
     contact: {
         email: '',
         phone: '',
