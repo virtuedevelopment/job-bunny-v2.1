@@ -4,10 +4,10 @@ import {faHouse, faTag, faEnvelope, faUserPlus,faAddressCard} from '@fortawesome
 //define configurations
 const configurations = {
     title: 'Job Bunny © ',
-    description: '',
-    keywords: [],
-    author: '',
-    baseUrl: '',
+    description: 'Embark on your career journey with Job Bunny, the ultimate web app for job seekers. Effortlessly search for jobs, automate your applications, receive instant alerts on new opportunities, and track all your applications in one convenient place. Simplify your job hunt and find your perfect match with Job Bunny!',
+    keywords: ['Job Search', 'Employment Opportunities', 'Job Alerts', 'Job Seeker'],
+    author: 'Job Bunny Corporation',
+    baseUrl: 'https://www.jobbunny.co',
     language: 'en',
     socialLinks: [],
     icon: '',

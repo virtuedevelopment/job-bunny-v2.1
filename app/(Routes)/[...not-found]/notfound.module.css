@@ -1,0 +1,36 @@
+.main{
+    min-height: 80svh;
+    background: linear-gradient(var(--primary), 35%, var(--main-white) 65%, var(--main-white));
+    padding: var(--container-padding-large);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.main img{
+    width: 60%;
+    animation: var(--hover);
+}
+.main h1{
+    font-size: var(--heading);
+    color: var(--main-black);
+}
+.main p{
+    width: 40%;
+    font-size: var(--subtitle);
+    color: var(--main-black);
+    text-align: center;
+}
+.main p a{
+    color: var(--accent-primary);
+    text-decoration: underline;
+}
+
+@media (max-width:750px) {
+    .main{
+        padding: var(--container-padding-regular);
+    }
+    .main p{
+        width: 100%;
+    }
+}
