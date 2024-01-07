@@ -37,8 +37,8 @@ export default function Home() {
         <div className={styles.heroImageBox}>
           <Image
             src={"/heroImage.svg"}
-            width={100}
-            height={100}
+            width={200}
+            height={200}
             alt="Computer displaying Job Bunny Application"
           />
         </div>

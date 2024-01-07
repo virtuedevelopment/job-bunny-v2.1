@@ -90,6 +90,7 @@
     }
     .heroInteraction h1{
         font-size: var(--subtitle);
+        animation-delay: 0.75s;
     }
     .heroPrompt {
         flex-direction: column-reverse;
@@ -100,10 +101,14 @@
         width: 100%;
         height: 50svh;
     }
+    .heroImageBox img{
+        animation-delay: 2s;
+    }
     .heroButton{
         display: block;
+        opacity: 0;
         animation: var(--fadeIn);
-        animation-delay: 0.5s;
+        animation-delay: 1.5s;
     }
     .popularSearches{
         display: none;
