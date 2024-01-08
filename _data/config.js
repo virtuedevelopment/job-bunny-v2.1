@@ -1,5 +1,5 @@
 //imports for configurations
-import { faFacebook, faInstagram, faXTwitter, faLinkedin, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import {  } from '@fortawesome/free-brands-svg-icons'
 import {faHouse, faTag, faEnvelope, faUserPlus,faAddressCard} from '@fortawesome/free-solid-svg-icons';
 //define configurations
 const configurations = {
@@ -49,6 +49,24 @@ const configurations = {
     ],
     userRoutes: [],
     adminRoutes: [],
+    job_Boards: [
+        {
+            name: 'LinkedIn',
+            icon:"/linkedin.svg"
+        },
+        {
+            name: 'Indeed',
+            icon:"/indeed.svg" 
+        },
+        {
+            name: 'Career Builder',
+            icon:"/cb.svg"
+        },
+        {
+            name: 'Zip Recruiter',
+            icon:"/zip.svg"
+        }
+    ],
     popSearches: ['Administrator','Delivery Driver','Electrician','Web Designer','Sales Advisor','Data Analyst']
 }
 

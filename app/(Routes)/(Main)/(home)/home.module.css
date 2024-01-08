@@ -1,5 +1,5 @@
 .hero{
-    min-height: 70svh;
+    min-height: 85svh;
     background: linear-gradient(var(--primary), 35%, var(--main-white) 65%, var(--main-white));
     padding: var(--container-padding-large);
     display: flex;
@@ -64,7 +64,6 @@
 .heroImageBox img{
     width: 100%;
     height: 100%;
-    object-fit: cover;
     position: absolute;
     bottom: 0;
     opacity: 0;
@@ -74,9 +73,32 @@
     animation: var(--fadeIn);
     animation-delay: 1s;
 }
+
+
 .jobBoards{
-    min-height: 35svh;
     background-color: var(--main-white);
+    padding: var(--container-padding-large);
+    text-align: center;
+}
+.jobBoards h2{
+    font-size: var(--subhead);
+    font-weight: 400;
+    margin: 1.25rem 0;
+}
+.jobBoards div{
+    display: grid;
+    width: 70%;
+    margin: 1rem auto;
+    grid-template-columns: repeat(4,1fr);
+    padding: 1rem;
+    gap: 0.5rem;
+}
+.jobBoards small{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 @media (max-width:750px) {
@@ -112,5 +134,20 @@
     }
     .popularSearches{
         display: none;
+    }
+
+    .jobBoards{
+        padding: var(--container-padding-regular);
+    }
+    .jobBoards div{
+        width: 95%;
+        padding: 0;
+        gap: 2rem;
+    }
+    .jobBoards h2{
+        margin: .5rem 0;
+    }
+    .jobBoards img{
+        width: 100%;
     }
 }

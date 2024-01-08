@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import StaticSearch from "@/app/Components/(Misc)/Static Search/StaticSearch";
 
+
 export default function Home() {
   return (
     <main>
@@ -45,7 +46,18 @@ export default function Home() {
         
       </section>
 
-      <section className={styles.jobBoards}></section>
+      <section className={styles.jobBoards}>
+        <h2>Job Listings pulled from</h2>
+        <div>
+          {configurations.job_Boards.map((board)=>(
+            <small key={board.name} >
+              <Image src={board.icon} width={105} height={100} alt="Logos"></Image>
+            </small>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.process} ></section>
     </main>
   );
 }

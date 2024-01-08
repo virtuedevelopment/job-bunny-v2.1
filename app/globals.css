@@ -22,15 +22,15 @@
   /* TEXT */
   --title: 2.35vw;
   --heading: 2.75rem;
-  --subtitle: 1.7rem;
+  --subtitle: 1.65rem;
   --subhead: 1.3rem;
   --body-text: 1rem;
   --mini-text: 0.85rem;
   --tiny-text: 0.625rem;
 
   /* Container and Formatting */
-  --border-rad-small: 5px;
-  --border-rad-large: 15px;
+  --border-rad-small: 3.5px;
+  --border-rad-large: 7.5px;
 
   --container-padding-large: 1.75rem 4rem;
   --container-padding-regular: 1rem 1.25rem;
