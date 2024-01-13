@@ -1,25 +1,26 @@
 /* ROOT VARIABLES  */
 :root {
   /* COLORS */
-  --main-black: #21282B ;
+  --main-black: #21282b;
   --accent-black: #384348;
 
-  --main-white: #FCFDFD;
-  --accent-white: #EBEEEF;
+  --main-white: #fcfdfd;
+  --accent-white: #ebeeef;
 
-  --main-grey: #D4DBDE;
-  --accent-grey: #9AAAB1;
+  --main-grey: #d4dbde;
+  --accent-grey: #9aaab1;
 
-  --primary: #9DACFF;
-  --accent-primary: #8093FF;
+  --primary: #9dacff;
+  --accent-primary: #8093ff;
 
-  --secondary: #DDDBFB;
-  --accent-secondary: #C7C3F8;
+  --secondary: #dddbfb;
+  --accent-secondary: #c7c3f8;
 
-  --error: #E34234;
-  --success: #77DD77;
+  --error: #e34234;
+  --success: #77dd77;
 
   /* TEXT */
+  --mega-text: 3.95vw;
   --title: 2.35vw;
   --heading: 2.75rem;
   --subtitle: 1.65rem;
@@ -46,7 +47,9 @@
   --transition-out: 0.65s ease-in-out;
 
   --fadeIn: fadeIn 2.5s ease forwards;
-  --hover: hoverEffect 1.5s ease-in-out infinite
+  --fadeInFast: fadeIn 1.25s ease forwards;
+  --scrollIn: scrollFade linear forwards;
+  --hover: hoverEffect 1.5s ease-in-out infinite;
 }
 
 /* CSS NORMAILIZE */
@@ -59,18 +62,18 @@
 }
 
 /* UTILITY CLASSES */
-.logo{
+.logo {
   color: var(--main-black);
   font-size: var(--subtitle);
   transition: var(--transition-out);
   font-weight: 700;
 }
-.logo:hover{
+.logo:hover {
   color: var(--accent-primary);
   transition: var(--transition-in);
 }
 
-.main-button{
+.main-button {
   background-color: var(--main-black);
   color: var(--accent-white);
   padding: var(--button-padding-regular);
@@ -79,13 +82,13 @@
   transition: var(--transition-out);
   border: none;
 }
-.main-button:hover{
+.main-button:hover {
   background-color: var(--main-white);
   color: var(--accent-black);
   transition: var(--transition-in);
 }
 
-.secondary-button{
+.secondary-button {
   background-color: var(--main-white);
   color: var(--accent-black);
   padding: var(--button-padding-regular);
@@ -94,42 +97,55 @@
   transition: var(--transition-out);
   border: none;
 }
-.secondary-button:hover{
+.secondary-button:hover {
   background-color: var(--main-black);
   color: var(--accent-white);
   transition: var(--transition-in);
 }
 
-.grid-3x-display{
+.grid-3x-display {
   width: 100%;
   padding: var(--container-padding-regular);
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
 /* ANIMATIONS */
 @keyframes fadeIn {
   from {
-      opacity: 0;
-      transform: translateY(100px); 
+    opacity: 0;
+    transform: translateY(100px);
   }
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes scrollFade {
+  from {
+    scale: 0.5;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
   }
 }
 @keyframes hoverEffect {
-  0%, 100% {
-      transform: translateY(0);
+  0%,
+  100% {
+    transform: translateY(0);
   }
   50% {
-      transform: translateY(-10px);
+    transform: translateY(-10px);
   }
 }
 
-
 /* MEDIA QUERY */
-@media (max-width:750px) {
-
+@media (max-width: 750px) {
+  .grid-3x-display {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
 }

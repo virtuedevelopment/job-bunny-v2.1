@@ -1,3 +1,4 @@
+/* Hero Section */
 .hero{
     min-height: 85svh;
     background: linear-gradient(var(--primary), 35%, var(--main-white) 65%, var(--main-white));
@@ -74,7 +75,7 @@
     animation-delay: 1s;
 }
 
-
+/* Job Boards Section */
 .jobBoards{
     background-color: var(--main-white);
     padding: var(--container-padding-large);
@@ -101,7 +102,102 @@
     text-align: center;
 }
 
+/* Process Section */
+.process{
+    background-color: var(--main-white);
+    padding: var(--container-padding-large);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.process p{
+    font-size: var(--mega-text);
+    color: var(--main-black);
+    font-weight: 700;
+    width: 50%;
+    animation: var(--scrollIn);
+    scale: 0.5;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range-start: entry;
+    animation-range-end: contain;
+}
+.process p span{
+    color: var(--accent-primary);
+}
+.process .customerExample{
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.exampleBox{
+    width: 100%;
+    opacity: 0;
+    border-radius: var(--border-rad-large);
+    animation: var(--fadeInFast);
+    animation-timeline: view();
+    animation-range: 250px 700px;
+}
+.process .customerExample > .exampleBox:nth-child(2){
+    animation-delay: .75s;
+}
+.exampleBox img{
+    width: 100%;
+    height: 40svh;
+    object-fit: cover;
+}
+.information{
+    padding: var(--button-padding-regular);
+    color: var(--main-white);
+    background-color: var(--main-black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.information > small:first-child{
+    color: var(--secondary);
+}
+.information .icon{
+    width: 15px;
+    height: 15px;
+}
+
+.easySteps{
+    padding: var(--container-padding-large);
+    background-color: var(--main-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+.easySteps h3{
+    text-align: center;
+    font-size: var(--heading);
+    color: var(--main-black);
+    margin-top: 1.25rem;
+}
+.easySteps div span{
+    width: 100%;
+    background-color: var(--accent-secondary);
+    padding: var(--button-padding-regular);
+    border-radius: var(--border-rad-large);
+    color: var(--main-white);
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
 @media (max-width:750px) {
+
     .hero{
         padding: var(--container-padding-regular);
         flex-direction: column;
@@ -149,5 +245,25 @@
     }
     .jobBoards img{
         width: 100%;
+    }
+
+    .process{
+        flex-direction: column;
+        padding: var(--container-padding-regular);
+    }
+    .process p{
+        font-size: var(--subtitle);
+        text-align: center;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    .process .customerExample{
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        width: 100%;
+    }
+
+    .easySteps{
+        padding: var(--container-padding-regular);
     }
 }
