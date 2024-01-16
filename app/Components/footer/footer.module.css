@@ -1,0 +1,65 @@
+.main{
+    padding: var(--container-padding-large);
+    background-color: var(--main-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.main div span{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+.main div span h2{
+    font-size: var(--heading);
+    color: var(--main-black);
+    text-align: center;
+}
+.main div span small{
+    color: var(--accent-black);
+    font-weight: 600;
+    text-align: center;
+}
+
+.footerOptions{
+    background-color: var(--accent-primary);
+    padding: var(--container-padding-large);
+    border-radius: var(--border-rad-large);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.footerOptions a{
+    color: var(--main-white);
+    transition: var(--transition-out);
+}
+.footerOptions p{
+    color: var(--main-white);
+}
+.footerOptions a:hover{
+    color: var(--accent-secondary);
+    transition: var(--transition-in);
+}
+
+@media (max-width:750px) {
+    .main{
+        padding: var(--container-padding-regular);
+    }
+    .main div span h2{
+        font-size: var(--subtitle);
+    }
+    .footerOptions{
+        padding: var(--container-padding-regular);
+    }
+    .footerOptions a{
+        font-size: var(--tiny-text);
+    }
+    .footerOptions p{
+        font-size: var(--tiny-text);
+    }
+}

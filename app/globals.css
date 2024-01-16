@@ -72,6 +72,14 @@
   color: var(--accent-primary);
   transition: var(--transition-in);
 }
+.tag-small{
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--border-rad-small);
+  font-size: 10px !important;
+  color: var(--accent-black);
+  background-color: var(--success);
+}
 
 .main-button {
   background-color: var(--main-black);

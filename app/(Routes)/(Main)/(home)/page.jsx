@@ -4,7 +4,11 @@ import styles from "./home.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import StaticSearch from "@/app/Components/(Misc)/Static Search/StaticSearch";
-import { faUser, faGear, faRepeat } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faGear,
+  faRepeat
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const exampleUser = {
@@ -12,7 +16,7 @@ const exampleUser = {
   age: 34,
   location: "Canada",
   position: "Cloud Solutions Architect",
-  url: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800",
+  url: "https://images.pexels.com/photos/1182238/pexels-photo-1182238.jpeg?auto=compress&cs=tinysrgb&w=600",
 };
 const exampleUser2 = {
   name: "Fernanda",
@@ -21,6 +25,7 @@ const exampleUser2 = {
   position: "Human Resources Specialist",
   url: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=800",
 };
+
 const steps = [
   { step: "Create a profile, upload your resume", icon: faUser },
   { step: "Set preferences, answer pre-filled quetions", icon: faGear },
@@ -101,13 +106,38 @@ export default function Home() {
         <h3>How it Works</h3>
         <div className="grid-3x-display">
           {steps.map((step, index) => (
-            <span key={index}> <FontAwesomeIcon icon={step.icon} /> <p>{step.step}</p> </span>
+            <span key={index}>
+              {" "}
+              <FontAwesomeIcon icon={step.icon} /> <p>{step.step}</p>{" "}
+            </span>
           ))}
         </div>
         <p>You maximize your employment opportunities by using us!</p>
         <Link href={"/signup"} className="main-button">
           Get Started
         </Link>
+      </section>
+
+      <section className={styles.features}>
+        <div className={styles.displays}>
+          <Image src={'/jobApply.svg'} width={450} height={450} alt="Job Apply"  />
+          <Image src={'/joblist.svg'} width={450} height={450} alt="Job List"  />
+        </div>
+        <h3>
+          Get on step closer to your <span>Future Job</span>
+        </h3>
+        <div className={styles.featuresList}>
+          {configurations.features.map((feature) => (
+            <small key={feature.name}>
+              {" "}
+              <FontAwesomeIcon
+                className={styles.icon}
+                icon={feature.icon}
+              />{" "}
+              {feature.name}
+            </small>
+          ))}
+        </div>
       </section>
     </main>
   );

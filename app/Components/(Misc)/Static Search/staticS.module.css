@@ -4,7 +4,7 @@
     display: flex;
     border-radius: var(--border-rad-small);
     position: relative;
-    border:  solid 1px var(--accent-grey);
+    border:  solid 1px var(--accent-black);
     animation: var(--fadeIn);
     animation-delay: 0.5s;
 }
@@ -18,7 +18,7 @@
 
 }
 .inputbox input::placeholder{
-    color: var(--accent-grey);
+    color: var(--accent-black);
 }
 .inputbox input:focus{
     outline: none;
@@ -33,7 +33,7 @@
     height: 35px;
     background-color: transparent;
     border: none;
-    color: var(--accent-grey);
+    color: var(--accent-black);
     cursor: pointer;
 }
 .inputbox button .icon{
