@@ -37,9 +37,11 @@
 .footerOptions a{
     color: var(--main-white);
     transition: var(--transition-out);
+    font-size: var(--subhead);
 }
 .footerOptions p{
     color: var(--main-white);
+    font-size: var(--subhead);
 }
 .footerOptions a:hover{
     color: var(--accent-secondary);

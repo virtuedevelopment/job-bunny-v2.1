@@ -16,14 +16,14 @@ const exampleUser = {
   age: 34,
   location: "Canada",
   position: "Cloud Solutions Architect",
-  url: "https://images.pexels.com/photos/1182238/pexels-photo-1182238.jpeg?auto=compress&cs=tinysrgb&w=600",
+  url: "/david.png",
 };
 const exampleUser2 = {
   name: "Fernanda",
   age: 28,
   location: "Spain",
   position: "Human Resources Specialist",
-  url: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=800",
+  url: "/fernanda.png",
 };
 
 const steps = [
@@ -35,6 +35,7 @@ const steps = [
 export default function Home() {
   return (
     <main>
+
       <section className={styles.hero}>
         <div className={styles.heroInteraction}>
           <div className={styles.heroPrompt}>
@@ -75,7 +76,7 @@ export default function Home() {
       </section>
 
       <section className={styles.jobBoards}>
-        <h2>Job Listings pulled from</h2>
+        <h2>Job listings pulled from</h2>
         <div>
           {configurations.job_Boards.map((board) => (
             <small key={board.name}>
@@ -107,8 +108,7 @@ export default function Home() {
         <div className="grid-3x-display">
           {steps.map((step, index) => (
             <span key={index}>
-              {" "}
-              <FontAwesomeIcon icon={step.icon} /> <p>{step.step}</p>{" "}
+              <FontAwesomeIcon icon={step.icon} /> <small>{step.step}</small>
             </span>
           ))}
         </div>
@@ -124,21 +124,21 @@ export default function Home() {
           <Image src={'/joblist.svg'} width={450} height={450} alt="Job List"  />
         </div>
         <h3>
-          Get on step closer to your <span>Future Job</span>
+          Get on step closer to your <span>future job</span>
         </h3>
         <div className={styles.featuresList}>
           {configurations.features.map((feature) => (
-            <small key={feature.name}>
-              {" "}
-              <FontAwesomeIcon
+            <span key={feature.name}>
+               <FontAwesomeIcon
                 className={styles.icon}
                 icon={feature.icon}
-              />{" "}
-              {feature.name}
-            </small>
+              />
+              <small>{feature.name}</small>
+            </span>
           ))}
         </div>
       </section>
+
     </main>
   );
 }

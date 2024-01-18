@@ -8,18 +8,18 @@ export default function Footer() {
     <section className={styles.main}>
         <div className="grid-3x-display">
             <span>
-                <h2>Want to apply to 400+ Jobs?</h2>
-                <small>Use our Auto Apply Feature</small>
+                <h2>Want to apply to 400+ jobs?</h2>
+                <small>Use our auto apply feature</small>
             </span>
 
             <span>
                 <h2>Want to immigrate via a job?</h2>
-                <small>Use our sponsorship Filter</small>
+                <small>Use our sponsorship filter</small>
             </span>
 
             <span>
-                <h2>Want to work at a Top Company?</h2>
-                <small>Use our Companny Alerts Feature</small>
+                <h2>Want to work at a top company?</h2>
+                <small>Use our company alerts feature</small>
             </span>
         </div>
         <Link href={'/signup'} className="main-button">Get Started</Link>

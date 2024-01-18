@@ -88,15 +88,14 @@
 }
 .jobBoards h2 {
   font-size: var(--subhead);
-  font-weight: 400;
-  margin: 1.25rem 0;
+  font-weight: 600;
 }
 .jobBoards div {
   display: grid;
   width: 70%;
   margin: 1rem auto;
   grid-template-columns: repeat(4, 1fr);
-  padding: 1rem;
+  padding: 0.5rem;
   gap: 0.5rem;
 }
 .jobBoards small {
@@ -182,6 +181,10 @@
   gap: 1.5rem;
   text-align: center;
 }
+.easySteps p{
+  font-size: var(--subhead);
+  font-weight: 600;
+}
 .easySteps h3 {
   text-align: center;
   font-size: var(--heading);
@@ -235,9 +238,20 @@
   justify-content: center;
   gap: 1.25rem;
 }
+.featuresList span{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
 .featuresList small {
   font-size: var(--mini-text);
   color: var(--accent-primary);
+}
+.featuresList span .icon{
+  color: var(--accent-primary);
+  width: 15px;
+  height: 15px;
 }
 .positionInfo span {
   display: flex;
@@ -315,13 +329,28 @@
   .easySteps {
     padding: var(--container-padding-regular);
   }
+  .easySteps div span{
+    flex-direction: column;
+  }
+  .easySteps div span small{
+    font-size: var(--mini-text);
+  }
 
   .featuresList{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
     padding: var(--container-padding-regular);
+    margin: 1.75rem auto;
   }
-
+  .featuresList span{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
   .features {
     padding: var(--container-padding-regular);
   }
