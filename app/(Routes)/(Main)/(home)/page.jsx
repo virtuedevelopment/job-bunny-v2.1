@@ -25,7 +25,6 @@ const exampleUser2 = {
   position: "Human Resources Specialist",
   url: "/fernanda.png",
 };
-
 const steps = [
   { step: "Create a profile, upload your resume", icon: faUser },
   { step: "Set preferences, answer pre-filled quetions", icon: faGear },
@@ -37,6 +36,7 @@ export default function Home() {
     <main>
 
       <section className={styles.hero}>
+        
         <div className={styles.heroInteraction}>
           <div className={styles.heroPrompt}>
             <Link
@@ -82,7 +82,7 @@ export default function Home() {
             <small key={board.name}>
               <Image
                 src={board.icon}
-                width={105}
+                width={150}
                 height={100}
                 alt="Logos"
               ></Image>
@@ -112,7 +112,7 @@ export default function Home() {
             </span>
           ))}
         </div>
-        <p>You maximize your employment opportunities by using us!</p>
+        <p>You maximize your employment opportunities by using us</p>
         <Link href={"/signup"} className="main-button">
           Get Started
         </Link>

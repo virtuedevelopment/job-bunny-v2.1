@@ -1,6 +1,6 @@
 .inputbox{
     opacity: 0;
-    width: 100%;
+    width: 90%;
     display: flex;
     border-radius: var(--border-rad-small);
     position: relative;
@@ -44,6 +44,7 @@
 @media (max-width:750px) {
     .inputbox{
         border-color: var(--accent-black);
+        width: 100%;
     }
     .inputbox input::placeholder{
         color: var(--accent-black);

@@ -20,14 +20,16 @@
   --success: #77dd77;
 
   /* TEXT */
-  --mega-text: 3.95vw;
-  --title: 2.35vw;
+  --mega-text: 3.95svw;
+  --title: 2.75svw;
   --heading: 2.75rem;
   --subtitle: 1.65rem;
   --subhead: 1.3rem;
   --body-text: 1rem;
   --mini-text: 0.85rem;
   --tiny-text: 0.625rem;
+
+  --body-style:'Outfit', sans-serif;
 
   /* Container and Formatting */
   --border-rad-small: 3.5px;
@@ -89,6 +91,7 @@
   font-size: var(--mini-text);
   transition: var(--transition-out);
   border: none;
+  cursor: pointer;
 }
 .main-button:hover {
   background-color: var(--main-white);
@@ -103,11 +106,28 @@
   border-radius: var(--border-rad-large);
   font-size: var(--mini-text);
   transition: var(--transition-out);
+  cursor: pointer;
   border: none;
 }
 .secondary-button:hover {
   background-color: var(--main-black);
   color: var(--accent-white);
+  transition: var(--transition-in);
+}
+
+.primary-button {
+  font-weight: 600;
+  background-color: var(--accent-primary);
+  color: var(--accent-white);
+  padding: var(--button-padding-regular);
+  border-radius: var(--border-rad-large);
+  font-size: var(--mini-text);
+  transition: var(--transition-out);
+  cursor: pointer;
+  border: none;
+}
+.primary-button:hover {
+  background-color: var(--secondary);
   transition: var(--transition-in);
 }
 
@@ -117,6 +137,16 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+}
+
+.loading{
+  width: 100%;
+  height: 90svh;
+  background-color: #21282b;
+  color: #dddbfb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ANIMATIONS */
