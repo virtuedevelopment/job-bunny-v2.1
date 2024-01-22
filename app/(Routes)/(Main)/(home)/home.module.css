@@ -56,10 +56,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--secondary);
+  background-color: var(--primary);
   border-radius: var(--border-rad-large);
   padding: var(--button-padding-regular);
   font-weight: 300;
+}
+.popularSearches .item p{
+  font-weight: 400;
+  color: var(--accent-white);
 }
 .popularSearches h2 {
   font-size: var(--subhead);

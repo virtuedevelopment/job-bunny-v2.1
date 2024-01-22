@@ -57,8 +57,7 @@ export default function Home() {
             <div className="grid-3x-display">
               {configurations.popSearches.map((search) => (
                 <div className={styles.item} key={search}>
-                  {" "}
-                  {search}{" "}
+                  <p>{search}</p>
                 </div>
               ))}
             </div>
