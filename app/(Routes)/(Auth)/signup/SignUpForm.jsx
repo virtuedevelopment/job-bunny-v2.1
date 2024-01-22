@@ -7,7 +7,7 @@ import {
   faIdCard,
   faEnvelope,
   faEye,
-  faHashtag,
+  faInbox,
   faGlobe,
   faCity,
   faFlag,
@@ -16,12 +16,134 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { resolve } from "styled-jsx/css";
+import Loading from "@/app/loading";
+
+//
+const experience = [
+  "Internship",
+  "Entry level",
+  "Associate",
+  "Mid-Senior level",
+  "Director",
+  "Executive",
+];
+const job_type = [
+  "Full-time",
+  "Part-time",
+  "Contract",
+  "Tempoarary",
+  "Volunteer",
+  "Internship",
+  "Other",
+];
+const position = ["On-site", "Hybrid", "Remote"];
 
 //set steps
 const UserInformation = ({ user, next, input }) => {
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
   const handleChange = (e) => {
-    input(e.target.name, e.target.value);
+    if (e.target.name !== "confirmPassword") {
+      input(e.target.name, e.target.value);
+    }
+
+    // Clear error messages when user starts typing
+    switch (e.target.name) {
+      case "firstname":
+        setFirstNameError("");
+        break;
+      case "lastname":
+        setLastNameError("");
+        break;
+      case "email":
+        setEmailError("");
+        break;
+      case "password":
+        setPasswordError("");
+        break;
+      case "confirmPassword":
+        setConfirmPasswordError("");
+        setConfirmPassword(e.target.value);
+      default:
+        break;
+    }
+  };
+
+  const checkFields = (e) => {
+    e.preventDefault();
+
+    //if div.inputBox input does not contain a data or properly formatted data error message will pop up
+    let isValid = true;
+
+    // Validate first name
+    if (!user.firstname.trim()) {
+      setFirstNameError("Please enter a first name");
+      isValid = false;
+    }
+
+    // Validate last name
+    if (!user.lastname.trim()) {
+      setLastNameError("Please enter a last name");
+      isValid = false;
+    }
+
+    // Validate email
+    if (!user.email.trim() || !/\S+@\S+\.\S+/.test(user.email)) {
+      setEmailError("Please enter a valid email");
+      isValid = false;
+    }
+
+    // Validate password
+    let passwordValid = true;
+    if (!user.password) {
+      setPasswordError("Please enter a password");
+      passwordValid = false;
+      isValid = false;
+    } else {
+      let passwordErrors = [];
+
+      // Check for minimum length
+      if (user.password.length < 8) {
+        passwordErrors.push("at least 8 characters long");
+      }
+
+      if (!/[A-Z]/.test(user.password)) {
+        passwordErrors.push("at least one capital letter");
+      }
+
+      if (!/\d/.test(user.password)) {
+        passwordErrors.push("at least one number");
+      }
+
+      // Include checks for lowercase and special characters if needed
+
+      if (passwordErrors.length > 0) {
+        setPasswordError(`Password must be ${passwordErrors.join(", ")}`);
+        passwordValid = false;
+        isValid = false;
+      }
+    }
+
+    // Validate confirm password
+    if (passwordValid) {
+      if (confirmPassword !== user.password) {
+        setConfirmPasswordError("Passwords do not match");
+        isValid = false;
+      } else {
+        setConfirmPasswordError("");
+      }
+    } else {
+      setConfirmPasswordError(passwordError);
+    }
+
+    // If all fields are valid
+    if (isValid) next();
   };
 
   return (
@@ -38,6 +160,7 @@ const UserInformation = ({ user, next, input }) => {
             onChange={handleChange}
             onBlur={handleChange}
           />
+          <small className="error">{firstNameError}</small>
         </span>
         <FontAwesomeIcon icon={faIdCard} className={styles.icon} />
       </div>
@@ -54,6 +177,7 @@ const UserInformation = ({ user, next, input }) => {
             onChange={handleChange}
             onBlur={handleChange}
           />
+          <small className="error">{lastNameError}</small>
         </span>
         <FontAwesomeIcon icon={faIdCard} className={styles.icon} />
       </div>
@@ -70,6 +194,7 @@ const UserInformation = ({ user, next, input }) => {
             onChange={handleChange}
             onBlur={handleChange}
           />
+          <small className="error">{emailError}</small>
         </span>
         <FontAwesomeIcon icon={faEnvelope} className={styles.icon} />
       </div>
@@ -86,6 +211,24 @@ const UserInformation = ({ user, next, input }) => {
             onChange={handleChange}
             onBlur={handleChange}
           />
+          <small className="error">{passwordError}</small>
+        </span>
+        <FontAwesomeIcon icon={faEye} className={styles.icon} />
+      </div>
+
+      <div style={{ gridColumn: "span 2" }} className={styles.inputBox}>
+        <span>
+          <small>Confirm Password</small>
+          <input
+            name="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            required
+            placeholder="**************"
+            onChange={handleChange}
+            onBlur={handleChange}
+          />
+          <small className="error">{confirmPasswordError}</small>
         </span>
         <FontAwesomeIcon icon={faEye} className={styles.icon} />
       </div>
@@ -93,31 +236,9 @@ const UserInformation = ({ user, next, input }) => {
       <button
         style={{ gridColumn: "span 2" }}
         type="button"
-        onClick={next}
+        onClick={checkFields}
         className="main-button"
       >
-        Next
-      </button>
-    </form>
-  );
-};
-const Verification = ({ user, next, back, input }) => {
-  return (
-    <form>
-      <div style={{ gridColumn: "span 2" }} className={styles.inputBox}>
-        <span>
-          <small>Enter verification code sent to your email</small>{" "}
-          {/* Replace with user email */}
-          <input type="text" required placeholder="Code" />
-        </span>
-        <FontAwesomeIcon icon={faHashtag} className={styles.icon} />
-      </div>
-
-      <button type="button" onClick={back} className="main-button">
-        Previous
-      </button>
-
-      <button type="button" onClick={next} className="primary-button">
         Next
       </button>
     </form>
@@ -131,16 +252,46 @@ const Location = ({ user, next, back, input }) => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
 
+  const [countryError, setCountryError] = useState("");
+  const [stateError, setStateError] = useState("");
+  const [cityError, setCityError] = useState("");
+
+  const checkFields = (e) => {
+    e.preventDefault();
+
+    let isValid = true;
+
+    // Validate country
+    if (!selectedCountry || selectedCountry === null) {
+      setCountryError("Please select a country");
+      isValid = false;
+    } else {
+      setCountryError("");
+    }
+
+    // Validate state
+    if (!selectedState || selectedState === null) {
+      setStateError("Please select a state/province");
+      isValid = false;
+    } else {
+      setStateError("");
+    }
+
+    // Proceed to next step if all validations pass
+    if (isValid) next();
+  };
+
   const handleChange = (e) => {
     input(e.target.name, e.target.value);
+    // Reset error messages when the values change
     if (e.target.name === "country") {
       setSelectedCountry(e.target.value);
       setSelectedState(""); // Reset state when country changes
+      setCountryError(""); // Clear country error
     } else if (e.target.name === "state") {
       setSelectedState(e.target.value);
+      setStateError(""); // Clear state error
     }
-    console.log("Selected Country: ", selectedCountry);
-
   };
 
   //fetch APIs
@@ -162,7 +313,6 @@ const Location = ({ user, next, back, input }) => {
     }
   };
   const fetchStates = async (country) => {
-    console.log('fetching states with: ', country)
     try {
       const response = await fetch(
         "https://countriesnow.space/api/v0.1/countries/states",
@@ -188,7 +338,6 @@ const Location = ({ user, next, back, input }) => {
     }
   };
   const fetchCities = async (country, state) => {
-    console.log('Fetching cities with: ', country , state)
     try {
       const response = await fetch(
         "https://countriesnow.space/api/v0.1/countries/state/cities",
@@ -204,7 +353,7 @@ const Location = ({ user, next, back, input }) => {
       const data = await response.json();
       if (data.error === false) {
         setCities(data.data);
-        console.log("cities: ",data.data)
+        console.log("cities: ", data.data);
       } else {
         // Handle error here
         console.error("Error fetching cities:", data.msg);
@@ -244,13 +393,14 @@ const Location = ({ user, next, back, input }) => {
             onChange={handleChange}
             required
           >
-            <option value="1">Select Country</option>
+            <option value={null}>Select Country</option>
             {countries.map((country) => (
               <option key={country.name} value={country.name}>
                 {country.name}
               </option>
             ))}
           </select>
+          <small className="error">{countryError}</small>
         </span>
         <FontAwesomeIcon icon={faGlobe} className={styles.icon} />
       </div>
@@ -264,13 +414,14 @@ const Location = ({ user, next, back, input }) => {
             onChange={handleChange}
             required
           >
-            <option value="null">Select State / Province</option>
+            <option value={null}>Select State / Province</option>
             {states.map((state, index) => (
               <option key={index} value={state.name}>
                 {state.name}
               </option>
             ))}
           </select>
+          <small className="error">{stateError}</small>
         </span>
         <FontAwesomeIcon icon={faFlag} className={styles.icon} />
       </div>
@@ -284,13 +435,14 @@ const Location = ({ user, next, back, input }) => {
             onChange={handleChange}
             required
           >
-            <option value="1">Select City</option>
+            <option value={null}>Select City</option>
             {cities.map((city, index) => (
               <option key={index} value={city}>
                 {city}
               </option>
             ))}
           </select>
+          <small className="error">{cityError}</small>
         </span>
         <FontAwesomeIcon icon={faCity} className={styles.icon} />
       </div>
@@ -299,8 +451,41 @@ const Location = ({ user, next, back, input }) => {
         Previous
       </button>
 
-      <button type="button" onClick={next} className="primary-button">
+      <button type="button" onClick={checkFields} className="primary-button">
         Next
+      </button>
+    </form>
+  );
+};
+const Verification = ({ user, back, next }) => {
+  const resendVerificationEmail = (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <form>
+      <h2 style={{ gridColumn: "span 2" }}>Verification email sent.</h2>
+      <p style={{ gridColumn: "span 2" }}>
+        We&apos;ve sent a verification email to {user.email}. Please click on the
+        link in that email to confirm your account. Can&apos;t find the email? It may
+        take a few minutes to arrive, or it could be in your spam folder. If you
+        need to, you can resend the verification email.
+      </p>
+
+      <button type="button" onClick={back} className="main-button">
+        Previous
+      </button>
+
+      <button type="button" onClick={next} className="main-button">
+        Next
+      </button>
+
+      <button
+        type="button"
+        onClick={resendVerificationEmail}
+        className="primary-button"
+      >
+        Resend email
       </button>
     </form>
   );
@@ -310,9 +495,9 @@ const Welcome = ({ user, next, back }) => {
     <form>
       <h2 style={{ gridColumn: "span 2" }}>Welcome {user.firstname},</h2>
       <p style={{ gridColumn: "span 2" }}>
-        We are excited to make your job search easier. Now that you have
-        finished registering, you can upload your resume and set your custom
-        preferences. Happy searching!
+        Thank you for verifying your account! We&apos;re excited to make your job
+        search easier. Now that you have finished registering, you can upload
+        your resume and set your custom preferences. Happy searching!
       </p>
       <button type="button" onClick={back} className="main-button">
         Previous
@@ -324,42 +509,179 @@ const Welcome = ({ user, next, back }) => {
     </form>
   );
 };
-const Jobs = ({ user, next }) => {
+const Jobs = ({ user, next, input }) => {
   const [jobList, setJobList] = useState([]); //max 3
+
+  const [skillsError, setSkillsError] = useState("");
+  const [experienceError, setExperienceError] = useState("");
+  const [jobTypeError, setJobTypeError] = useState("");
+  const [positionError, setPositionError] = useState("");
+
+  const handleChange = (e) => {
+    input(e.target.name, e.target.value);
+
+    if (e.target.name === "job_type") {
+      setJobTypeError(""); //clear state error
+    } else if (e.target.name === "job_type_cat") {
+      setPositionError(""); // Clear state error
+    } else if (e.target.name == "experience") {
+      setExperienceError(""); //clear experience error
+    } else if (jobList.length <= 1) {
+      setSkillsError("");
+    }
+  };
+
+  const checkFields = (e) => {
+    e.preventDefault();
+
+    let isValid = true;
+
+    // Check if jobList has less than 1 entry
+    if (jobList.length < 1) {
+      setSkillsError("Not enough jobs added");
+      isValid = false; // Set isValid to false if there's an error
+    }
+
+    // Check if experience is not selected
+    if (user.experience === null || user.experience === "") {
+      setExperienceError("Please select an Experience Level");
+      isValid = false;
+    }
+
+    // Check if job_type is not selected
+    if (user.job_types.job_type === null || user.job_types.job_type === "") {
+      setJobTypeError("Please select a Contract Type");
+      isValid = false;
+    }
+
+    // Check if job_type_cat is not selected
+    if (
+      user.job_types.job_type_cat === null ||
+      user.job_types.job_type_cat === ""
+    ) {
+      setPositionError("Please select a Position Type");
+      isValid = false;
+    }
+
+    if (isValid) {
+      input("job_titles", jobList);
+      next(); // Only proceed if all validations pass
+    }
+  };
+
+  const addJobs = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const job = e.target.value.trim(); // Trim whitespace from the input value
+
+      if (!job) {
+        // Check if the input is empty
+        alert("Please enter a job title");
+      } else if (jobList.includes(job)) {
+        // Check if the job is already in the list
+        alert("This job is already added");
+      } else if (jobList.length >= 3) {
+        // Check if the job list already has 3 jobs
+        alert("Maximum of 3 jobs can be added");
+      } else {
+        // Add the new job to the list
+        setJobList((prevJobList) => [...prevJobList, job]);
+        e.target.value = ""; // Clear the input field after adding the job
+      }
+    }
+  };
+
+  const removeJobs = (jobToRemove) => {
+    setJobList((prevJobList) =>
+      prevJobList.filter((job) => job !== jobToRemove)
+    );
+  };
 
   return (
     <form>
       <div style={{ gridColumn: "span 2" }} className={styles.inputBox}>
         <span>
           <small>Job Titles (3 Maximum) </small>
-          <input type="text" required placeholder="Enter Skills" />
+          <input
+            maxLength="50"
+            name="jobs"
+            type="text"
+            required
+            placeholder="Enter a job title and press enter"
+            onKeyDown={addJobs}
+          />
+          <small className="error">{skillsError}</small>
         </span>
-        <FontAwesomeIcon icon={faEnvelope} className={styles.icon} />
+        <FontAwesomeIcon icon={faClipboardUser} className={styles.icon} />
       </div>
 
-      <div className={styles.jobTitleDisplay} style={{ gridColumn: "span 2" }}>
+      <div className={styles.jobTitleDisplay}>
         <p style={{ gridColumn: "span 3" }}>Click to remove:</p>
-        {jobList.map((job) => (
-          <small key={job}>{job}</small>
+        {jobList.map((job, index) => (
+          <small key={`${job}-${index}`} onClick={() => removeJobs(job)}>
+            {job}
+          </small>
         ))}
+      </div>
+
+      <div style={{ gridColumn: "span 2" }} className={styles.inputBox}>
+        <span>
+          <small>Job Experience</small>
+          <select
+            name="experience"
+            value={user.experience}
+            onChange={handleChange}
+            required
+          >
+            <option value={null}>Select Experience Level</option>
+            {experience.map((exp) => (
+              <option key={exp} value={exp}>
+                {exp}
+              </option>
+            ))}
+          </select>
+          <small className="error">{experienceError}</small>
+        </span>
+        <FontAwesomeIcon icon={faClipboardUser} className={styles.icon} />
       </div>
 
       <div className={styles.inputBox}>
         <span>
-          <small>Job Experience</small>
-          <select>
-            <option value="1">Select Experience Level</option>
+          <small>Contract Type</small>
+          <select
+            name="job_type"
+            value={user.job_types.job_type}
+            onChange={handleChange}
+            required
+          >
+            <option value={null}>Select Contract Type</option>
+            {job_type.map((exp) => (
+              <option key={exp} value={exp}>
+                {exp}
+              </option>
+            ))}
           </select>
+          <small className="error">{jobTypeError}</small>
         </span>
         <FontAwesomeIcon icon={faFileContract} className={styles.icon} />
       </div>
 
       <div className={styles.inputBox}>
         <span>
-          <small>Contract Type</small>
-          <select>
-            <option value="1">Select Contract Type</option>
+          <small>Position Type</small>
+          <select
+            name="job_type_cat"
+            value={user.job_types.job_type_cat}
+            onChange={handleChange}
+          >
+            <option value={null}>Select Position Type</option>
+            {position.map((exp) => (
+              <option key={exp} value={exp}>
+                {exp}
+              </option>
+            ))}
           </select>
+          <small className="error">{positionError}</small>
         </span>
         <FontAwesomeIcon icon={faClipboardUser} className={styles.icon} />
       </div>
@@ -367,7 +689,7 @@ const Jobs = ({ user, next }) => {
       <button
         style={{ gridColumn: "span 2" }}
         type="button"
-        onClick={next}
+        onClick={checkFields}
         className="primary-button"
       >
         Next
@@ -375,22 +697,82 @@ const Jobs = ({ user, next }) => {
     </form>
   );
 };
-const Skills = ({ user, next, back }) => {
+const Skills = ({ user, next, back, input }) => {
   const [skillList, setSkillList] = useState([]); //max 20
+  const [skillsError, setSkillsError] = useState("");
+
+  const addSkills = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleChange();
+      const skill = e.target.value.trim(); // Trim whitespace from the input value
+
+      if (!skill) {
+        // Check if the input is empty
+        alert("Please enter a skill");
+      } else if (skillList.includes(skill)) {
+        // Check if the job is already in the list
+        alert("This skill is already added");
+      } else if (skillList.length >= 20) {
+        // Check if the job list already has 3 jobs
+        alert("Maximum of 20 skills can be added");
+      } else {
+        // Add the new job to the list
+        setSkillList((prevSkillList) => [...prevSkillList, skill]);
+        e.target.value = ""; // Clear the input field after adding the job
+      }
+    }
+  };
+  const removeSkills = (skillToRemove) => {
+    setSkillList((prevSkillList) =>
+      prevSkillList.filter((skill) => skill !== skillToRemove)
+    );
+  };
+
+  const checkFields = (e) => {
+    e.preventDefault();
+    let isValid = true;
+
+    if (skillList.length < 1) {
+      setSkillsError("Not enough skills added");
+      isValid = false;
+    }
+
+    if (isValid) {
+      input("skills", skillList);
+      next();
+    }
+  };
+
+  const handleChange = () => {
+    if (skillList.length <= 1) {
+      setSkillsError("");
+    }
+  };
+
   return (
     <form>
       <div style={{ gridColumn: "span 2" }} className={styles.inputBox}>
         <span>
           <small>Skills Titles (20 Maximum) </small>
-          <input type="text" required placeholder="Enter Skills" />
+          <input
+            type="text"
+            required
+            placeholder="Enter a skill and press enter"
+            onKeyDown={addSkills}
+            maxLength="25"
+          />
+          <small className="error">{skillsError}</small>
         </span>
         <FontAwesomeIcon icon={faEnvelope} className={styles.icon} />
       </div>
 
-      <div className={styles.skillsDisplay} style={{ gridColumn: "span 2" }}>
-        <p style={{ gridColumn: "span 5" }}>Click to remove:</p>
-        {skillList.map((skill) => (
-          <small key={skill}>{skill}</small>
+      <div className={styles.skillsDisplay}>
+        <p>Click to remove:</p>
+        {skillList.map((skill, index) => (
+          <small key={`${skill}-${index}`} onClick={() => removeSkills(skill)}>
+            {skill}
+          </small>
         ))}
       </div>
 
@@ -398,13 +780,13 @@ const Skills = ({ user, next, back }) => {
         Previous
       </button>
 
-      <button type="button" onClick={next} className="primary-button">
+      <button type="button" onClick={checkFields} className="primary-button">
         Next
       </button>
     </form>
   );
 };
-const Resume = ({ user, submit, back }) => {
+const Resume = ({ user, next, back }) => {
   return (
     <form>
       <div className={styles.inputBox}>
@@ -427,11 +809,25 @@ const Resume = ({ user, submit, back }) => {
         Previous
       </button>
 
-      <button type="button" onClick={submit} className="primary-button">
+      <button type="button" onClick={next} className="primary-button">
         Go to dashboard
       </button>
     </form>
   );
+};
+const ProfileLoading = ({ user, submit }) => {
+  // create a use effect where once this page is rendered it loads for 5 seconds then triggers the submit function
+  useEffect(() => {
+    // Set a timeout to trigger the submit function after 5 seconds
+    const timer = setTimeout(() => {
+      submit();
+    }, 5000);
+
+    // Clean up the timer when the component unmounts
+    return () => clearTimeout(timer);
+  }, [submit]);
+
+  return <Loading />;
 };
 
 export default function SignUpForm() {
@@ -456,18 +852,25 @@ export default function SignUpForm() {
 
   const handleInputChange = (fieldName, value) => {
     setUser((prevState) => {
-      // Check if the field is part of the location object
-      if (fieldName in prevState.location) {
-        return {
-          ...prevState,
-          location: {
-            ...prevState.location,
-            [fieldName]: value,
-          },
-        };
+      // Iterate over the keys of the prevState
+      for (const key in prevState) {
+        // Check if the key is an object and if it contains the fieldName
+        if (
+          typeof prevState[key] === "object" &&
+          prevState[key] !== null &&
+          fieldName in prevState[key]
+        ) {
+          return {
+            ...prevState,
+            [key]: {
+              ...prevState[key],
+              [fieldName]: value,
+            },
+          };
+        }
       }
 
-      // For fields not part of the location object
+      // Default case for top-level fields
       return {
         ...prevState,
         [fieldName]: value,
@@ -476,9 +879,8 @@ export default function SignUpForm() {
   };
 
   const onSubmit = async (e) => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-
     console.log(user);
+    router.push("/");
   };
 
   return (
@@ -501,9 +903,6 @@ export default function SignUpForm() {
         />
       )}
       {step == 2 && (
-        <Verification user={user} next={nextStep} back={previousStep} />
-      )}
-      {step == 3 && (
         <Location
           user={user}
           next={nextStep}
@@ -511,12 +910,24 @@ export default function SignUpForm() {
           input={handleInputChange}
         />
       )}
-      {step == 4 && <Welcome user={user} next={nextStep} back={previousStep} />}
-      {step == 5 && <Jobs user={user} next={nextStep} />}
-      {step == 6 && <Skills user={user} next={nextStep} back={previousStep} />}
-      {step == 7 && (
-        <Resume user={user} submit={onSubmit} back={previousStep} />
+      {step == 3 && (
+        <Verification user={user} next={nextStep} back={previousStep} />
       )}
+
+      {step == 4 && <Welcome user={user} next={nextStep} back={previousStep} />}
+      {step == 5 && (
+        <Jobs user={user} next={nextStep} input={handleInputChange} />
+      )}
+      {step == 6 && (
+        <Skills
+          user={user}
+          next={nextStep}
+          back={previousStep}
+          input={handleInputChange}
+        />
+      )}
+      {step == 7 && <Resume user={user} next={nextStep} back={previousStep} />}
+      {step == 8 && <ProfileLoading user={user} submit={onSubmit} />}
     </div>
   );
 }
