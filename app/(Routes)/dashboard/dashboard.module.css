@@ -1,0 +1,53 @@
+.main {
+  padding: var(--dashboard-padding);
+  width: 100%;
+}
+
+.welcomeBox {
+  padding: var(--dashboard-padding);
+  border-radius: var(--border-rad-small);
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+
+  animation: var(--fadeInFast);
+  animation-delay: 0.5s;
+}
+.welcomeBox p {
+  font-weight: 500;
+  color: var(--accent-black);
+}
+.welcomeBox small a {
+  color: var(--primary);
+  transition: var(--transition-out);
+}
+.welcomeBox small a:hover {
+  color: var(--secondary);
+  transition: var(--transition-in);
+}
+
+/* GET JOBS COMPONENT */
+.DisplayJobs {
+  margin-top: 2rem;
+  padding: var(--dashboard-padding);
+  border-radius: var(--border-rad-small);
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  opacity: 0;
+
+  animation: var(--fadeInFast);
+  animation-delay: 0.75s;
+  height: 55svh;
+  overflow-y: scroll;
+}
+
+@media (max-width: 750px) {
+  .welcomeBox p {
+    font-size: var(--mini-text);
+  }
+}

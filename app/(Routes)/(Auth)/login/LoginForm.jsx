@@ -67,6 +67,9 @@ export default function LoginForm() {
       setPasswordError(""); // Clear the password error message
     }
   };
+  const togglePassworView = () =>{
+    setToggleSeePassword(!toggleSeePassword)
+  };
 
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -74,6 +77,7 @@ export default function LoginForm() {
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [toggleSeePassword, setToggleSeePassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
 
@@ -116,7 +120,7 @@ export default function LoginForm() {
               <input
                 name="password"
                 value={password}
-                type="password"
+                type={toggleSeePassword ? ('text'):('password')}
                 required
                 placeholder="************"
                 onChange={handleChange}
@@ -124,7 +128,7 @@ export default function LoginForm() {
               />
               <small className="error">{passwordError}</small>
             </span>
-            <FontAwesomeIcon icon={faEye} className={styles.icon} />
+            <FontAwesomeIcon onClick={togglePassworView} icon={faEye} className={styles.icon} />
           </div>
 
           {authError && (<span className={styles.loginError} style={{ gridColumn: "span 2" }} >{authError}</span>)}
