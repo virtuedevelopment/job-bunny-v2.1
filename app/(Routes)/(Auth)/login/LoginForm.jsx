@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { signIn, getSession } from "next-auth/react";
 import styles from "../auth.module.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -8,6 +9,7 @@ import { faIdBadge, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function LoginForm() {
+
   const submit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Start loading immediately upon form submission
@@ -29,18 +31,30 @@ export default function LoginForm() {
 
     // Simulate a delay of 3 seconds
     setTimeout(async () => {
-      setIsLoading(false); // Stop loading after the delay
-
       if (!hasError) {
         // Perform your login logic here if there are no errors
         // Example: await loginUser({ email, password });
-        router.push("/"); // Redirect to dashboard after successful login
+        const result = await signIn('credentials', {
+          username: email,
+          password: password,
+          redirect: false,
+        })
+
+        if(result.error){
+          setAuthError("Username or password is incorrect please try again.")
+          setIsLoading(false); // Stop loading after the delay
+        } else {
+          await getSession();
+          router.push('/dashboard')
+          window.location.href = window.location.origin + '/dashboard';
+          setIsLoading(false); // Stop loading after the delay
+        }
       }
       // If there are errors, the function simply ends here after stopping the loading state
-    }, 3000);
+    }, 1500);
   };
-
   const handleChange = (e) => {
+    setAuthError("");
     const { name, value } = e.target;
 
     // Set the target value to each field (email and password) and clear error messages
@@ -53,6 +67,7 @@ export default function LoginForm() {
       setPasswordError(""); // Clear the password error message
     }
   };
+
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,6 +75,7 @@ export default function LoginForm() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState("");
 
   return (
     <div className={styles.loginFormBox}>
@@ -110,6 +126,8 @@ export default function LoginForm() {
             </span>
             <FontAwesomeIcon icon={faEye} className={styles.icon} />
           </div>
+
+          {authError && (<span className={styles.loginError} style={{ gridColumn: "span 2" }} >{authError}</span>)}
 
           <button
             type="submit"

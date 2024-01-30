@@ -4,23 +4,23 @@
     display: flex;
     border-radius: var(--border-rad-small);
     position: relative;
-    border:  solid 1.5px var(--accent-primary);
+    border:  solid 1px var(--accent-black);
     animation: var(--fadeIn);
     animation-delay: 0.5s;
 }
 .inputbox input{
     font-family:'Outfit', sans-serif;
-    font-weight: 600;
+    font-weight: 500;
     padding: var(--button-padding-small);
     border-radius: var(--border-rad-small);
-    color: var(--accent-primary);
+    color: var(--accent-black);
     width: 100%;
     border: none;
     background-color: transparent;
 
 }
 .inputbox input::placeholder{
-    color: var(--accent-primary);
+    color: var(--accent-black);
 }
 .inputbox input:focus{
     outline: none;
@@ -35,7 +35,7 @@
     height: 35px;
     background-color: transparent;
     border: none;
-    color: var(--accent-primary);
+    color: var(--accent-black);
     cursor: pointer;
 }
 .inputbox button .icon{
@@ -45,13 +45,13 @@
 
 @media (max-width:750px) {
     .inputbox{
-        border-color: var(--accent-primary);
+        border-color: var(--accent-black);
         width: 100%;
     }
     .inputbox input::placeholder{
-        color: var(--accent-primary);
+        color: var(--accent-black);
     }
     .inputbox button{
-        color: var(--accent-primary);
+        color: var(--accent-black);
     }
 }

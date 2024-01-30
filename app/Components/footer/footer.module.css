@@ -12,16 +12,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
+    row-gap: 1rem;
+    background-color: var(--accent-white);
+    border-radius: var(--border-rad-large);
+    padding: var(--container-padding-regular);
 }
 .main div span h2{
-    font-size: var(--heading);
+    font-size: var(--subtitle);
     color: var(--main-black);
     text-align: center;
 }
 .main div span small{
     color: var(--accent-black);
-    font-size: var(--subhead);
+    font-size: var(--body-text);
     font-weight: 500;
     text-align: center;
 }
@@ -34,15 +37,16 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    margin-top: 3rem;
 }
 .footerOptions a{
     color: var(--main-white);
     transition: var(--transition-out);
-    font-size: var(--subhead);
+    font-size: var(--body-text);
 }
 .footerOptions p{
     color: var(--main-white);
-    font-size: var(--subhead);
+    font-size: var(--body-text);
 }
 .footerOptions a:hover{
     color: var(--accent-secondary);

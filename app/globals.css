@@ -109,6 +109,11 @@
   transition: var(--transition-out);
   cursor: pointer;
   border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 .secondary-button:hover {
   background-color: var(--main-black);
@@ -174,6 +179,10 @@
   color: var(--accent-grey);
 }
 
+.dashboardLayout{
+  display: flex;
+}
+
 /* ANIMATIONS */
 @keyframes fadeIn {
   from {
@@ -212,6 +221,7 @@
     transform: translateY(-10px);
   }
 }
+
 /* MEDIA QUERY */
 @media (max-width: 750px) {
   .grid-3x-display {

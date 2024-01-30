@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./navbar.module.css";
-import { faBars, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCircleXmark, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import configurations from "@/_data/config";
 import Link from "next/link";
 
@@ -11,6 +12,12 @@ export default function Mobilenav() {
 
   const toggleNav = () => {
     setIsOpen(!isOpen);
+  };
+
+  const { data, status } = useSession();
+
+  const handleLogout = () => {
+    signOut({ callbackUrl: "/login" });
   };
 
   return (
@@ -33,13 +40,42 @@ export default function Mobilenav() {
             </span>
           </Link>
         ))}
-        {configurations.authRoutes.map((route) => (
-          <Link className={styles.asideLink} key={route.route} href={route.url}>
-            <span onClick={toggleNav}>
-              <FontAwesomeIcon icon={route.icon} /> <p>{route.route}</p>
-            </span>
-          </Link>
-        ))}
+
+        {data ? (
+          <>
+            {configurations.userRoutes.map((route) => (
+              <Link
+                className={styles.asideLink}
+                key={route.route}
+                href={route.url}
+              >
+                <span onClick={toggleNav}>
+                  <FontAwesomeIcon icon={route.icon} /> <p>{route.route}</p>
+                </span>
+              </Link>
+            ))}
+
+            <Link href={'/login'} className={styles.asideLink} onClick={handleLogout}>
+              <span onClick={toggleNav}>
+                <FontAwesomeIcon icon={faRightFromBracket} /> <p>Logout</p>
+              </span>
+            </Link>
+          </>
+        ) : (
+          <>
+            {configurations.authRoutes.map((route) => (
+              <Link
+                className={styles.asideLink}
+                key={route.route}
+                href={route.url}
+              >
+                <span onClick={toggleNav}>
+                  <FontAwesomeIcon icon={route.icon} /> <p>{route.route}</p>
+                </span>
+              </Link>
+            ))}
+          </>
+        )}
       </aside>
     </>
   );

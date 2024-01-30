@@ -1,13 +1,13 @@
 //imports for configurations
-import {  } from '@fortawesome/free-brands-svg-icons'
-import {faHouse, faTag, faEnvelope, faUserPlus,faAddressCard, faMagnifyingGlass, faRepeat, faBell, faLocationCrosshairs, faSliders} from '@fortawesome/free-solid-svg-icons';
+import { } from '@fortawesome/free-brands-svg-icons'
+import { faHouse, faTag, faEnvelope, faUserPlus, faAddressCard, faMagnifyingGlass, faRepeat, faBell, faLocationCrosshairs, faSliders, faGauge, faCheckCircle, faEye, faGear } from '@fortawesome/free-solid-svg-icons';
 //define configurations
 const configurations = {
     title: 'Job Bunny © ',
     description: 'Embark on your career journey with Job Bunny, the ultimate web app for job seekers. Effortlessly search for jobs, automate your applications, receive instant alerts on new opportunities, and track all your applications in one convenient place. Simplify your job hunt and find your perfect match with Job Bunny!',
     copyright: '© Job Bunny 2024 ',
     keywords: ['Job Search', 'Employment Opportunities', 'Job Alerts', 'Job Seeker'],
-    authors: [{name: 'Job Bunny Co'}, {name: 'Virtue Technologies and Development'}] ,
+    authors: [{ name: 'Job Bunny Co' }, { name: 'Virtue Technologies and Development' }],
     baseUrl: 'https://www.jobbunny.co',
     canonical: '/',
     language: 'en',
@@ -23,39 +23,39 @@ const configurations = {
         {
             route: 'Home',
             url: '/',
-            icon: faHouse ,
+            icon: faHouse,
         },
         {
             route: 'Features',
             url: '/features',
-            icon: faTag ,
+            icon: faTag,
         },
         {
             route: 'Get in Touch',
             url: '/contact',
-            icon: faEnvelope ,
+            icon: faEnvelope,
         }
     ],
-    footerRoutes:[
+    footerRoutes: [
         {
             route: 'Home',
             url: '/',
-            icon: faHouse ,
+            icon: faHouse,
         },
         {
             route: 'Features',
             url: '/features',
-            icon: faTag ,
+            icon: faTag,
         },
         {
             route: 'Get in Touch',
             url: '/contact',
-            icon: faEnvelope ,
+            icon: faEnvelope,
         },
         {
             route: 'Terms',
             url: '/terms',
-        
+
         },
         {
             route: 'Privacy',
@@ -74,37 +74,48 @@ const configurations = {
             icon: faUserPlus
         }
     ],
-    userRoutes: [],
-    adminRoutes: [],
+    userRoutes: [
+        { route: 'Dashbaord', url: '/dashboard', icon: faGauge },
+        { route: 'Search', url: '/dashboard/search', icon: faMagnifyingGlass },
+        { route: 'Auto Applications', url: 'dashboard/auto-apply', icon: faCheckCircle },
+        { route: 'Company Watch', url: '/dashboard/company-watch', icon: faEye},
+        { route: 'Profile and Settings', url: '/dashboard/settings', icon: faGear}
+    ],
+    adminRoutes: [
+        { route: 'dashbaord', url: '/dashboard', icon: faGauge },
+        { route: 'search', url: '/dashboard/search', icon: faMagnifyingGlass },
+        { route: 'auto applications', url: 'dashboard/auto-apply', icon: faCheckCircle },
+
+    ],
     job_Boards: [
         {
             name: 'LinkedIn',
-            icon:"/linkedin.svg"
+            icon: "/linkedin.svg"
         },
         {
             name: 'Indeed',
-            icon:"/indeed.svg" 
+            icon: "/indeed.svg"
         },
         {
             name: 'Career Builder',
-            icon:"/cb.svg"
+            icon: "/cb.svg"
         },
         {
             name: 'Zip Recruiter',
-            icon:"/zip.svg"
+            icon: "/zip.svg"
         }
     ],
-    popSearches: 
-    ['Administrator','Delivery Driver','Electrician','Web Designer','Sales Advisor','Data Analyst'
-    ],
+    popSearches:
+        ['Administrator', 'Delivery Driver', 'Electrician', 'Web Designer', 'Sales Advisor', 'Data Analyst'
+        ],
     features: [
         {
-            name:'Search Engine',
+            name: 'Search Engine',
             icon: faMagnifyingGlass
         },
         {
             name: 'Auto Applications',
-            icon:faRepeat
+            icon: faRepeat
         },
         {
             name: 'Company Alerts',

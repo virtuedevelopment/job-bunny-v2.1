@@ -56,18 +56,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--primary);
+  background-color: var(--secondary);
   border-radius: var(--border-rad-large);
   padding: var(--button-padding-regular);
   font-weight: 300;
 }
 .popularSearches .item p{
   font-weight: 400;
-  color: var(--accent-white);
+  color: var(--accent-black);
 }
 .popularSearches h2 {
-  font-size: var(--subhead);
-  font-weight: 400;
+  font-size: var(--body-text);
+  font-weight: 500;
 }
 .heroImageBox {
   width: 50%;

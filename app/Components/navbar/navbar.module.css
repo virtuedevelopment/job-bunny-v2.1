@@ -61,6 +61,8 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 1rem;
+  -webkit-box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.25); 
+  box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.25);
 }
 .closeButton{
   width: 100%;
@@ -95,6 +97,9 @@
   padding: var(--button-padding-small);
   transition: var(--transition-out);
   color: var(--primary);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 .asideLink span{
   width: 100%;

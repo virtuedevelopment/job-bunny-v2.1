@@ -47,6 +47,7 @@ const UserInformation = ({ user, next, input }) => {
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [toggleSeePassword, setToggleSeePassword] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.name !== "confirmPassword") {
@@ -146,6 +147,10 @@ const UserInformation = ({ user, next, input }) => {
     if (isValid) next();
   };
 
+  const togglePassworView = () =>{
+    setToggleSeePassword(!toggleSeePassword)
+  }
+
   return (
     <form>
       <div className={styles.inputBox}>
@@ -204,7 +209,7 @@ const UserInformation = ({ user, next, input }) => {
           <small>Password</small>
           <input
             name="password"
-            type="password"
+            type={toggleSeePassword ? ('text'):('password')}
             value={user.password}
             required
             placeholder="**************"
@@ -213,7 +218,7 @@ const UserInformation = ({ user, next, input }) => {
           />
           <small className="error">{passwordError}</small>
         </span>
-        <FontAwesomeIcon icon={faEye} className={styles.icon} />
+        <FontAwesomeIcon onClick={togglePassworView} icon={faEye} className={styles.icon} />
       </div>
 
       <div style={{ gridColumn: "span 2" }} className={styles.inputBox}>
@@ -221,7 +226,7 @@ const UserInformation = ({ user, next, input }) => {
           <small>Confirm Password</small>
           <input
             name="confirmPassword"
-            type="password"
+            type={toggleSeePassword ? ('text'):('password')}
             value={confirmPassword}
             required
             placeholder="**************"
@@ -230,7 +235,7 @@ const UserInformation = ({ user, next, input }) => {
           />
           <small className="error">{confirmPasswordError}</small>
         </span>
-        <FontAwesomeIcon icon={faEye} className={styles.icon} />
+        <FontAwesomeIcon onClick={togglePassworView} icon={faEye} className={styles.icon} />
       </div>
 
       <button
@@ -353,7 +358,6 @@ const Location = ({ user, next, back, input }) => {
       const data = await response.json();
       if (data.error === false) {
         setCities(data.data);
-        console.log("cities: ", data.data);
       } else {
         // Handle error here
         console.error("Error fetching cities:", data.msg);
@@ -457,54 +461,22 @@ const Location = ({ user, next, back, input }) => {
     </form>
   );
 };
-const Verification = ({ user, back, next }) => {
-  const resendVerificationEmail = (e) => {
-    e.preventDefault();
-  };
-
-  return (
-    <form>
-      <h2 style={{ gridColumn: "span 2" }}>Verification email sent.</h2>
-      <p style={{ gridColumn: "span 2" }}>
-        We&apos;ve sent a verification email to {user.email}. Please click on the
-        link in that email to confirm your account. Can&apos;t find the email? It may
-        take a few minutes to arrive, or it could be in your spam folder. If you
-        need to, you can resend the verification email.
-      </p>
-
-      <button type="button" onClick={back} className="main-button">
-        Previous
-      </button>
-
-      <button type="button" onClick={next} className="main-button">
-        Next
-      </button>
-
-      <button
-        type="button"
-        onClick={resendVerificationEmail}
-        className="primary-button"
-      >
-        Resend email
-      </button>
-    </form>
-  );
-};
 const Welcome = ({ user, next, back }) => {
   return (
     <form>
       <h2 style={{ gridColumn: "span 2" }}>Welcome {user.firstname},</h2>
       <p style={{ gridColumn: "span 2" }}>
-        Thank you for verifying your account! We&apos;re excited to make your job
-        search easier. Now that you have finished registering, you can upload
-        your resume and set your custom preferences. Happy searching!
+        Thank you for choosing Job Bunny to take your job search to the next
+        level! We&apos;re excited to make your job search easier. Now that you
+        have finished registering, you can upload your resume and set your
+        custom preferences. Happy searching!
       </p>
       <button type="button" onClick={back} className="main-button">
         Previous
       </button>
 
       <button type="button" onClick={next} className="primary-button">
-        Set Profile
+        Set up Profile
       </button>
     </form>
   );
@@ -700,6 +672,8 @@ const Jobs = ({ user, next, input }) => {
 const Skills = ({ user, next, back, input }) => {
   const [skillList, setSkillList] = useState([]); //max 20
   const [skillsError, setSkillsError] = useState("");
+  const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const addSkills = (e) => {
     if (e.key === "Enter") {
@@ -723,6 +697,13 @@ const Skills = ({ user, next, back, input }) => {
       }
     }
   };
+
+  const selectSuggestion = (suggestion) => {
+    setSkillList((prevSkillList) => [...prevSkillList, suggestion]);
+    setShowDropdown(false);
+    setAutocompleteSuggestions([]);
+  };
+
   const removeSkills = (skillToRemove) => {
     setSkillList((prevSkillList) =>
       prevSkillList.filter((skill) => skill !== skillToRemove)
@@ -744,9 +725,54 @@ const Skills = ({ user, next, back, input }) => {
     }
   };
 
+  function debounce(func, wait) {
+    let timeout;
+
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  const debouncedApiCall = debounce(async (input) => {
+    try {
+      const response = await fetch(
+        "https://jobbunny.co/jobbunnyapi/v1/skill_autocomplete",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ skill_prefix: input }),
+        }
+      );
+      const data = await response.json();
+      if (data.status === 200) {
+        setAutocompleteSuggestions(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching autocomplete suggestions:", error);
+    }
+  }, 300);
+
   const handleChange = () => {
     if (skillList.length <= 1) {
       setSkillsError("");
+    }
+  };
+
+  const handleInputChange = async (e) => {
+    const input = e.target.value;
+
+    if (input.length > 1) {
+      debouncedApiCall(input);
+      setShowDropdown(true);
+    } else {
+      setAutocompleteSuggestions([]);
+      setShowDropdown(false);
     }
   };
 
@@ -756,16 +782,28 @@ const Skills = ({ user, next, back, input }) => {
         <span>
           <small>Skills Titles (20 Maximum) </small>
           <input
+            className={styles.autocompleteInput}
             type="text"
             required
-            placeholder="Enter a skill and press enter"
+            placeholder={"Enter a skill and press enter"}
             onKeyDown={addSkills}
+            onChange={handleInputChange}
             maxLength="25"
           />
           <small className="error">{skillsError}</small>
         </span>
         <FontAwesomeIcon icon={faEnvelope} className={styles.icon} />
       </div>
+
+      {showDropdown && autocompleteSuggestions.length > 0 && (
+        <div style={{ gridColumn: "span 2" }} className={styles.dropdown}>
+          {autocompleteSuggestions.map((suggestion, index) => (
+            <div key={index} onClick={() => selectSuggestion(suggestion)}>
+              {suggestion}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className={styles.skillsDisplay}>
         <p>Click to remove:</p>
@@ -810,24 +848,38 @@ const Resume = ({ user, next, back }) => {
       </button>
 
       <button type="button" onClick={next} className="primary-button">
-        Go to dashboard
+        Complete Signup
       </button>
     </form>
   );
 };
-const ProfileLoading = ({ user, submit }) => {
+const ProfileLoading = ({ user, next, submit }) => {
   // create a use effect where once this page is rendered it loads for 5 seconds then triggers the submit function
   useEffect(() => {
     // Set a timeout to trigger the submit function after 5 seconds
     const timer = setTimeout(() => {
       submit();
+      next();
     }, 5000);
 
     // Clean up the timer when the component unmounts
     return () => clearTimeout(timer);
-  }, [submit]);
+  }, [next]);
 
   return <Loading />;
+};
+const Verification = ({ user }) => {
+  return (
+    <form>
+      <h2 style={{ gridColumn: "span 2" }}>Verification email sent.</h2>
+      <p style={{ gridColumn: "span 2" }}>
+        We&apos;ve sent a verification email to {user.email}. Please click on
+        the link in that email to confirm your account. Can&apos;t find the
+        email? It may take a few minutes to arrive, or it could be in your spam
+        folder.
+      </p>
+    </form>
+  );
 };
 
 export default function SignUpForm() {
@@ -879,8 +931,22 @@ export default function SignUpForm() {
   };
 
   const onSubmit = async (e) => {
-    console.log(user);
-    router.push("/");
+    try {
+      const response = await fetch(`/api/auth/register`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user)
+      })
+
+      const responseData = await response.json();
+      if (responseData.ok){
+          console.log("User signed up")
+      }
+    } catch (error){
+      router.push('/singup/failure')
+    }
   };
 
   return (
@@ -910,24 +976,31 @@ export default function SignUpForm() {
           input={handleInputChange}
         />
       )}
-      {step == 3 && (
-        <Verification user={user} next={nextStep} back={previousStep} />
-      )}
+      {step == 3 && <Welcome user={user} next={nextStep} back={previousStep} />}
 
-      {step == 4 && <Welcome user={user} next={nextStep} back={previousStep} />}
-      {step == 5 && (
-        <Jobs user={user} next={nextStep} input={handleInputChange} />
-      )}
-      {step == 6 && (
-        <Skills
+      {step == 4 && (
+        <Jobs
           user={user}
           next={nextStep}
           back={previousStep}
           input={handleInputChange}
         />
       )}
-      {step == 7 && <Resume user={user} next={nextStep} back={previousStep} />}
-      {step == 8 && <ProfileLoading user={user} submit={onSubmit} />}
+      {step == 5 && (
+        <Skills user={user} next={nextStep} input={handleInputChange} back={previousStep} />
+      )}
+      {step == 6 && (
+        <Resume
+          user={user}
+          next={nextStep}
+          back={previousStep}
+          input={handleInputChange}
+        />
+      )}
+      {step == 7 && (
+        <ProfileLoading user={user} next={nextStep} submit={onSubmit} />
+      )}
+      {step == 8 && <Verification user={user} />}
     </div>
   );
 }
