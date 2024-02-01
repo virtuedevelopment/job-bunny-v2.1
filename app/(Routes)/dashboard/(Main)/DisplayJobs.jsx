@@ -5,27 +5,6 @@ import styles from "../dashboard.module.css";
 import Loading from "@/app/loading";
 import JobDisplay from "@/app/Components/(Misc)/Object Displays/JobDisplay";
 
-const exampleJobs = [
-  {
-    job_title: "Google Cloud Architect",
-    location: "Dallas, Texas",
-    url: "/",
-    company: "Google Inc.",
-    salary: { currency: "USD", amount: 50000 },
-    job_type: "Full Time",
-    skills: ["Remote", "JavaScript"],
-  },
-  {
-    job_title: "Amazon Database Interpreter",
-    location: "SanFrancisco, California",
-    url: "/",
-    company: "Amazon Inc.",
-    salary: { currency: "USD", amount: 75000 },
-    job_type: "Full Time",
-    skills: ["Remote", "Visa"],
-  },
-];
-
 export default function DisplayJobs() {
   const { data, status } = useSession();
   const [start, setStart] = useState(0);

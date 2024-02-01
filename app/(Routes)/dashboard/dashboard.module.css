@@ -2,7 +2,6 @@
   padding: var(--dashboard-padding);
   width: 100%;
 }
-
 .welcomeBox {
   padding: var(--dashboard-padding);
   border-radius: var(--border-rad-small);
@@ -41,13 +40,55 @@
   opacity: 0;
 
   animation: var(--fadeInFast);
-  animation-delay: 0.75s;
+  animation-delay: 1.25s;
   height: 55svh;
   overflow-y: scroll;
 }
 .jobListing h3{
   margin-bottom: 1rem;
   color: var(--accent-black);
+}
+
+/* STATISTICS BOARD */
+.statistics {
+  margin-top: 2rem;
+  padding: var(--dashboard-padding);
+  border-radius: var(--border-rad-small);
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  opacity: 0;
+
+  animation: var(--fadeInFast);
+  animation-delay: 0.75s;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  position: relative;
+}
+.statistics div{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.statistics div small{
+  color: var(--main-grey);
+  font-size: var(--mini-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.statistics div small .icon{
+  width: 5px;
+  height: 5px;
+}
+.statistics div big{
+  color: var(--primary);
+  font-size: var(--body-text);
+  font-weight: 700;
 }
 
 
