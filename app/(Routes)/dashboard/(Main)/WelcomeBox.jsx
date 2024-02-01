@@ -2,6 +2,8 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import configurations from "@/_data/config";
+import { faCrown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../dashboard.module.css";
 import Link from "next/link";
 
@@ -17,7 +19,7 @@ export default function WelcomeBox() {
       </div>
 
       <div style={{textAlign:"right"}} >
-        <p>Starter Plan</p>
+        <p>Starter Plan <FontAwesomeIcon icon={faCrown} /></p>
         <small>
           <Link href={"/plans"}>Upgrade</Link>
         </small>

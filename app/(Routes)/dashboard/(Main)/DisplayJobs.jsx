@@ -1,26 +1,96 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import styles from "../dashboard.module.css";
 import Loading from "@/app/loading";
 import JobDisplay from "@/app/Components/(Misc)/Object Displays/JobDisplay";
 
+const exampleJobs = [
+  {
+    job_title: "Google Cloud Architect",
+    location: "Dallas, Texas",
+    url: "/",
+    company: "Google Inc.",
+    salary: { currency: "USD", amount: 50000 },
+    job_type: "Full Time",
+    skills: ["Remote", "JavaScript"],
+  },
+  {
+    job_title: "Amazon Database Interpreter",
+    location: "SanFrancisco, California",
+    url: "/",
+    company: "Amazon Inc.",
+    salary: { currency: "USD", amount: 75000 },
+    job_type: "Full Time",
+    skills: ["Remote", "Visa"],
+  },
+];
+
 export default function DisplayJobs() {
-  const [jobs, setJobs] = useState([
-  ]);
+  const { data, status } = useSession();
+  const [start, setStart] = useState(0);
+  const count = 30;
+  const [jobs, setJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getJobs = async (data) => {
+    //define request
+    const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/get_job_list";
+    const requestBody = {
+      username: data.user.email,
+      jb_token: data.user.jb_token,
+      start: start,
+      count: count,
+    };
+    //make request
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    //handle response
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      throw new Error(`HTTP ERROR! STATUS: ${response.status}`);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (data && data.user) {
+        try {
+          const response = await getJobs(data);
+          if (response.data.length < 1) {
+            setIsLoading(false);
+          } else {
+            setJobs(response.data);
+            setIsLoading(false);
+          }
+        } catch (error) {
+          console.error("Failed to fetch jobs:", error);
+        }
+      }
+    };
+    fetchData();
+  }, [data]);
+
   return (
     <section className={styles.DisplayJobs}>
-      {jobs.length < 1 ? (
-        <>
-          <Loading />
-        </>
-      ) : (
-        <>
+      {isLoading && <Loading />}{" "}
+      {/* Show loading spinner while fetching data */}
+      {!isLoading && jobs.length === 0 && <p>Currently no jobs</p>}{" "}
+      {/* Show message when not loading and no jobs */}
+      {jobs.length > 0 && (
+        <div className={styles.jobListing} >
+          <h3>Recommended jobs from our premium search engine:</h3>
           <div className="job-1x-display">
             {jobs.map((job, index) => (
               <JobDisplay job={job} index={index} key={index} />
             ))}
           </div>
-        </>
+        </div>
       )}
     </section>
   );

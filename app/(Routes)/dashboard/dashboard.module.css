@@ -45,6 +45,11 @@
   height: 55svh;
   overflow-y: scroll;
 }
+.jobListing h3{
+  margin-bottom: 1rem;
+  color: var(--accent-black);
+}
+
 
 @media (max-width: 750px) {
   .welcomeBox p {

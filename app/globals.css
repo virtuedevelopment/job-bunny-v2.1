@@ -170,9 +170,11 @@
   gap: 0.75rem;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 .loading span{
   display: flex;
+  text-align: center;
   gap: 0.75rem;
 }
 .loading span small{
@@ -233,9 +235,25 @@
 }
 
 /* MEDIA QUERY */
+@media (max-width:1200px) {
+  .job-1x-display{
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 750px) {
   .grid-3x-display {
     grid-template-columns: 1fr;
     gap: 1.25rem;
+  }
+
+  .job-1x-display{
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .loading p{
+    font-size: var(--tiny-text);
   }
 }
