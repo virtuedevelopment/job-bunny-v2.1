@@ -209,10 +209,10 @@
   height: 100%;
   z-index: 3;
   border-radius: var(--border-rad-small);
-  background: rgba(56, 67, 72, 0.15);
+  background: rgba(56, 67, 72, 0.35);
 
-  backdrop-filter: blur(12.5px);
-  -webkit-backdrop-filter: blur(12.5px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 
   display: flex;
   align-items: center;
