@@ -147,9 +147,9 @@ const UserInformation = ({ user, next, input }) => {
     if (isValid) next();
   };
 
-  const togglePassworView = () =>{
-    setToggleSeePassword(!toggleSeePassword)
-  }
+  const togglePassworView = () => {
+    setToggleSeePassword(!toggleSeePassword);
+  };
 
   return (
     <form>
@@ -209,7 +209,7 @@ const UserInformation = ({ user, next, input }) => {
           <small>Password</small>
           <input
             name="password"
-            type={toggleSeePassword ? ('text'):('password')}
+            type={toggleSeePassword ? "text" : "password"}
             value={user.password}
             required
             placeholder="**************"
@@ -218,7 +218,11 @@ const UserInformation = ({ user, next, input }) => {
           />
           <small className="error">{passwordError}</small>
         </span>
-        <FontAwesomeIcon onClick={togglePassworView} icon={faEye} className={styles.icon} />
+        <FontAwesomeIcon
+          onClick={togglePassworView}
+          icon={faEye}
+          className={styles.icon}
+        />
       </div>
 
       <div style={{ gridColumn: "span 2" }} className={styles.inputBox}>
@@ -226,7 +230,7 @@ const UserInformation = ({ user, next, input }) => {
           <small>Confirm Password</small>
           <input
             name="confirmPassword"
-            type={toggleSeePassword ? ('text'):('password')}
+            type={toggleSeePassword ? "text" : "password"}
             value={confirmPassword}
             required
             placeholder="**************"
@@ -235,7 +239,11 @@ const UserInformation = ({ user, next, input }) => {
           />
           <small className="error">{confirmPasswordError}</small>
         </span>
-        <FontAwesomeIcon onClick={togglePassworView} icon={faEye} className={styles.icon} />
+        <FontAwesomeIcon
+          onClick={togglePassworView}
+          icon={faEye}
+          className={styles.icon}
+        />
       </div>
 
       <button
@@ -489,6 +497,10 @@ const Jobs = ({ user, next, input }) => {
   const [jobTypeError, setJobTypeError] = useState("");
   const [positionError, setPositionError] = useState("");
 
+  const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+
   const handleChange = (e) => {
     input(e.target.name, e.target.value);
 
@@ -563,6 +575,63 @@ const Jobs = ({ user, next, input }) => {
     }
   };
 
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  const debouncedApiCall = debounce(async (input) => {
+    try {
+      const response = await fetch(
+        "https://jobbunny.co/jobbunnyapi/v1/title_autocomplete",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: "yourEmail@example.com",
+            title_prefix: input,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.status === 200) {
+        setAutocompleteSuggestions(data.data);
+        setShowDropdown(true);
+      } else {
+        setShowDropdown(false);
+      }
+    } catch (error) {
+      console.error("Error fetching job title suggestions:", error);
+    }
+  }, 10);
+
+  const handleJobInputChange = (e) => {
+    const input = e.target.value;
+    if (input.length > 1) {
+      debouncedApiCall(input);
+    } else {
+      setAutocompleteSuggestions([]);
+      setShowDropdown(false);
+    }
+  };
+
+  const selectSuggestion = (suggestion) => {
+    if (!jobList.includes(suggestion) && jobList.length < 3) {
+      setJobList((prevJobList) => [...prevJobList, suggestion]);
+      setInputValue("");
+    }
+    setAutocompleteSuggestions([]);
+    setShowDropdown(false);
+    // Optionally clear the input field if required
+  };
+
   const removeJobs = (jobToRemove) => {
     setJobList((prevJobList) =>
       prevJobList.filter((job) => job !== jobToRemove)
@@ -581,11 +650,26 @@ const Jobs = ({ user, next, input }) => {
             required
             placeholder="Enter a job title and press enter"
             onKeyDown={addJobs}
+            onChange={(e) => {
+              setInputValue(e.target.value); 
+              handleJobInputChange(e); 
+            }}
+            value={inputValue}
           />
           <small className="error">{skillsError}</small>
         </span>
         <FontAwesomeIcon icon={faClipboardUser} className={styles.icon} />
       </div>
+
+      {showDropdown && autocompleteSuggestions.length > 0 && (
+        <div style={{ gridColumn: "span 2" }} className={styles.dropdown}>
+          {autocompleteSuggestions.map((suggestion, index) => (
+            <div key={index} onClick={() => selectSuggestion(suggestion)}>
+              {suggestion}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className={styles.jobTitleDisplay}>
         <p style={{ gridColumn: "span 3" }}>Click to remove:</p>
@@ -595,7 +679,6 @@ const Jobs = ({ user, next, input }) => {
           </small>
         ))}
       </div>
-
       <div style={{ gridColumn: "span 2" }} className={styles.inputBox}>
         <span>
           <small>Job Experience</small>
@@ -616,7 +699,6 @@ const Jobs = ({ user, next, input }) => {
         </span>
         <FontAwesomeIcon icon={faClipboardUser} className={styles.icon} />
       </div>
-
       <div className={styles.inputBox}>
         <span>
           <small>Contract Type</small>
@@ -637,7 +719,6 @@ const Jobs = ({ user, next, input }) => {
         </span>
         <FontAwesomeIcon icon={faFileContract} className={styles.icon} />
       </div>
-
       <div className={styles.inputBox}>
         <span>
           <small>Position Type</small>
@@ -657,7 +738,6 @@ const Jobs = ({ user, next, input }) => {
         </span>
         <FontAwesomeIcon icon={faClipboardUser} className={styles.icon} />
       </div>
-
       <button
         style={{ gridColumn: "span 2" }}
         type="button"
@@ -670,6 +750,7 @@ const Jobs = ({ user, next, input }) => {
   );
 };
 const Skills = ({ user, next, back, input }) => {
+  const [inputValue, setInputValue] = useState("");
   const [skillList, setSkillList] = useState([]); //max 20
   const [skillsError, setSkillsError] = useState("");
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
@@ -693,7 +774,7 @@ const Skills = ({ user, next, back, input }) => {
       } else {
         // Add the new job to the list
         setSkillList((prevSkillList) => [...prevSkillList, skill]);
-        e.target.value = ""; // Clear the input field after adding the job
+        setInputValue(""); // Clear the input field after adding the job
       }
     }
   };
@@ -702,6 +783,7 @@ const Skills = ({ user, next, back, input }) => {
     setSkillList((prevSkillList) => [...prevSkillList, suggestion]);
     setShowDropdown(false);
     setAutocompleteSuggestions([]);
+    setInputValue("");
   };
 
   const removeSkills = (skillToRemove) => {
@@ -756,7 +838,7 @@ const Skills = ({ user, next, back, input }) => {
     } catch (error) {
       console.error("Error fetching autocomplete suggestions:", error);
     }
-  }, 300);
+  }, 10);
 
   const handleChange = () => {
     if (skillList.length <= 1) {
@@ -782,12 +864,17 @@ const Skills = ({ user, next, back, input }) => {
         <span>
           <small>Skills Titles (20 Maximum) </small>
           <input
+            name="skills"
             className={styles.autocompleteInput}
             type="text"
             required
             placeholder={"Enter a skill and press enter"}
             onKeyDown={addSkills}
-            onChange={handleInputChange}
+            onChange={(e) => {
+              setInputValue(e.target.value); // Update the state based on input
+              handleInputChange(e); // Your existing logic for handling input change
+            }}
+            value={inputValue}
             maxLength="25"
           />
           <small className="error">{skillsError}</small>
@@ -932,20 +1019,20 @@ export default function SignUpForm() {
 
   const onSubmit = async (e) => {
     try {
-      const response = await fetch(`/api/auth/register`,{
+      const response = await fetch(`/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(user)
-      })
+        body: JSON.stringify(user),
+      });
 
       const responseData = await response.json();
-      if (responseData.ok){
-          console.log("User signed up")
+      if (responseData.ok) {
+        console.log("User signed up");
       }
-    } catch (error){
-      router.push('/singup/failure')
+    } catch (error) {
+      router.push("/singup/failure");
     }
   };
 
@@ -987,7 +1074,12 @@ export default function SignUpForm() {
         />
       )}
       {step == 5 && (
-        <Skills user={user} next={nextStep} input={handleInputChange} back={previousStep} />
+        <Skills
+          user={user}
+          next={nextStep}
+          input={handleInputChange}
+          back={previousStep}
+        />
       )}
       {step == 6 && (
         <Resume

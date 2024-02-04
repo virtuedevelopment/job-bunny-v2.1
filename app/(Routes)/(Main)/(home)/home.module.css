@@ -38,7 +38,7 @@
   opacity: 0;
   font-size: var(--title);
   color: var(--main-black);
-  animation: var(--fadeIn);
+  animation: var(--fadeInFast);
 }
 .heroInteraction h1 span {
   color: var(--accent-primary);
@@ -48,7 +48,7 @@
   margin-inline: auto;
   text-align: center;
   padding: var(--container-padding-regular);
-  animation: var(--fadeIn);
+  animation: var(--fadeInFast);
   animation-delay: 0.5s;
 }
 .popularSearches .item {
@@ -83,7 +83,7 @@
   left: 0;
   right: 0;
   margin-inline: auto;
-  animation: var(--fadeIn);
+  animation: var(--fadeInFast);
   animation-delay: 1s;
 }
 
@@ -141,7 +141,7 @@
   width: 50%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  column-gap: 1rem;
 }
 .exampleBox {
   width: 100%;
@@ -331,7 +331,8 @@
   }
   .process .customerExample {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    column-gap: 0;
+    row-gap: 2rem;
     width: 100%;
   }
 
