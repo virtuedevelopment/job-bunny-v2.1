@@ -1,0 +1,8 @@
+.main {
+    padding: var(--dashboard-padding);
+    position: relative;
+    width: 100%;
+}
+.mainSection{
+    min-height: 75svh;
+}

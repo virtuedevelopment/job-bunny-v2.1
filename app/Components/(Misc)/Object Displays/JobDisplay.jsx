@@ -8,8 +8,6 @@ export default function JobDisplay({ job, index }) {
     <>
       {job && (
         <Link className={styles.jobItem} href={job.job_Url}>
-          <div className={styles.imageIcon}>JB</div>
-
           <div>
             <p>{job.job_title}</p>
             <span>

@@ -96,4 +96,19 @@
   .welcomeBox p {
     font-size: var(--mini-text);
   }
+
+  .jobListing h3{
+   display: none;
+  }
+
+  .statistics{
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .statistics div small{
+    font-size: var(--tiny-text);
+  }
+  .statistics div big{
+    font-size: var(--mini-text);
+  }
 }

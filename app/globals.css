@@ -229,6 +229,19 @@
   font-size: var(--mini-text);
   color: var(--accent-black);
 }
+.lockedComponent{
+  min-height: 85svh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: var(--secondary);
+  border-radius: var(--border-rad-small);
+}
+.lockedComponent p{
+  color: var(--accent-primary);
+}
 
 /* ANIMATIONS */
 @keyframes fadeIn {

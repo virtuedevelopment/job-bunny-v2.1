@@ -21,7 +21,7 @@ export default function WelcomeBox() {
       <div style={{textAlign:"right"}} >
         <p>Starter Plan <FontAwesomeIcon icon={faCrown} /></p>
         <small>
-          <Link href={"/plans"}>Upgrade <FontAwesomeIcon icon={faRocket}/></Link>
+          <Link href={"/plans"}>Upgrade</Link>
         </small>
       </div>
     </div>
