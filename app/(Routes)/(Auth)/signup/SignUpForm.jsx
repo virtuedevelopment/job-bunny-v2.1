@@ -570,9 +570,13 @@ const Jobs = ({ user, next, input }) => {
       } else {
         // Add the new job to the list
         setJobList((prevJobList) => [...prevJobList, job]);
-        e.target.value = ""; // Clear the input field after adding the job
+        setInputValue(""); // Clear the input field after adding the job
+        setShowDropdown(true);
       }
     }
+    e.target.value = "";
+    setAutocompleteSuggestions([]);
+    setShowDropdown(true);
   };
 
   function debounce(func, wait) {
@@ -651,8 +655,8 @@ const Jobs = ({ user, next, input }) => {
             placeholder="Enter a job title and press enter"
             onKeyDown={addJobs}
             onChange={(e) => {
-              setInputValue(e.target.value); 
-              handleJobInputChange(e); 
+              setInputValue(e.target.value);
+              handleJobInputChange(e);
             }}
             value={inputValue}
           />
@@ -775,6 +779,8 @@ const Skills = ({ user, next, back, input }) => {
         // Add the new job to the list
         setSkillList((prevSkillList) => [...prevSkillList, skill]);
         setInputValue(""); // Clear the input field after adding the job
+        setShowDropdown(false);
+        setAutocompleteSuggestions([]);
       }
     }
   };
@@ -982,7 +988,7 @@ export default function SignUpForm() {
     experience: "", //experience list form
     job_types: { job_type: "", job_type_cat: "" },
   });
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
   const [error, setError] = useState(null);
 
   //Helper Functions

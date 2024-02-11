@@ -12,11 +12,11 @@ export async function POST(request){
             method:"POST",
             headers: {'Content-Type': 'application/json', },
             body: JSON.stringify({
-                username, password, firstname, lastname, location, job_titles, experience, skills, job_types
-            })
+                username, password, firstname, lastname, location, job_titles, experience, skills, job_types})
         })
         if (!response.ok) {
             //Handle response errors, e.g, invalid data, user already exists
+            console.log("there was an error")
             const errorData = await response.json();
             console.error('Error from external API:', errorData);
             return NextResponse.json({ message: 'Registration failed', details: errorData })

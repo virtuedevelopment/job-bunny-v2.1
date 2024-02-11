@@ -141,12 +141,12 @@
   height: 20px;
   cursor: pointer;
 }
-.inputBox .icon:hover{
+.inputBox .icon:hover {
   transition: var(--transition-in);
   color: var(--secondary);
 }
 
-.dropdown{
+.dropdown {
   width: 100%;
   height: 250px;
   overflow-y: scroll;
@@ -154,16 +154,20 @@
   border-radius: var(--border-rad-large);
   background-color: var(--accent-white);
   display: grid;
+  grid-template-rows: repeat(4, minmax(50px, auto));
   gap: 0.75rem;
 }
-.dropdown div{
+.dropdown div {
   padding: 0.5rem;
   cursor: pointer;
   border-radius: var(--border-rad-large);
   color: var(--accent-black);
   transition: var(--transition-out);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
-.dropdown div:hover{
+.dropdown div:hover {
   transition: var(--transition-in);
   background-color: var(--accent-primary);
   color: var(--main-white);
@@ -251,7 +255,7 @@
   animation: var(--fadeInFast);
   animation-delay: 0.5s;
 }
-.forgotPasswordPrompt{
+.forgotPasswordPrompt {
   font-size: var(--body-text);
   color: var(--accent-black);
   font-weight: 600;
@@ -261,14 +265,14 @@
   color: var(--primary);
   text-decoration: underline;
 }
-.loginError{
+.loginError {
   text-align: center;
   padding: 0.5rem;
   color: var(--error);
 }
 
 /* Verification Pages */
-.messagePage{
+.messagePage {
   padding: var(--container-padding-large);
   min-height: 70svh;
   display: flex;
@@ -278,25 +282,65 @@
   text-align: center;
   gap: 1rem;
 }
-.messagePage h1{
+.messagePage h1 {
   font-size: var(--heading);
   color: var(--accent-black);
 }
-.messagePage p{
+.messagePage p {
   color: var(--accent-black);
   font-size: var(--subhead);
   line-height: 2;
 }
-.messagePage p a{
+.messagePage p a {
   color: var(--accent-primary);
   text-decoration: underline;
   font-weight: 700;
 }
-.messagePage .icon{
+.messagePage .icon {
   width: 50px;
   height: 50px;
 }
 
+/* ForgotPassword */
+.forgotP {
+  display: flex;
+}
+.forgotP .image {
+  width: 50%;
+  height: 90svh;
+  background-image: url("/loginbackground.svg");
+  background-position: center;
+  background-size: cover;
+}
+.forgotPasswordBox {
+  background-color: var(--main-white);
+  padding: var(--container-padding-large);
+  width: 50%;
+  min-height: 90svh;
+}
+.forgotPasswordBox form {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1.5rem 0;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  opacity: 0;
+
+  animation: var(--fadeInFast);
+  animation-delay: 0.5s;
+}
+.forgotPasswordBox form h2 {
+  font-size: var(--subtitle);
+  color: var(--primary);
+}
+.forgotPasswordBox form p {
+  padding: 0.75rem 0;
+  color: var(--accent-black);
+  line-height: 2;
+}
 
 /* Mobile Version */
 @media (max-width: 750px) {
@@ -347,19 +391,38 @@
   }
 
   /* Verification Pages */
-.messagePage{
-  padding: var(--container-padding-regular);
-}
-.messagePage h1{
-  width: 80%;
-  font-size: var(--subtitle);
-  color: var(--accent-black);
-}
-.messagePage p{
-  color: var(--accent-black);
-  font-size: var(--body-text);
-  line-height: 2;
-}
+  .messagePage {
+    padding: var(--container-padding-regular);
+  }
+  .messagePage h1 {
+    width: 80%;
+    font-size: var(--subtitle);
+    color: var(--accent-black);
+  }
+  .messagePage p {
+    color: var(--accent-black);
+    font-size: var(--body-text);
+    line-height: 2;
+  }
 
+  .forgotP {
+    flex-direction: column-reverse;
+  }
+  .forgotP .image {
+    width: 100%;
+    height: 30svh;
+  }
+  .forgotPasswordBox {
+    padding: var(--container-padding-regular);
+    width: 100%;
+    min-height: 50svh;
+  }
+  .forgotPasswordBox h1 {
+    font-size: 2.25rem;
+  }
+  .forgotPasswordBox form {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
 
 }

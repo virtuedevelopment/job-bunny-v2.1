@@ -71,20 +71,20 @@
   color: var(--secondary);
 }
 
-.filterSpan div{
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
-    padding: 0.5rem 0;
-    gap: 0.5rem;
+.filterSpan div {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  padding: 0.5rem 0;
+  gap: 0.5rem;
 }
-.filterSpan div select{
-    width: 100%;
-    background-color: var(--main-white);
-    border-radius: var(--border-rad-small);
-    color: var(--accent-grey);
-    padding: 0.5rem;
-    font-size: var(--tiny-text);
+.filterSpan div select {
+  width: 100%;
+  background-color: var(--main-white);
+  border-radius: var(--border-rad-small);
+  color: var(--accent-grey);
+  padding: 0.5rem;
+  font-size: var(--tiny-text);
 }
 
 .dropdown {
@@ -94,12 +94,16 @@
   padding: 0.5rem 1rem;
   border-radius: var(--border-rad-large);
   background-color: var(--accent-white);
+  grid-template-rows: repeat(4, minmax(50px, auto));
   display: grid;
   gap: 0.75rem;
 }
 .dropdown div {
   padding: 0.5rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   border-radius: var(--border-rad-large);
   color: var(--accent-black);
   transition: var(--transition-out);
@@ -110,20 +114,22 @@
   color: var(--main-white);
 }
 
-.searchDisplay{
+.searchDisplay {
   width: 100%;
   height: 60svh;
   border-radius: var(--border-rad-small);
   box-shadow: var(--box-shadow);
+  padding: 1rem;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   opacity: 0;
   overflow: hidden;
   overflow-y: scroll;
   animation: var(--fadeInFast);
 }
-.noJobs{
+.noJobs {
   width: 100%;
   height: 60svh;
   display: flex;
@@ -133,15 +139,15 @@
   gap: 0.75rem;
   text-align: center;
 }
-.noJobs p{
+.noJobs p {
   color: var(--primary);
   font-weight: 500;
 }
-.noJobs small{
+.noJobs small {
   font-weight: 200;
   color: var(--accent-black);
 }
-.jobListing{
+.jobListing {
   width: 100%;
   padding: var(--dashboard-padding);
 }

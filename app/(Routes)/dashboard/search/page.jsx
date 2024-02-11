@@ -55,73 +55,128 @@ export default function Search() {
   const [showDropdown, setShowDropdown] = useState(false);
   const count = 30;
 
-  const getResults = async (e) => {
-    setIsLoading(true);
-
-    // Determine if it's a new search.
-    const isNewSearch = previousSearch !== search;
-
-    if (isNewSearch) {
-      setJobs([]);
-      setStart(0); // Reset start for a new search
-    } else {
-      setStart(jobs.length); // For pagination, if needed
+  const checkKey = (e) => {
+    if (e.key === "Enter"){
+      e.preventDefault();
+      getResults()
     }
+  }
 
+  const getResults = async (e) => {
+    setIsLoading(true); // Start loading state
+
+    // Always treat the search as a new search
+    setAutocompleteSuggestions([]);
+    setShowDropdown(false)
+    setJobs([]); // Clear current jobs list to start fresh
+    setStart(0); // Reset pagination start index for the search
+
+    // Check if the search query is empty
     if (search === "") {
       setError("Please Enter a search");
-      setIsLoading(false); // Make sure to stop loading when there's an error
-    } else {
-      // Define request
-      const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/job_search";
-      setStart(jobs.length);
-      // Filter out null values from filters
-      const activeFilters = Object.entries(filters).reduce(
-        (acc, [key, value]) => {
-          if (value !== null && value !== 0 && !Number.isNaN(value)) {
-            // Assuming you want to keep 0 as a valid value
-            acc[key] = value;
-          }
-          return acc;
-        },
-        {}
-      );
+      setIsLoading(false); // Stop loading due to error (empty search query)
+      return; // Early return to prevent further execution
+    }
 
-      const requestBody = {
-        username: data.user.email,
-        jb_token: data.user.jb_token,
-        job_title: search,
-        start: start, // Update to always start from the current jobs length
-        count: count,
-        filters: activeFilters, // Use the filtered filters object
-      };
-      console.log(requestBody);
-      console.log(filters);
+    // Prepare API request
+    const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/job_search";
 
-      // Make response
-      const response = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      });
-
-      // Handle response
-      if (response.status === 200) {
-        const responseData = await response.json(); // Parse JSON response
-        console.log(responseData);
-        if (responseData.data.length > 0) {
-          setJobs([...jobs, ...responseData.data]); // Append new jobs to existing list
-          setPreviousSearch(search);
-          setIsLoading(false);
-        } else {
-          setIsLoading(false); // Stop loading when no data is returned
+    // Filter out null or undefined values from filters
+    const activeFilters = Object.entries(filters).reduce(
+      (acc, [key, value]) => {
+        if (value !== null && value !== undefined && !Number.isNaN(value)) {
+          acc[key] = value;
         }
+        return acc;
+      },
+      {}
+    );
+
+    const requestBody = {
+      username: data.user.email,
+      jb_token: data.user.jb_token,
+      job_title: search,
+      start: 0, // Always start from the beginning for every search
+      count: count,
+      filters: activeFilters,
+    };
+
+    // Execute API request
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    // Process response from the API
+    if (response.status === 200) {
+      const responseData = await response.json();
+      if (responseData.data.length > 0) {
+        // Set jobs to the newly fetched jobs
+        setJobs(responseData.data);
+        setPreviousSearch(search); // Update the previous search state
+        setIsLoading(false); // Stop loading after successfully fetching jobs
       } else {
-        setError("Failed to fetch jobs"); // Set an error message for non-200 responses
-        setIsLoading(false);
+        setIsLoading(false); // Stop loading when no data is returned
       }
+    } else {
+      setError("Failed to fetch jobs"); // Handle non-200 responses
+      setIsLoading(false); // Ensure loading is stopped on error
     }
   };
+
+  const addResults = async (e) => {
+    setIsLoading(true);
+
+    // Prepare API request
+
+    setStart(jobs.length);
+    const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/job_search";
+
+    // Filter out null or undefined values from filters
+    const activeFilters = Object.entries(filters).reduce(
+      (acc, [key, value]) => {
+        if (value !== null && value !== undefined && !Number.isNaN(value)) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {}
+    );
+
+    const requestBody = {
+      username: data.user.email,
+      jb_token: data.user.jb_token,
+      job_title: search,
+      start: start, //set to the length of the current list so it can add more to the list
+      count: count,
+      filters: activeFilters,
+    };
+
+    // Execute API request
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    // Process response from the API
+    if (response.status === 200) {
+      const responseData = await response.json();
+      if (responseData.data.length > 0) {
+        // Append new jobs to the existing list
+        setJobs((prevJobs) => [...prevJobs, ...responseData.data]);
+        setPreviousSearch(search); // Update the previous search state
+        setIsLoading(false); // Stop loading after successfully fetching jobs
+      } else {
+        setIsLoading(false); // Stop loading when no data is returned
+      }
+    } else {
+      setError("There was a problem getting more jobs"); // Handle non-200 responses
+      setIsLoading(false); // Ensure loading is stopped on error
+    }
+  };
+
   const setFilterValue = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
@@ -167,7 +222,7 @@ export default function Search() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            username: 'yourEmail@example.com',
+            username: "yourEmail@example.com",
             title_prefix: input,
           }),
         }
@@ -188,7 +243,6 @@ export default function Search() {
     setShowDropdown(false); // Close the dropdown
     getResults(); // Trigger the search
   };
-  
 
   return (
     <main className={styles.main}>
@@ -199,6 +253,7 @@ export default function Search() {
             <input
               onChange={setSearchValue}
               onBlur={() => getResults()}
+              onKeyDown={checkKey}
               type="text"
               name="search"
               placeholder="Search..."
@@ -311,6 +366,16 @@ export default function Search() {
               ))}
             </div>
           </div>
+        )}
+        {!isLoading && jobs.length > 0 && (
+          <button
+            style={{ display: "block", width:"100%" }}
+            onClick={addResults}
+            type="button"
+            className="primary-button"
+          >
+            More results for &ldquo;{search}&rdquo;
+          </button>
         )}
       </section>
 
