@@ -988,7 +988,7 @@ export default function SignUpForm() {
     experience: "", //experience list form
     job_types: { job_type: "", job_type_cat: "" },
   });
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
   const [error, setError] = useState(null);
 
   //Helper Functions
