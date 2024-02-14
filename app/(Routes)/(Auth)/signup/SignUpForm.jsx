@@ -95,7 +95,7 @@ const UserInformation = ({ user, next, input }) => {
     }
 
     // Validate email
-    if (!user.email.trim() || !/\S+@\S+\.\S+/.test(user.email)) {
+    if (!user.username.trim() || !/\S+@\S+\.\S+/.test(user.username)) {
       setEmailError("Please enter a valid email");
       isValid = false;
     }
@@ -191,8 +191,8 @@ const UserInformation = ({ user, next, input }) => {
         <span>
           <small>Email</small>
           <input
-            name="email"
-            value={user.email}
+            name="username"
+            value={user.username}
             type="email"
             required
             placeholder="johndoe@mail.com"
@@ -966,7 +966,7 @@ const Verification = ({ user }) => {
     <form>
       <h2 style={{ gridColumn: "span 2" }}>Verification email sent.</h2>
       <p style={{ gridColumn: "span 2" }}>
-        We&apos;ve sent a verification email to {user.email}. Please click on
+        We&apos;ve sent a verification email to {user.username}. Please click on
         the link in that email to confirm your account. Can&apos;t find the
         email? It may take a few minutes to arrive, or it could be in your spam
         folder.
@@ -980,7 +980,7 @@ export default function SignUpForm() {
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
-    email: "",
+    username: "",
     password: "",
     location: { city: "", state: "", country: "" },
     job_titles: [], //max 3 entries
@@ -1034,11 +1034,25 @@ export default function SignUpForm() {
       });
 
       const responseData = await response.json();
-      if (responseData.ok) {
-        console.log("User signed up");
+
+      // Since the backend does not directly set a `.ok` property on responseData,
+      // we need to check the HTTP response status or a specific success message.
+      if (response.ok && responseData.message === "success") {
+        console.log("User signed up", responseData);
+        // Proceed with success logic, e.g., redirecting to a success page
+      } else {
+        // Handle application-level errors based on responseData details
+        console.error(
+          "Signup failed:",
+          responseData.message,
+          responseData.details
+        );
+        // Optionally, redirect to an error page or display an error message
+        router.push("/signup/failure");
       }
     } catch (error) {
-      router.push("/singup/failure");
+      console.error("An error occurred during signup:", error);
+      router.push("/signup/failure");
     }
   };
 

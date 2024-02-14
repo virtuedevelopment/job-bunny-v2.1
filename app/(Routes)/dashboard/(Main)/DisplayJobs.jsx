@@ -14,7 +14,7 @@ export default function DisplayJobs() {
 
   const getJobs = async (data) => {
     //define request
-    const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/get_job_list";
+    const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/get_user_jobs";
     const requestBody = {
       username: data.user.email,
       jb_token: data.user.jb_token,
