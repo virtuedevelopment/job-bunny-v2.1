@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import styles from "../dashboard.module.css";
 import Loading from "@/app/loading";
+import Link from "next/link";
 import JobDisplay from "@/app/Components/(Misc)/Object Displays/JobDisplay";
+
+import { faInbox } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function DisplayJobs() {
   const { data, status } = useSession();
@@ -29,10 +33,12 @@ export default function DisplayJobs() {
     });
 
     //handle response
-    if (response.status === 200) {
-      return response.json();
-    } else {
-      throw new Error(`HTTP ERROR! STATUS: ${response.status}`);
+    const resdata = await response.json();
+    console.log(resdata);
+
+    if (resdata.status !== 200) {
+      console.log("There was an error: ", resdata);
+      setIsLoading(false);
     }
   };
 
@@ -57,12 +63,17 @@ export default function DisplayJobs() {
 
   return (
     <section className={styles.DisplayJobs}>
-      {isLoading && <Loading />}{" "}
+      {isLoading && <Loading />}
       {/* Show loading spinner while fetching data */}
-      {!isLoading && jobs.length === 0 && <p>Currently no jobs</p>}{" "}
+      {!isLoading && jobs.length === 0 && 
+      <div className={styles.emptyList} >
+        <FontAwesomeIcon icon={faInbox} />
+        <h2>Sorry, currently no jobs fit your description.</h2>
+        <p>Please try using our <Link href={'/dashboard/search'}>Search Engine</Link> to find more positions.</p>  
+      </div>}
       {/* Show message when not loading and no jobs */}
       {jobs.length > 0 && (
-        <div className={styles.jobListing} >
+        <div className={styles.jobListing}>
           <h3>Recommended jobs from our premium search engine:</h3>
           <div className="job-1x-display">
             {jobs.map((job, index) => (
