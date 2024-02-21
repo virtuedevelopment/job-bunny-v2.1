@@ -17,7 +17,6 @@ export default function DisplayJobs() {
   const [isLoading, setIsLoading] = useState(true);
 
   const getJobs = async (data) => {
-    //define request
     const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/get_user_jobs";
     const requestBody = {
       username: data.user.email,
@@ -25,36 +24,35 @@ export default function DisplayJobs() {
       start: start,
       count: count,
     };
-    //make request
     const response = await fetch(apiEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     });
-
-    //handle response
     const resdata = await response.json();
-    console.log(resdata);
 
     if (resdata.status !== 200) {
       console.log("There was an error: ", resdata);
-      setIsLoading(false);
+      // Potentially throw an error or return a status code to indicate failure
+      return { error: true, message: resdata.message };
     }
+    // Assuming `resdata.data` contains the jobs array
+    return { error: false, data: resdata.data };
   };
 
   useEffect(() => {
     const fetchData = async () => {
       if (data && data.user) {
+        setIsLoading(true); // Ensure loading is true at the start of fetch
         try {
           const response = await getJobs(data);
-          if (response.data.length < 1) {
-            setIsLoading(false);
-          } else {
+          if (!response.error && response.data.length > 0) {
             setJobs(response.data);
-            setIsLoading(false);
           }
+          setIsLoading(false); // Set loading to false after fetching data
         } catch (error) {
           console.error("Failed to fetch jobs:", error);
+          setIsLoading(false); // Ensure loading is set to false on error as well
         }
       }
     };
@@ -65,12 +63,17 @@ export default function DisplayJobs() {
     <section className={styles.DisplayJobs}>
       {isLoading && <Loading />}
       {/* Show loading spinner while fetching data */}
-      {!isLoading && jobs.length === 0 && 
-      <div className={styles.emptyList} >
-        <FontAwesomeIcon icon={faInbox} />
-        <h2>Sorry, currently no jobs fit your description.</h2>
-        <p>Please try using our <Link href={'/dashboard/search'}>Search Engine</Link> to find more positions.</p>  
-      </div>}
+      {!isLoading && jobs.length === 0 && (
+        <div className={styles.emptyList}>
+          <FontAwesomeIcon icon={faInbox} />
+          <h2>Sorry, currently no jobs fit your description.</h2>
+          <p>
+            Please try using our{" "}
+            <Link href={"/dashboard/search"}>Search Engine</Link> to find more
+            positions.
+          </p>
+        </div>
+      )}
       {/* Show message when not loading and no jobs */}
       {jobs.length > 0 && (
         <div className={styles.jobListing}>

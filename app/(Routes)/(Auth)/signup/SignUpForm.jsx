@@ -1035,9 +1035,9 @@ export default function SignUpForm() {
 
       const responseData = await response.json();
 
-      // Since the backend does not directly set a `.ok` property on responseData,
-      // we need to check the HTTP response status or a specific success message.
-      if (response.ok && responseData.message === "success") {
+      // Adjust the success condition to match the actual API response
+      if (response.ok) {
+        // This checks for HTTP 200-299
         console.log("User signed up", responseData);
         // Proceed with success logic, e.g., redirecting to a success page
       } else {
@@ -1047,7 +1047,6 @@ export default function SignUpForm() {
           responseData.message,
           responseData.details
         );
-        // Optionally, redirect to an error page or display an error message
         router.push("/signup/failure");
       }
     } catch (error) {
