@@ -6,7 +6,7 @@ export async function POST(request) {
         //initialize response
         console.log("Initializing response...")
         const body = await request.json();
-        const registerEndpoint = 'https://jobbunny.co/jobbunnyapi/v1/register';
+        const registerEndpoint = 'https://167.235.249.247/jobbunnyapi/v1/register';
         const response = await fetch(registerEndpoint, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },

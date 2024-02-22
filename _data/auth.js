@@ -12,7 +12,7 @@ export const authOptions = {
           },
           async authorize(credentials, req) {
             try {
-                const response = await fetch('https://jobbunny.co/jobbunnyapi/v1/login', {
+                const response = await fetch('https://167.235.249.247/jobbunnyapi/v1/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ export const authOptions = {
         async signOut(signOutOptions){
             const { token } = signOutOptions
 
-            const logoutResponse = await fetch('https://jobbunny.co/jobbunnyapi/v1/logout',{
+            const logoutResponse = await fetch('https://167.235.249.247/jobbunnyapi/v1/logout',{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',
