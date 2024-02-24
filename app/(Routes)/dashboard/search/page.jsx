@@ -56,18 +56,18 @@ export default function Search() {
   const count = 30;
 
   const checkKey = (e) => {
-    if (e.key === "Enter"){
+    if (e.key === "Enter") {
       e.preventDefault();
-      getResults()
+      getResults();
     }
-  }
+  };
 
   const getResults = async (e) => {
     setIsLoading(true); // Start loading state
 
     // Always treat the search as a new search
     setAutocompleteSuggestions([]);
-    setShowDropdown(false)
+    setShowDropdown(false);
     setJobs([]); // Clear current jobs list to start fresh
     setStart(0); // Reset pagination start index for the search
 
@@ -79,7 +79,7 @@ export default function Search() {
     }
 
     // Prepare API request
-    const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/job_search";
+    const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/job_search";
 
     // Filter out null or undefined values from filters
     const activeFilters = Object.entries(filters).reduce(
@@ -131,7 +131,7 @@ export default function Search() {
     // Prepare API request
 
     setStart(jobs.length);
-    const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/job_search";
+    const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/job_search";
 
     // Filter out null or undefined values from filters
     const activeFilters = Object.entries(filters).reduce(
@@ -217,7 +217,7 @@ export default function Search() {
   const debouncedApiCall = debounce(async (input) => {
     try {
       const response = await fetch(
-        "https://jobbunny.co/jobbunnyapi/v1/title_autocomplete",
+        "https://jobbunnyapi.com/jobbunnyapi/v1/title_autocomplete",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -238,10 +238,12 @@ export default function Search() {
       console.error("Error fetching job title suggestions:", error);
     }
   }, 30); // Adjust debounce time as needed
+
   const selectSuggestion = (suggestion) => {
-    setSearch(suggestion); // Set the search state to the selected suggestion
+    console.log(search)
+    setSearch(suggestion); // Update the search state
     setShowDropdown(false); // Close the dropdown
-    getResults(); // Trigger the search
+    getResults(); // Optionally trigger the search immediately
   };
 
   return (
@@ -369,7 +371,7 @@ export default function Search() {
         )}
         {!isLoading && jobs.length > 0 && (
           <button
-            style={{ display: "block", width:"100%" }}
+            style={{ display: "block", width: "100%" }}
             onClick={addResults}
             type="button"
             className="primary-button"

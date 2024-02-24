@@ -594,7 +594,7 @@ const Jobs = ({ user, next, input }) => {
   const debouncedApiCall = debounce(async (input) => {
     try {
       const response = await fetch(
-        "https://jobbunny.co/jobbunnyapi/v1/title_autocomplete",
+        "https://jobbunnyapi.com/jobbunnyapi/v1/title_autocomplete",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -830,7 +830,7 @@ const Skills = ({ user, next, back, input }) => {
   const debouncedApiCall = debounce(async (input) => {
     try {
       const response = await fetch(
-        "https://jobbunny.co/jobbunnyapi/v1/skill_autocomplete",
+        "https://jobbunnyapi.com/jobbunnyapi/v1/skill_autocomplete",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

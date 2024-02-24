@@ -1,6 +1,6 @@
 //imports for configurations
 import { } from '@fortawesome/free-brands-svg-icons'
-import { faHouse, faTag, faEnvelope, faUserPlus, faAddressCard, faMagnifyingGlass, faRepeat, faBell, faLocationCrosshairs, faSliders, faGauge, faCheckCircle, faEye, faGear } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faTag, faEnvelope, faUserPlus, faAddressCard, faMagnifyingGlass, faRepeat, faBell, faLocationCrosshairs, faSliders, faGauge, faCheckCircle, faEye, faGear, faClock } from '@fortawesome/free-solid-svg-icons';
 //define configurations
 const configurations = {
     title: 'Job Bunny © ',
@@ -119,7 +119,8 @@ const configurations = {
         },
         {
             name: 'Company Alerts',
-            icon: faBell
+            icon: faBell,
+            description: 'Get instant alerts on new openings at companies you want to work at.'
         },
         {
             name: 'Application Tracking',
@@ -128,6 +129,10 @@ const configurations = {
         {
             name: 'Unique Filters',
             icon: faSliders
+        },
+        {
+            name: 'Real Time Updates',
+            icon: faClock 
         }
     ]
 }
