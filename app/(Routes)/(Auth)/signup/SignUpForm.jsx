@@ -1032,21 +1032,16 @@ export default function SignUpForm() {
         },
         body: JSON.stringify(user),
       });
-
+  
       const responseData = await response.json();
-
-      // Adjust the success condition to match the actual API response
-      if (response.ok) {
-        // This checks for HTTP 200-299
+  
+      // Check for HTTP success and specific application-level success message
+      if (response.ok && responseData.status === 201 && responseData.message === "User Creation Successful. Please check your email for confirmation link.") {
         console.log("User signed up", responseData);
-        // Proceed with success logic, e.g., redirecting to a success page
+        // Proceed with success logic, such as redirecting to a confirmation or success page
       } else {
-        // Handle application-level errors based on responseData details
-        console.error(
-          "Signup failed:",
-          responseData.message,
-          responseData.details
-        );
+        // If the condition for success is not met, handle as error
+        console.error("Signup failed:", responseData.message, responseData);
         router.push("/signup/failure");
       }
     } catch (error) {
@@ -1054,6 +1049,7 @@ export default function SignUpForm() {
       router.push("/signup/failure");
     }
   };
+  
 
   return (
     <div className={styles.signUpFormBox}>
