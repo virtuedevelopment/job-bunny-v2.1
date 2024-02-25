@@ -11,10 +11,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  opacity: 0;
+  /* opacity: 0; */
 
-  animation: var(--fadeInFast);
-  animation-delay: 0.5s;
+  /* animation: var(--fadeInFast);
+  animation-delay: 0.5s; */
 }
 .welcomeBox p {
   font-weight: 500;
@@ -37,10 +37,10 @@
   -webkit-box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
   width: 100%;
-  opacity: 0;
+  /* opacity: 0; */
 
-  animation: var(--fadeInFast);
-  animation-delay: 1.25s;
+  /* animation: var(--fadeInFast);
+  animation-delay: 1.25s; */
   height: 55svh;
   overflow-y: scroll;
 }
@@ -85,10 +85,10 @@
   -webkit-box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
   width: 100%;
-  opacity: 0;
+  /* opacity: 0; */
 
-  animation: var(--fadeInFast);
-  animation-delay: 0.75s;
+  /* animation: var(--fadeInFast);
+  animation-delay: 0.75s; */
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
