@@ -35,21 +35,21 @@
 .heroInteraction h1 {
   text-align: left;
   width: 90%;
-  opacity: 0;
+  /* opacity: 0; */
   font-size: var(--title);
   color: var(--main-black);
-  animation: var(--fadeInFast);
+  /* animation: var(--fadeInFast); */
 }
 .heroInteraction h1 span {
   color: var(--accent-primary);
 }
 .popularSearches {
-  opacity: 0;
+  /* opacity: 0; */
   margin-inline: auto;
   text-align: center;
   padding: var(--container-padding-regular);
-  animation: var(--fadeInFast);
-  animation-delay: 0.5s;
+  /* animation: var(--fadeInFast);
+  animation-delay: 0.5s; */
 }
 .popularSearches .item {
   width: 100%;
@@ -79,12 +79,12 @@
   height: 100%;
   position: absolute;
   bottom: 0;
-  opacity: 0;
+  /* opacity: 0; */
   left: 0;
   right: 0;
   margin-inline: auto;
-  animation: var(--fadeInFast);
-  animation-delay: 1s;
+  /* animation: var(--fadeInFast);
+  animation-delay: 1s; */
 }
 
 /* Job Boards Section */

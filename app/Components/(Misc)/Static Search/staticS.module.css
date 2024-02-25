@@ -1,12 +1,12 @@
 .inputbox{
-    opacity: 0;
+    /* opacity: 0; */
     width: 90%;
     display: flex;
     border-radius: var(--border-rad-small);
     position: relative;
     border:  solid 1px var(--accent-black);
-    animation: var(--fadeInFast);
-    animation-delay: 0.5s;
+    /* animation: var(--fadeInFast);
+    animation-delay: 0.5s; */
 }
 .inputbox input{
     font-family:'Outfit', sans-serif;
