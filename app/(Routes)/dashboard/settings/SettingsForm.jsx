@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Skills from "./Skills";
+import Jobs from "./Jobs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSession } from "next-auth/react";
 import {
@@ -35,11 +37,8 @@ const job_type = [
 ];
 const position = ["On-site", "Hybrid", "Remote"];
 
-
 // first get user session x
 // use the session to get the users information && set the vaules to the user information x
-
-
 
 //fetch APIs
 const fetchCountries = async () => {
@@ -144,19 +143,37 @@ export default function SettingsForm() {
   const [cities, setCities] = useState([]);
 
   //Utility Functions
-  const handleInputChange = (fieldName, value) => {};
-  const onSubmit = async (e) => {};
+  const handleSkillsUpdate = (newSkills) => {
+    setUpdatedUser((prevUser) => ({
+      ...prevUser,
+      skills: newSkills,
+    }));
+  };
+  const handleJobTitlesUpdate = (newJobTitles) => {
+    setUpdatedUser((prevUser) => ({
+      ...prevUser,
+      job_titles: newJobTitles,
+    }));
+  };
 
-  //Use effects
+
+  const handleInputChange = (fieldName, value) => {}; //appends new state to updated user
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log(updatedUser);
+  }; // submits change to API endpoint
+
+
+
 
   //get user settings ->
   useEffect(() => {
-    const fetchSettings = async () =>{
+    const fetchSettings = async () => {
       if (data && data.user) {
         const settings = await getSettings(data);
-        
-        if(settings && settings.data){
-          setUser(settings.data)
+
+        if (settings && settings.data) {
+          setUser(settings.data);
         }
       }
     };
@@ -174,8 +191,7 @@ export default function SettingsForm() {
             <input
               name="firstname"
               type="text"
-              required
-              placeholder={user? (user.firstname):("")}
+              placeholder={user ? user.firstname : ""}
               onChange={handleInputChange}
             />
             <small className="error"></small>
@@ -188,8 +204,7 @@ export default function SettingsForm() {
             <input
               name="lastname"
               type="text"
-              required
-              placeholder={user? (user.lastname):("")}
+              placeholder={user ? user.lastname : ""}
               onChange={handleInputChange}
             />
             <small className="error"></small>
@@ -201,12 +216,8 @@ export default function SettingsForm() {
         <div className={styles.inputBox} style={{ gridColumn: "1 / -1" }}>
           <span>
             <small>Country</small>
-            <select
-              name="country"
-              onChange={handleInputChange}
-              required
-            >
-              <option value={null}>{user? (user.country):("")}</option>
+            <select name="country" onChange={handleInputChange} >
+              <option value={null}>{user ? user.country : ""}</option>
               {countries.map((country) => (
                 <option key={country.name} value={country.name}>
                   {country.name}
@@ -220,12 +231,8 @@ export default function SettingsForm() {
         <div className={styles.inputBox} style={{ gridColumn: "1 / -1" }}>
           <span>
             <small>State/Province</small>
-            <select
-              name="state"
-              onChange={handleInputChange}
-              required
-            >
-              <option value={null}>{user? (user.state):("")}</option>
+            <select name="state" onChange={handleInputChange} >
+              <option value={null}>{user ? user.state : ""}</option>
               {states.map((state, index) => (
                 <option key={index} value={state.name}>
                   {state.name}
@@ -239,12 +246,8 @@ export default function SettingsForm() {
         <div className={styles.inputBox} style={{ gridColumn: "1 / -1" }}>
           <span>
             <small>City</small>
-            <select
-              name="city"
-              onChange={handleInputChange}
-              required
-            >
-              <option value={null}>{user? (user.city):("")}</option>
+            <select name="city" onChange={handleInputChange} >
+              <option value={null}>{user ? user.city : ""}</option>
               {cities.map((city, index) => (
                 <option key={index} value={city}>
                   {city}
@@ -257,29 +260,12 @@ export default function SettingsForm() {
         </div>
 
         <h3 style={{ gridColumn: "1 / -1" }}>Job Experience:</h3>
-        <div style={{ gridColumn: "1 / -1" }} className={styles.inputBox}>
-          <span>
-            <small>Job Titles (3 Maximum) </small>
-            <input
-              maxLength="50"
-              name="jobs"
-              type="text"
-              required
-              placeholder="Enter a job title and press enter"
-            />
-            <small className="error"></small>
-          </span>
-          <FontAwesomeIcon icon={faClipboardUser} />
-        </div>
+        {user.job_titles && (<Jobs userJobs={user.job_titles} onUpdate={handleJobTitlesUpdate}/>)}
 
         <div style={{ gridColumn: "1 / -1" }} className={styles.inputBox}>
           <span>
             <small>Job Experience</small>
-            <select
-              name="experience"
-              onChange={handleInputChange}
-              required
-            >
+            <select name="experience" onChange={handleInputChange} >
               <option value={null}>Select Experience Level</option>
               {experience.map((exp) => (
                 <option key={exp} value={exp}>
@@ -295,11 +281,7 @@ export default function SettingsForm() {
         <div className={styles.inputBox}>
           <span>
             <small>Contract Type</small>
-            <select
-              name="job_type"
-              onChange={handleInputChange}
-              required
-            >
+            <select name="job_type" onChange={handleInputChange} >
               <option value={null}>Select Contract Type</option>
               {job_type.map((exp) => (
                 <option key={exp} value={exp}>
@@ -315,10 +297,7 @@ export default function SettingsForm() {
         <div className={styles.inputBox}>
           <span>
             <small>Position Type</small>
-            <select
-              name="job_type_cat"
-              onChange={handleInputChange}
-            >
+            <select name="job_type_cat" onChange={handleInputChange}>
               <option value={null}>Select Position Type</option>
               {position.map((exp) => (
                 <option key={exp} value={exp}>
@@ -332,24 +311,9 @@ export default function SettingsForm() {
         </div>
 
         <h3 style={{ gridColumn: "1 / -1" }}>Additonal Information:</h3>
+        {user.skills && <Skills userSkills={user.skills} onUpdate={handleSkillsUpdate} />}
 
-        <div style={{ gridColumn: "1 / -1" }} className={styles.inputBox}>
-          <span>
-            <small>Skills Titles (20 Maximum) </small>
-            <input
-              name="skills"
-              className={styles.autocompleteInput}
-              type="text"
-              required
-              placeholder={"Enter a skill and press enter"}
-              maxLength="25"
-            />
-            <small className="error"></small>
-          </span>
-          <FontAwesomeIcon icon={faEnvelope} />
-        </div>
-
-        <button style={{ gridColumn: "1 /-1" }} className="primary-button">
+        <button onClick={onSubmit} style={{ gridColumn: "1 /-1" }} className="primary-button">
           Save Changes
         </button>
       </form>
