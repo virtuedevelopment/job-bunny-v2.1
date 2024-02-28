@@ -989,7 +989,7 @@ export default function SignUpForm() {
     job_types: { job_type: "", job_type_cat: "" },
   });
   const [step, setStep] = useState(1);
-  const [error, setError] = useState(null);
+
 
   //Helper Functions
   const nextStep = () => setStep(step + 1);

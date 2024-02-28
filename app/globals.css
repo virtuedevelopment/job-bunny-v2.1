@@ -207,7 +207,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 2;
   border-radius: var(--border-rad-small);
   background: rgba(56, 67, 72, 0.35);
 

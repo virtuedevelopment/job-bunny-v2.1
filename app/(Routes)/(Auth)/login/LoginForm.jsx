@@ -47,7 +47,6 @@ export default function LoginForm() {
           await getSession();
           router.push('/dashboard')
           window.location.href = window.location.origin + '/dashboard';
-          setIsLoading(false); // Stop loading after the delay
         }
       }
       // If there are errors, the function simply ends here after stopping the loading state

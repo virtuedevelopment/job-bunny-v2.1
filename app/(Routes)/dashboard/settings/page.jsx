@@ -4,7 +4,7 @@ import SettingsForm from './SettingsForm'
 
 export default function Settings() {
   return (
-    <main>
+    <main className={styles.main} >
         <SettingsForm/>
     </main>
   )
