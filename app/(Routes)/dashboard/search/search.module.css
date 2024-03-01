@@ -74,17 +74,18 @@
 .filterSpan div {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
   padding: 0.5rem 0;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 .filterSpan div select {
   width: 100%;
   background-color: var(--main-white);
-  border-radius: var(--border-rad-small);
-  color: var(--accent-grey);
-  padding: 0.5rem;
+  border-radius: var(--border-rad-large);
+  color: var(--primary);
+  padding: 0.5rem 0.75rem;
   font-size: var(--tiny-text);
+  font-weight: 300;
 }
 
 .dropdown {

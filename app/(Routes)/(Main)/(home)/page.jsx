@@ -4,11 +4,7 @@ import styles from "./home.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import StaticSearch from "@/app/Components/(Misc)/Static Search/StaticSearch";
-import {
-  faUser,
-  faGear,
-  faRepeat
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faGear, faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const exampleUser = {
@@ -34,9 +30,7 @@ const steps = [
 export default function Home() {
   return (
     <main>
-
       <section className={styles.hero}>
-        
         <div className={styles.heroInteraction}>
           <div className={styles.heroPrompt}>
             <Link
@@ -119,8 +113,13 @@ export default function Home() {
 
       <section className={styles.features}>
         <div className={styles.displays}>
-          <Image src={'/jobApply.svg'} width={450} height={450} alt="Job Apply"  />
-          <Image src={'/joblist.svg'} width={450} height={450} alt="Job List"  />
+          <Image
+            src={"/jobApply.svg"}
+            width={450}
+            height={450}
+            alt="Job Apply"
+          />
+          <Image src={"/joblist.svg"} width={450} height={450} alt="Job List" />
         </div>
         <h3>
           Get on step closer to your <span>future job</span>
@@ -128,16 +127,12 @@ export default function Home() {
         <div className={styles.featuresList}>
           {configurations.features.map((feature) => (
             <span key={feature.name}>
-               <FontAwesomeIcon
-                className={styles.icon}
-                icon={feature.icon}
-              />
+              <FontAwesomeIcon className={styles.icon} icon={feature.icon} />
               <small>{feature.name}</small>
             </span>
           ))}
         </div>
       </section>
-
     </main>
   );
 }

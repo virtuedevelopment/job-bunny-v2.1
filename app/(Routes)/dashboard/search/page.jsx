@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Loading from "@/app/loading";
 import styles from "./search.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,6 +37,7 @@ const salary = [
 export default function Search() {
   const { data, status } = useSession();
   const [jobs, setJobs] = useState([]); //job list
+  const [countries, setCountries] = useState([]);
   const [filters, setFilters] = useState({
     job_site: null,
     experience: null,
@@ -44,7 +45,8 @@ export default function Search() {
     job_type_cat: null,
     visa_sponsored: null,
     date_range: null,
-    min_salary: 0,
+    min_salary: null,
+    country: null,
   });
   const [search, setSearch] = useState(""); //search value
   const [previousSearch, setPreviousSearch] = useState(""); // for research and adding more to the list
@@ -55,13 +57,30 @@ export default function Search() {
   const [showDropdown, setShowDropdown] = useState(false);
   const count = 30;
 
+  const fetchCountries = async () => {
+    try {
+      const response = await fetch(
+        "https://countriesnow.space/api/v0.1/countries/capital"
+      );
+      const data = await response.json();
+      if (data.error === false) {
+        setCountries(data.data);
+      } else {
+        // Handle error here
+        console.error("Error fetching countries:", data.msg);
+      }
+    } catch (error) {
+      // Handle fetch error here
+      console.error("Fetch error:", error);
+    }
+  };
+
   const checkKey = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       getResults();
     }
   };
-
   const getResults = async (e) => {
     setIsLoading(true); // Start loading state
 
@@ -124,7 +143,6 @@ export default function Search() {
       setIsLoading(false); // Ensure loading is stopped on error
     }
   };
-
   const addResults = async (e) => {
     setIsLoading(true);
 
@@ -240,11 +258,19 @@ export default function Search() {
   }, 30); // Adjust debounce time as needed
 
   const selectSuggestion = (suggestion) => {
-    console.log(search)
+    console.log(search);
     setSearch(suggestion); // Update the search state
     setShowDropdown(false); // Close the dropdown
     getResults(); // Optionally trigger the search immediately
   };
+
+  useEffect(() => {
+    const getCountries = async () => {
+      await fetchCountries();
+    };
+
+    getCountries();
+  }, []);
 
   return (
     <main className={styles.main}>
@@ -326,6 +352,16 @@ export default function Search() {
                   </option>
                 ))}
               </select>
+
+              <select name="country" onChange={setFilterValue}>
+                <option value={0}>Select Preferred Country</option>
+                {countries.map((country) => (
+                  <option key={country.name} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+
             </div>
           </span>
         </div>

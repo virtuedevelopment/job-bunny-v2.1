@@ -1,57 +1,49 @@
-.inputbox{
-    /* opacity: 0; */
-    width: 90%;
-    display: flex;
-    border-radius: var(--border-rad-small);
-    position: relative;
-    border:  solid 1px var(--accent-black);
-    /* animation: var(--fadeInFast);
+.inputbox {
+  /* opacity: 0; */
+  width: 90%;
+  display: flex;
+  border-radius: var(--border-rad-large);
+  background-color: var(--secondary);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* animation: var(--fadeInFast);
     animation-delay: 0.5s; */
 }
-.inputbox input{
-    font-family:'Outfit', sans-serif;
-    font-weight: 500;
-    padding: var(--button-padding-small);
-    border-radius: var(--border-rad-small);
-    color: var(--accent-black);
+.inputbox input {
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  padding: var(--button-padding-small);
+  border-radius: var(--border-rad-small);
+  color: var(--accent-black);
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.inputbox button {
+  padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  color: var(--accent-black);
+  transition: var(--tranisition-out);
+  cursor: pointer;
+}
+.inputbox button:hover {
+  transition: var(--tranisition-in);
+  color: var(--primary);
+}
+
+@media (max-width: 1200px) {
+  .inputbox {
     width: 100%;
-    border: none;
-    background-color: transparent;
-
-}
-.inputbox input::placeholder{
-    color: var(--accent-black);
-}
-.inputbox input:focus{
-    outline: none;
-}
-.inputbox button{
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin-block: auto;
-    width: 35px;
-    height: 35px;
-    background-color: transparent;
-    border: none;
-    color: var(--accent-black);
-    cursor: pointer;
-}
-.inputbox button .icon{
-    width: 15px;
-    height: 15px;
+  }
 }
 
-@media (max-width:750px) {
-    .inputbox{
-        border-color: var(--accent-black);
-        width: 100%;
-    }
-    .inputbox input::placeholder{
-        color: var(--accent-black);
-    }
-    .inputbox button{
-        color: var(--accent-black);
-    }
+@media (max-width: 750px) {
+  .inputbox {
+    width: 100%;
+  }
 }
