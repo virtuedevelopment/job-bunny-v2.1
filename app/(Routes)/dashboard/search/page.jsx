@@ -74,13 +74,6 @@ export default function Search() {
       console.error("Fetch error:", error);
     }
   };
-
-  const checkKey = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      getResults();
-    }
-  };
   const getResults = async (e) => {
     setIsLoading(true); // Start loading state
 
@@ -194,6 +187,12 @@ export default function Search() {
       setIsLoading(false); // Ensure loading is stopped on error
     }
   };
+  const checkKey = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      getResults();
+    }
+  };
 
   const setFilterValue = (e) => {
     const { name, value } = e.target;
@@ -257,8 +256,7 @@ export default function Search() {
     }
   }, 30); // Adjust debounce time as needed
 
-  const selectSuggestion = (suggestion) => {
-    console.log(search);
+  const selectSuggestion = (suggestion, e) => {
     setSearch(suggestion); // Update the search state
     setShowDropdown(false); // Close the dropdown
     getResults(); // Optionally trigger the search immediately
@@ -280,12 +278,11 @@ export default function Search() {
           <span>
             <input
               onChange={setSearchValue}
-              onBlur={() => getResults()}
-              onKeyDown={checkKey}
               type="text"
               name="search"
               placeholder="Search..."
               value={search}
+              onKeyDown={checkKey}
             />
             <small className="error">{error && error}</small>
           </span>
@@ -361,7 +358,6 @@ export default function Search() {
                   </option>
                 ))}
               </select>
-
             </div>
           </span>
         </div>
@@ -370,9 +366,13 @@ export default function Search() {
         {showDropdown && autocompleteSuggestions.length > 0 && (
           <div className={styles.dropdown}>
             {autocompleteSuggestions.map((suggestion, index) => (
-              <div key={index} onClick={() => selectSuggestion(suggestion)}>
+              <button
+                key={index}
+                type="button"
+                onClick={(e) => selectSuggestion(suggestion, e)}
+              >
                 {suggestion}
-              </div>
+              </button>
             ))}
           </div>
         )}

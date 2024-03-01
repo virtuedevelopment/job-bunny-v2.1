@@ -95,21 +95,27 @@
   padding: 0.5rem 1rem;
   border-radius: var(--border-rad-large);
   background-color: var(--accent-white);
-  grid-template-rows: repeat(4, minmax(50px, auto));
-  display: grid;
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.5rem;
 }
-.dropdown div {
-  padding: 0.5rem;
+.dropdown button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  border: none;
+  cursor: pointer;
   border-radius: var(--border-rad-large);
   color: var(--accent-black);
   transition: var(--transition-out);
 }
-.dropdown div:hover {
+.dropdown button:hover {
   transition: var(--transition-in);
   background-color: var(--accent-primary);
   color: var(--main-white);
