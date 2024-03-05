@@ -1,164 +1,154 @@
-.focus {
-  background: linear-gradient(
-    var(--primary),
-    35%,
-    var(--main-white) 65%,
-    var(--main-white)
-  );
-  padding: var(--container-padding-large);
+.main {
   background-color: var(--main-white);
+  min-height: 500px;
+}
+.hero {
+  padding: var(--container-padding-large);
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.55)),
+    url("/ashley.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   min-height: 75svh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-.focus div {
-  width: 100%;
-  height: 75svh;
+
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
-.focus div h2 {
-  font-size: 5rem;
-  color: var(--main-black);
-  text-align: left;
+.hero h1 {
+  font-size: var(--mega-text);
+  color: var(--primary);
+  width: 65%;
 }
-.focus div p {
-  width: 100%;
-  color: var(--main-black);
-  font-size: var(--subhead);
-  margin-top: 1rem;
+.hero p {
+  margin-top: 2rem;
   font-weight: 600;
-  text-align: left;
+  color: var(--main-white);
+  font-size: var(--subtitle);
+}
+.list {
+  margin-block: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.list small {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  font-size: var(--body-text);
+  color: var(--primary);
+  font-weight: 600;
+}
+.list svg {
+  width: 15px;
+  height: 15px;
 }
 
 .auto {
+  background: linear-gradient(
+    0deg,
+    rgba(157, 172, 255, 1) 0%,
+    rgba(252, 253, 253, 1) 70%
+  );
   padding: var(--container-padding-large);
-  background-color: var(--main-white);
-  min-height: 75svh;
+  min-height: 50svh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 .auto div {
   width: 100%;
-  height: 75svh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 .auto div h2 {
-  font-size: 4rem;
-  color: var(--main-black);
-  text-align: left;
+  font-size: var(--mega-text);
+  color: var(--accent-black);
 }
 .auto div p {
-  width: 100%;
-  color: var(--main-black);
+  margin-block: 1.5rem;
+  color: var(--accent-primary);
   font-size: var(--subhead);
-  margin-top: 1rem;
   font-weight: 600;
-  text-align: left;
 }
 .auto div img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
+}
+.auto div svg {
+  width: 35px;
+  height: 35px;
+  color: var(--accent-primary);
+  margin-bottom: 1.5rem;
 }
 
-.advantages {
-  background-color: var(--main-white);
+.advantage{
   padding: var(--container-padding-large);
-  min-height: 75svh;
+  min-height: 50svh;
+}
+.advantage .advantageList{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-.advantages h3 {
-  font-size: var(--heading);
-  color: var(--main-black);
-}
-.featuresList {
-  padding: 1.5rem 2.5rem;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
-}
-
-.card {
-  width: 100%;
-  padding: var(--container-padding-large);
-  background-color: var(--accent-white);
-  border-top: solid 15px var(--primary);
-  min-height: 275px;
-}
-.card big {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
   gap: 1rem;
-  font-weight: 600;
-  font-size: var(--subtitle);
-  color: var(--main-black);
-  margin-bottom: 1.75rem;
 }
-.card p {
-  font-size: var(--subhead);
-  color: var(--main-black);
-  margin-bottom: 0.75rem;
-}
-.card svg {
-  width: 20px;
-  height: 20px;
+.advantage h2{
+  width: 100%;
+  text-align: center;
+  font-size: var(--heading);
+  color: var(--accent-black);
+  margin-block: 1.5rem;
 }
 
 @media (max-width: 1200px) {
-  .featuresList {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1rem;
+  .hero h1 {
+    font-size: var(--heading);
   }
-  .advantages {
+  .auto div h2 {
+    font-size: var(--heading);
+  }
+}
+
+@media (max-width: 750px) {
+  .hero {
+    padding: var(--container-padding-regular);
+  }
+  .hero h1 {
+    width: 100%;
+  }
+  .hero p {
+    font-size: var(--subhead);
+  }
+
+  .auto {
     padding: var(--container-padding-regular);
   }
   .auto {
-    padding: var(--container-padding-regular);
     grid-template-columns: 1fr;
   }
   .auto div {
-    height: 40svh;
-  }
-  .auto div h2 {
-    font-size: 2.75rem;
     text-align: center;
+    margin-top: 1.5rem;
   }
   .auto div p {
     width: 100%;
     text-align: center;
   }
-}
+  .auto div svg {
+    display: none;
+  }
 
-@media (max-width: 750px) {
-  .advantages h3 {
-    font-size: var(--subtitle);
-  }
-  .card {
+  .advantages{
     padding: var(--container-padding-regular);
-    min-height: 175px;
   }
-  .card big {
-    font-size: var(--body-text);
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  .card p {
-    font-size: var(--subhead);
-    color: var(--main-black);
-    text-align: center;
-    margin-bottom: 0.75rem;
+  .advantage h2{
+    font-size: var(--subtitle);
   }
 }

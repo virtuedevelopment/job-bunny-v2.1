@@ -2,66 +2,63 @@ import React from "react";
 import styles from "./features.module.css";
 import configurations from "@/_data/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faCopy } from "@fortawesome/free-solid-svg-icons";
+import FeatureCard from "@/app/Components/(Misc)/Cards/FeatureCard";
 import Image from "next/image";
 import Link from "next/link";
 
+const list = [
+  "View Jobs from multiple platforms",
+  "Automatically Apply to multiple jobs",
+  "Get Access to positions in different countries",
+  "Get alerts for updates",
+];
+
 export default function Features() {
   return (
-    <main>
-      <section className={styles.focus}>
+    <main className={styles.main}>
+      <section className={styles.hero}>
         <div>
-        <h2>Focus on maximizing your employment opportunities</h2>
-            <p>We simplify the manual work by 100x.</p>
-        </div>
+          <h1>Focus on maximizing your employment opportunities.</h1>
+          <p>We simplify the manual work by 100x.</p>
+          <div className={styles.list}>
+            {list.map((item) => (
+              <small key={item}>
+                {" "}
+                <FontAwesomeIcon icon={faCheck} /> {item}{" "}
+              </small>
+            ))}
+          </div>
+          <Link href={"/signup"} className="primary-button">
+            Get Started
+          </Link>
 
-        <div></div>
+          <p style={{fontWeight:'500', fontSize:'16px'}} >Missing job opportunities is typical, we solve this by pulling job listings from the most used platforms.</p>
+        </div>
       </section>
 
       <section className={styles.auto}>
         <div>
-            <h2>It takes on average 20-30 minutes to complete a job application.</h2>
-            <p>Image having to spend 0 minutes.</p>
+          <FontAwesomeIcon icon={faCopy} />
+          <h2>It can take up to 30 minutes to complete a job application.</h2>
+          <p>Image spending no time at all.</p>
+          <Link href={"/dashboard/search"} className="primary-button">
+            Search Engine
+          </Link>
         </div>
 
         <div>
-            <Image src={'/jobs.svg'} width={600} height={600} alt="photo" />
+          <Image src={'/jobs.svg'} width={500} height={500} alt="jobs" />
         </div>
       </section>
 
-      <section className={styles.advantages}>
-        <h3>Our other advantages</h3>
-        <div className={styles.featuresList}>
-          <div className={styles.card}>
-            <big>
-              {configurations.features[2].name}{" "}
-              <FontAwesomeIcon icon={configurations.features[2].icon} />{" "}
-            </big>
-            <p>{configurations.features[2].description}</p>
-          </div>
-
-          <div className={styles.card}>
-            <big>
-              {configurations.features[3].name}{" "}
-              <FontAwesomeIcon icon={configurations.features[3].icon} />{" "}
-            </big>
-            <p>{configurations.features[2].description}</p>
-          </div>
-
-          <div className={styles.card}>
-            <big>
-              {configurations.features[4].name}{" "}
-              <FontAwesomeIcon icon={configurations.features[4].icon} />{" "}
-            </big>
-            <p>{configurations.features[2].description}</p>
-          </div>
-
-          <div className={styles.card}>
-            <big>
-              {configurations.features[5].name}{" "}
-              <FontAwesomeIcon icon={configurations.features[5].icon} />{" "}
-            </big>
-            <p>{configurations.features[2].description}</p>
-          </div>
+      <section className={styles.advantage}>
+        <h2>Our Other Advantages</h2>
+        <div className={styles.advantageList} >
+              <FeatureCard feature={configurations.features[2]} />
+              <FeatureCard feature={configurations.features[3]} />
+              <FeatureCard feature={configurations.features[4]} />
+              <FeatureCard feature={configurations.features[5]} />
         </div>
       </section>
     </main>

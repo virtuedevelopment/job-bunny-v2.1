@@ -123,15 +123,19 @@ const configurations = {
         },
         {
             name: 'Application Tracking',
-            icon: faLocationCrosshairs
+            icon: faLocationCrosshairs,
+            description: 'Get instant alerts on new openings at companies you want to work at.'
+
         },
         {
             name: 'Unique Filters',
-            icon: faSliders
+            icon: faSliders,
+            description: 'Get instant alerts on new openings at companies you want to work at.'
         },
         {
             name: 'Real Time Updates',
-            icon: faClock 
+            icon: faClock,
+            description: 'Get instant alerts on new openings at companies you want to work at.'
         }
     ]
 }

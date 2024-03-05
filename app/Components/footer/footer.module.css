@@ -12,14 +12,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    row-gap: 1rem;
+    row-gap: 0.5rem;
     background-color: var(--accent-white);
     border-radius: var(--border-rad-large);
     padding: var(--container-padding-regular);
 }
 .main div span h2{
-    font-size: var(--subtitle);
-    color: var(--main-black);
+    font-size: var(--subhead);
+    color: var(--accent-black);
     text-align: center;
 }
 .main div span small{

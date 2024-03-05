@@ -258,7 +258,7 @@
   gap: 0.5rem;
 }
 .featuresList small {
-  font-size: var(--body-text);
+  font-size: var(--mini-text);
   color: var(--accent-black);
 }
 .featuresList svg{
