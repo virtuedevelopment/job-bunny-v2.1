@@ -41,7 +41,7 @@ export default function Features() {
         <div>
           <FontAwesomeIcon icon={faCopy} />
           <h2>It can take up to 30 minutes to complete a job application.</h2>
-          <p>Image spending no time at all.</p>
+          <p>Imagine spending no time at all.</p>
           <Link href={"/dashboard/search"} className="primary-button">
             Search Engine
           </Link>

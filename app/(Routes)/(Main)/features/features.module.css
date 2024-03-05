@@ -145,6 +145,10 @@
     display: none;
   }
 
+  .auto div a{
+    margin: auto;
+  }
+
   .advantages{
     padding: var(--container-padding-regular);
   }
