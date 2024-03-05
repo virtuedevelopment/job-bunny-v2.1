@@ -7,7 +7,6 @@
   border-radius: var(--border-rad-large);
   background-color: var(--secondary);
   padding: 0.5rem 0.75rem;
-  box-shadow: var(--box-shadow);
   /* animation: var(--fadeInFast);
     animation-delay: 0.5s; */
 }

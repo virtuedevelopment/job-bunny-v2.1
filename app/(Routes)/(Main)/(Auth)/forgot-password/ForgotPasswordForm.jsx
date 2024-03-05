@@ -191,7 +191,7 @@ const Update = ({ changeStep, user, loading }) => {
 };
 
 const requestCode = async (user) => {
-  const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/update_password";
+  const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/forgot_pass_request";
   const response = await fetch(apiEndpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -208,7 +208,7 @@ const requestCode = async (user) => {
 };
 
 const updatePassword = async (user) => {
-  const apiEndpoint = "https://jobbunny.co/jobbunnyapi/v1/update_password";
+  const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/update_password";
   const response = await fetch(apiEndpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
