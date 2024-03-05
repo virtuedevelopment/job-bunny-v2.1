@@ -4,6 +4,7 @@ import styles from "./home.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import StaticSearch from "@/app/Components/(Misc)/Static Search/StaticSearch";
+import GraphicCard from "@/app/Components/(Misc)/Cards/GraphicCard";
 import { faUser, faGear, faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -22,9 +23,12 @@ const exampleUser2 = {
   url: "/fernanda.png",
 };
 const steps = [
-  { step: "Create a profile, upload your resume", icon: faUser },
-  { step: "Set preferences, answer pre-filled quetions", icon: faGear },
-  { step: "Start searching, auto apply and more", icon: faRepeat },
+  { step: "Create a profile, upload your resume.", graphic: "/step1.svg" },
+  {
+    step: "Set preferences, answer pre-filled quetions.",
+    graphic: "/step2.svg",
+  },
+  { step: "Start searching, auto apply and more.", graphic: "/jobs.svg" },
 ];
 
 export default function Home() {
@@ -97,21 +101,20 @@ export default function Home() {
       </section>
 
       <section className={styles.easySteps}>
-        <h3>How it Works</h3>
+        <h3>How It Works</h3>
         <div className="grid-3x-display">
-          {steps.map((step, index) => (
-            <span key={index}>
-              <FontAwesomeIcon icon={step.icon} /> <small>{step.step}</small>
-            </span>
+          {steps.map((step)=>(
+            <GraphicCard key={step.step} graphic={step.graphic} message={step.step} />
           ))}
         </div>
-        <p>You maximize your employment opportunities by using us</p>
+        <p>Maximize your employment opportunities by using our app</p>
         <Link href={"/signup"} className="main-button">
           Get Started
         </Link>
       </section>
 
       <section className={styles.features}>
+        
         <div className={styles.displays}>
           <Image
             src={"/jobApply.svg"}
@@ -121,17 +124,20 @@ export default function Home() {
           />
           <Image src={"/joblist.svg"} width={450} height={450} alt="Job List" />
         </div>
+
         <h3>
           Get on step closer to your <span>future job</span>
         </h3>
+
         <div className={styles.featuresList}>
           {configurations.features.map((feature) => (
-            <span key={feature.name}>
+            <div key={feature.name}>
               <FontAwesomeIcon className={styles.icon} icon={feature.icon} />
               <small>{feature.name}</small>
-            </span>
+            </div>
           ))}
         </div>
+
       </section>
     </main>
   );

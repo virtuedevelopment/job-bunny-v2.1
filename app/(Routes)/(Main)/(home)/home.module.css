@@ -233,20 +233,25 @@
   text-align: center;
   font-size: var(--heading);
   color: var(--main-black);
-  margin-top: 1.25rem;
+  margin-block: 1.25rem;
 }
 .features h3 span {
   color: var(--accent-primary);
 }
 .featuresList {
-  width: 85%;
+  width: 100%;
   padding: var(--container-padding-regular);
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
-.featuresList span {
+.featuresList div {
+  width: 100%;
+  background-color: var(--accent-secondary);
+  border-radius: var(--border-rad-small);
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -254,15 +259,17 @@
 }
 .featuresList small {
   font-size: var(--body-text);
-  color: var(--accent-primary);
+  color: var(--accent-black);
 }
-.featuresList span .icon {
-  color: var(--accent-primary);
+.featuresList svg{
+  display: block;
+  color: var(--accent-black);
   width: 15px;
   height: 15px;
 }
 .positionInfo span {
-  display: flex;
+  display: block;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
@@ -290,6 +297,14 @@
   .features .displays img {
     width: 100%;
     height: 50%;
+  }
+
+  .featuresList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2rem;
+    padding: var(--container-padding-regular);
+    margin: 1.75rem auto;
   }
 }
 
@@ -371,7 +386,7 @@
 
   .featuresList {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     row-gap: 2rem;
     padding: var(--container-padding-regular);
     margin: 1.75rem auto;

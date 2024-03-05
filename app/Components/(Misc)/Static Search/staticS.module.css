@@ -1,19 +1,20 @@
 .inputbox {
   /* opacity: 0; */
   width: 90%;
-  display: flex;
+  display: grid ;
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
   border-radius: var(--border-rad-large);
   background-color: var(--secondary);
   padding: 0.5rem 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  box-shadow: var(--box-shadow);
   /* animation: var(--fadeInFast);
     animation-delay: 0.5s; */
 }
+
 .inputbox input {
-  font-family: "Outfit", sans-serif;
-  font-weight: 600;
+  font-family: inherit;
+  font-weight: 700;
   padding: var(--button-padding-small);
   border-radius: var(--border-rad-small);
   color: var(--accent-black);
@@ -21,6 +22,14 @@
   outline: none;
   border: none;
   background-color: transparent;
+}
+.inputbox input::placeholder{
+  color: var(--accent-black);
+}
+
+.inputbox .input{
+  width: 100%;
+  display: flex;
 }
 
 .inputbox button {
@@ -35,6 +44,22 @@
   transition: var(--tranisition-in);
   color: var(--primary);
 }
+
+
+.dropdown{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  height: 150px;
+  overflow-y: scroll;
+}
+.dropdown button{
+  width: 100%;
+  text-align: start;
+
+}
+
 
 @media (max-width: 1200px) {
   .inputbox {

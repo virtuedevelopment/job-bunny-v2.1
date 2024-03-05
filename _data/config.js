@@ -1,5 +1,4 @@
 //imports for configurations
-import { } from '@fortawesome/free-brands-svg-icons'
 import { faHouse, faTag, faEnvelope, faUserPlus, faAddressCard, faMagnifyingGlass, faRepeat, faBell, faLocationCrosshairs, faSliders, faGauge, faCheckCircle, faEye, faGear, faClock } from '@fortawesome/free-solid-svg-icons';
 //define configurations
 const configurations = {
