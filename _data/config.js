@@ -77,8 +77,8 @@ const configurations = {
         { route: 'Dashbaord', url: '/dashboard', icon: faGauge },
         { route: 'Search Engine', url: '/dashboard/search', icon: faMagnifyingGlass },
         { route: 'Auto Applications', url: 'dashboard/auto-apply', icon: faCheckCircle },
-        { route: 'Company Watch', url: '/dashboard/company-watch', icon: faEye},
-        { route: 'Profile and Settings', url: '/dashboard/settings', icon: faGear}
+        { route: 'Company Watch', url: '/dashboard/company-watch', icon: faEye },
+        { route: 'Profile and Settings', url: '/dashboard/settings', icon: faGear }
     ],
     adminRoutes: [
         { route: 'dashbaord', url: '/dashboard', icon: faGauge },
@@ -136,6 +136,28 @@ const configurations = {
             name: 'Real Time Updates',
             icon: faClock,
             description: 'Get instant alerts on new openings at companies you want to work at.'
+        }
+    ],
+    faq: [
+        {
+            title: 'Sources of our Job Listings',
+            description: 'Our job listings are sourced from major job boards worldwide, as well as directly from company websites. This diverse selection ensures a wide range of job choices for our users. Each listing includes a redirect link to the original source for further information.'
+        },
+        {
+            title: 'Auto Application Feature',
+            description: 'Auto applications streamline the job application process by submitting applications on your behalf, without any manual effort required from you as the job seeker. Our platform can submit hundreds of applications per day, saving you time and effort in your job search.'
+        },
+        {
+            title: 'Premium Immigration Filter',
+            description: 'Our immigration filter simplifies the process of finding job opportunities that offer work sponsorship. This feature allows you to easily identify jobs that align with your immigration needs, helping you narrow down your job search to relevant opportunities.'
+        },
+        {
+            title: 'Choosing the Right Plans',
+            description: 'We offer a range of affordable pricing plans tailored to the needs of job seekers. Each plan comes with different benefits, so we recommend selecting the one that best suits your individual requirements and preferences.'
+        },
+        {
+            title: 'Contacting JobBunny',
+            description: 'For all inquiries and assistance, our support team is available via email at support@jobbunny.co. Please allow up to 48 hours for a response, as we strive to provide timely and helpful support to all our users.'
         }
     ]
 }
