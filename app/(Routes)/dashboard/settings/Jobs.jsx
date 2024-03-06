@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "./settings.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardUser } from "@fortawesome/free-solid-svg-icons";
@@ -119,6 +119,7 @@ export default function Jobs({ userJobs, onUpdate }) {
       setJobList(userJobs);
     }
   }, [userJobs]);
+  
   useEffect(() => {
     onUpdate(jobList);
   }, [jobList, onUpdate]);

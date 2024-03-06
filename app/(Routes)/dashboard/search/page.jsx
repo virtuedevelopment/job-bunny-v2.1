@@ -113,6 +113,8 @@ export default function Search() {
       filters: activeFilters,
     };
 
+    console.log(requestBody);
+
     // Execute API request
     const response = await fetch(apiEndpoint, {
       method: "POST",
@@ -193,19 +195,20 @@ export default function Search() {
       getResults();
     }
   };
-
   const setFilterValue = (e) => {
     const { name, value } = e.target;
+  
+    // Handle the default option correctly
+    const selectedValue = value === "null" ? null : parseInt(value);
+  
     setFilters((prevFilters) => ({
       ...prevFilters,
       [name]:
         name === "min_salary" || name === "date_range"
-          ? value === "" || value === "null"
+          ? selectedValue === "" || selectedValue === "null"
             ? null
-            : parseInt(value, 10)
-          : value === "null"
-          ? null
-          : value,
+            : parseInt(selectedValue, 10)
+          : selectedValue,
     }));
   };
   const setSearchValue = (value) => {
@@ -351,12 +354,18 @@ export default function Search() {
               </select>
 
               <select name="country" onChange={setFilterValue}>
-                <option value={0}>Select Preferred Country</option>
+                <option value={null}>Select Preferred Country</option>
                 {countries.map((country) => (
                   <option key={country.name} value={country.name}>
                     {country.name}
                   </option>
                 ))}
+              </select>
+
+              <select name="visa_sponsored" onChange={setFilterValue}>
+                <option value={null}>Select Visa Preference</option>
+                <option value={0}>No Visa Required</option>
+                <option value={1}>Visa Required</option>
               </select>
             </div>
           </span>

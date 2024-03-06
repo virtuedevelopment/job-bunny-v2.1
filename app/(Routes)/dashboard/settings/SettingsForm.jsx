@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Skills from "./Skills";
 import Jobs from "./Jobs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -145,18 +145,19 @@ export default function SettingsForm() {
   };
 
   //Utility Functions
-  const handleSkillsUpdate = (newSkills) => {
+  const handleSkillsUpdate = useCallback((newSkills) => {
     setUpdatedUser((prevUser) => ({
       ...prevUser,
       skills: newSkills,
     }));
-  };
-  const handleJobTitlesUpdate = (newJobTitles) => {
+  }, []);
+  
+  const handleJobTitlesUpdate = useCallback((newJobTitles) => {
     setUpdatedUser((prevUser) => ({
       ...prevUser,
       job_titles: newJobTitles,
     }));
-  };
+  }, []);
   const handleInputChange = async (event) => {
     const { name, value } = event.target;
 

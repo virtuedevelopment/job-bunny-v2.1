@@ -83,6 +83,7 @@
   left: 0;
   right: 0;
   margin-inline: auto;
+  object-fit: contain;
   /* animation: var(--fadeInFast);
   animation-delay: 1s; */
 }
@@ -286,6 +287,9 @@
   .heroInteraction h1 {
     width: 100%;
     font-size: 3.5rem;
+  }
+  .heroImageBox img {
+    object-fit: contain;
   }
 
   .features {
