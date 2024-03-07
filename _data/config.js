@@ -105,7 +105,7 @@ const configurations = {
         }
     ],
     popSearches:
-        ['Administrator', 'Delivery Driver', 'Electrician', 'Web Designer', 'Sales Advisor', 'Data Analyst'
+        ['Administrator', 'Security', 'Electrician', 'Web Designer', 'Sales Advisor', 'Data Analyst'
         ],
     features: [
         {

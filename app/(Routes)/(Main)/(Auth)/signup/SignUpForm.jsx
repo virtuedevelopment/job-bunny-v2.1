@@ -990,7 +990,6 @@ export default function SignUpForm() {
   });
   const [step, setStep] = useState(1);
 
-
   //Helper Functions
   const nextStep = () => setStep(step + 1);
   const previousStep = () => setStep(step - 1);
@@ -1024,32 +1023,33 @@ export default function SignUpForm() {
   };
 
   const onSubmit = async (e) => {
-    try {
-      const response = await fetch(`/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-  
-      const responseData = await response.json();
-  
-      // Check for HTTP success and specific application-level success message
-      if (response.ok && responseData.status === 201 && responseData.message === "User Creation Successful. Please check your email for confirmation link.") {
+    const response = await fetch(`/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    const responseData = await response.json();
+
+    // Check for HTTP success and specific application-level success message
+    if (response.ok) {
+      if (responseData.status === 201) {
         console.log("User signed up", responseData);
         // Proceed with success logic, such as redirecting to a confirmation or success page
+      } else if (responseData.status === 409) {
+        console.error("Signup failed: Account already exists", responseData);
+        router.push("/signup/failure");
       } else {
-        // If the condition for success is not met, handle as error
         console.error("Signup failed:", responseData.message, responseData);
         router.push("/signup/failure");
       }
-    } catch (error) {
-      console.error("An error occurred during signup:", error);
+    } else {
+      console.error("An error occurred during signup:", responseData.message);
       router.push("/signup/failure");
     }
   };
-  
 
   return (
     <div className={styles.signUpFormBox}>
