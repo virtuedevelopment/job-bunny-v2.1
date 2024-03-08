@@ -1,5 +1,5 @@
 //imports for configurations
-import { faHouse, faTag, faEnvelope, faUserPlus, faAddressCard, faMagnifyingGlass, faRepeat, faBell, faLocationCrosshairs, faSliders, faGauge, faCheckCircle, faEye, faGear, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faTag, faEnvelope, faUserPlus, faAddressCard, faMagnifyingGlass, faRepeat, faBell, faLocationCrosshairs, faSliders, faGauge, faCheckCircle, faEye, faGear, faClock, faUserTie, faShieldHalved, faBoltLightning, faCode, faSackDollar, faDatabase } from '@fortawesome/free-solid-svg-icons';
 //define configurations
 const configurations = {
     title: 'Job Bunny © ',
@@ -105,7 +105,13 @@ const configurations = {
         }
     ],
     popSearches:
-        ['Administrator', 'Security', 'Electrician', 'Web Designer', 'Sales Advisor', 'Data Analyst'
+        [
+            { text: 'Administrator', icon: faUserTie },
+            { text: 'Security', icon: faShieldHalved },
+            { text: 'Electrician', icon: faBoltLightning },
+            { text: 'Web Designer', icon: faCode },
+            { text: 'Sales Advisor', icon: faSackDollar },
+            { text: 'Data Analyst', icon: faDatabase }
         ],
     features: [
         {

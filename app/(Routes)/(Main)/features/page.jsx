@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./features.module.css";
 import configurations from "@/_data/config";
+import RedirectButton from "@/app/Components/(Misc)/RedirectButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCopy } from "@fortawesome/free-solid-svg-icons";
 import FeatureCard from "@/app/Components/(Misc)/Cards/FeatureCard";
@@ -29,11 +30,17 @@ export default function Features() {
               </small>
             ))}
           </div>
-          <Link href={"/signup"} className="primary-button">
-            Get Started
-          </Link>
+          <RedirectButton
+            prompt={"Get Started"}
+            loggedin={"/dashboard"}
+            loggedout={"/signup"}
+            theme={"primary-button"}
+          />
 
-          <p style={{fontWeight:'500', fontSize:'16px'}} >Missing job opportunities is typical, we solve this by pulling job listings from the most used platforms.</p>
+          <p style={{ fontWeight: "500", fontSize: "16px" }}>
+            Missing job opportunities is typical, we solve this by pulling job
+            listings from the most used platforms.
+          </p>
         </div>
       </section>
 
@@ -42,23 +49,26 @@ export default function Features() {
           <FontAwesomeIcon icon={faCopy} />
           <h2>It can take up to 30 minutes to complete a job application.</h2>
           <p>Imagine spending no time at all.</p>
-          <Link href={"/dashboard/search"} className="primary-button">
-            Search Engine
-          </Link>
+          <RedirectButton
+            prompt={"Get Started"}
+            loggedin={"/dashboard"}
+            loggedout={"/signup"}
+            theme={"primary-button"}
+          />
         </div>
 
         <div>
-          <Image src={'/jobs.svg'} width={500} height={500} alt="jobs" />
+          <Image src={"/jobs.svg"} width={500} height={500} alt="jobs" />
         </div>
       </section>
 
       <section className={styles.advantage}>
         <h2>Our Other Advantages</h2>
-        <div className={styles.advantageList} >
-              <FeatureCard feature={configurations.features[2]} />
-              <FeatureCard feature={configurations.features[3]} />
-              <FeatureCard feature={configurations.features[4]} />
-              <FeatureCard feature={configurations.features[5]} />
+        <div className={styles.advantageList}>
+          <FeatureCard feature={configurations.features[2]} />
+          <FeatureCard feature={configurations.features[3]} />
+          <FeatureCard feature={configurations.features[4]} />
+          <FeatureCard feature={configurations.features[5]} />
         </div>
       </section>
     </main>

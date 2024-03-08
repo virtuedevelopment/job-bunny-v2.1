@@ -1,6 +1,6 @@
 /* Hero Section */
 .hero {
-  min-height: 85svh;
+  min-height: 80svh;
   background: linear-gradient(
     var(--primary),
     35%,
@@ -9,7 +9,7 @@
   );
   padding: var(--container-padding-large);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 .heroButton {
@@ -17,18 +17,17 @@
 }
 .heroInteraction {
   width: 50%;
-  height: 50svh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   text-align: left;
-  gap: 0.75rem;
+  gap: 2.5rem;
 }
 .heroPrompt {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 1rem;
 }
@@ -43,32 +42,24 @@
 .heroInteraction h1 span {
   color: var(--accent-primary);
 }
-.popularSearches {
-  /* opacity: 0; */
-  margin-inline: auto;
-  text-align: center;
-  padding: var(--container-padding-regular);
-  /* animation: var(--fadeInFast);
-  animation-delay: 0.5s; */
-}
-.popularSearches .item {
+
+.popularBox {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--secondary);
-  border-radius: var(--border-rad-large);
-  padding: var(--button-padding-regular);
-  font-weight: 300;
 }
-.popularSearches .item p {
-  font-weight: 400;
+.popularBox p {
+  width: 100%;
+  font-size: var(--subhead);
   color: var(--accent-black);
+  font-weight: 700;
+  margin: 1rem 0;
 }
-.popularSearches h2 {
-  font-size: var(--body-text);
-  font-weight: 500;
+.popular {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
 }
+
 .heroImageBox {
   width: 50%;
   height: 70svh;
@@ -217,6 +208,15 @@
   width: 15px;
   height: 15px;
 }
+.graphicDisplay{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3.5rem;
+  margin: 2.5rem 0;
+}
 
 /* Features Section */
 .features {
@@ -262,7 +262,7 @@
   font-size: var(--mini-text);
   color: var(--accent-black);
 }
-.featuresList svg{
+.featuresList svg {
   display: block;
   color: var(--accent-black);
   width: 15px;
@@ -279,10 +279,11 @@
 @media (max-width: 1200px) {
   .hero {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .heroInteraction {
     width: 100%;
-    height: 40svh;
   }
   .heroInteraction h1 {
     width: 100%;
@@ -310,6 +311,10 @@
     padding: var(--container-padding-regular);
     margin: 1.75rem auto;
   }
+
+  .popular {
+    flex-wrap: wrap;
+  }
 }
 
 @media (max-width: 750px) {
@@ -326,7 +331,7 @@
     width: 100%;
   }
   .heroPrompt {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
   }
@@ -341,9 +346,6 @@
     opacity: 0;
     animation: var(--fadeIn);
     animation-delay: 1.5s;
-  }
-  .popularSearches {
-    display: none;
   }
 
   .jobBoards {
@@ -416,5 +418,11 @@
   .features .displays img {
     width: 100%;
     height: 50%;
+  }
+
+  .popular {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
   }
 }

@@ -41,32 +41,58 @@
   border-radius: var(--border-rad-large);
   box-shadow: var(--box-shadow);
 }
-.feature span{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+.feature span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
-.feature svg{
-    width: 40px;
-    height: 40px;
-    color: var(--main-white);
-    margin: auto;
+.feature svg {
+  width: 40px;
+  height: 40px;
+  color: var(--main-white);
+  margin: auto;
 }
-.feature h2{
-    font-size: 2.5rem;
-    color: var(--main-white);
-    text-align: center;
+.feature h2 {
+  font-size: 2.5rem;
+  color: var(--main-white);
+  text-align: center;
 }
-.feature p{
-    text-align: center;
-    font-size: var(--body-text);
-    color: var(--main-white);
+.feature p {
+  text-align: center;
+  font-size: var(--body-text);
+  color: var(--main-white);
+}
+
+.jobFeatureCard {
+  background-color: var(--primary);
+  border-radius: var(--border-rad-large);
+  box-shadow: var(--box-shadow);
+  color: var(--main-white);
+  transition: var(--transition-out);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+}
+.jobFeatureCard:hover{
+  transition: var(--transition-in);
+  color: var(--accent-black);
+  background-color: var(--secondary);
+}
+.jobFeatureCard svg {
+  width: 15px;
+  height: 15px;
+}
+.jobFeatureCard small {
+  font-size: var(--tiny-text);
 }
 
 @media (max-width: 1200px) {
-
   .graphicCard {
     width: 275px;
     height: 325px;
@@ -78,18 +104,23 @@
     font-size: var(--subhead);
   }
 
-  .feature{
+  .feature {
     padding: 1.5rem;
     width: 250px;
     height: 300px;
     justify-content: center;
-    
   }
-  .feature svg{
+  .feature svg {
     width: 35px;
     height: 35px;
   }
-  .feature h2{
+  .feature h2 {
     font-size: var(--subtitle);
+  }
+}
+@media (max-width: 750px) {
+  .jobFeatureCard {
+    min-width: none;
+    width: 100%;
   }
 }

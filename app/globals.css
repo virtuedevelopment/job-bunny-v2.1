@@ -97,11 +97,12 @@
   border-radius: var(--border-rad-large);
   font-size: var(--mini-text);
   transition: var(--transition-out);
+  box-shadow: var(--box-shadow);
   border: none;
   cursor: pointer;
 }
 .main-button:hover {
-  background-color: var(--main-white);
+  background-color: var(--accent-white);
   color: var(--accent-black);
   transition: var(--transition-in);
 }

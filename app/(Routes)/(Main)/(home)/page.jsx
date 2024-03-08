@@ -5,7 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import StaticSearch from "@/app/Components/(Misc)/Static Search/StaticSearch";
 import GraphicCard from "@/app/Components/(Misc)/Cards/GraphicCard";
-import { faUser, faGear, faRepeat } from "@fortawesome/free-solid-svg-icons";
+import RedirectButton from "@/app/Components/(Misc)/RedirectButton";
+import JobFeatureCard from "@/app/Components/(Misc)/Cards/JobFeatureCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const exampleUser = {
@@ -37,28 +38,32 @@ export default function Home() {
       <section className={styles.hero}>
         <div className={styles.heroInteraction}>
           <div className={styles.heroPrompt}>
-            <Link
-              href={"/signup"}
-              className={`main-button ${styles.heroButton}`}
-            >
-              Get Started
-            </Link>
             <h1>
               Search for jobs. <span>Automate applications</span>. Get instant
               alerts. Track all applications.
             </h1>
-            <StaticSearch />
-          </div>
 
-          <div className={styles.popularSearches}>
-            <h2>Popular Searches</h2>
-            <div className="grid-3x-display">
-              {configurations.popSearches.map((search) => (
-                <div className={styles.item} key={search}>
-                  <p>{search}</p>
-                </div>
-              ))}
+            <StaticSearch />
+
+            <div className={styles.popularBox} >
+              <p>Popular Searches:</p>
+              <div className={styles.popular}>
+                {configurations.popSearches.map((search) => (
+                  <JobFeatureCard
+                    key={search.text}
+                    text={search.text}
+                    icon={search.icon}
+                  />
+                ))}
+              </div>
             </div>
+
+            <RedirectButton
+              prompt={"Get Started"}
+              loggedin={"/dashboard"}
+              loggedout={"/signup"}
+              theme={"main-button"}
+            />
           </div>
         </div>
 
@@ -102,19 +107,25 @@ export default function Home() {
 
       <section className={styles.easySteps}>
         <h3>How It Works</h3>
-        <div className="grid-3x-display">
-          {steps.map((step)=>(
-            <GraphicCard key={step.step} graphic={step.graphic} message={step.step} />
+        <div className={styles.graphicDisplay}>
+          {steps.map((step) => (
+            <GraphicCard
+              key={step.step}
+              graphic={step.graphic}
+              message={step.step}
+            />
           ))}
         </div>
         <p>Maximize your employment opportunities by using our app</p>
-        <Link href={"/signup"} className="main-button">
-          Get Started
-        </Link>
+        <RedirectButton
+          prompt={"Get Started"}
+          loggedin={"/dashboard"}
+          loggedout={"/signup"}
+          theme={"main-button"}
+        />
       </section>
 
       <section className={styles.features}>
-        
         <div className={styles.displays}>
           <Image
             src={"/jobApply.svg"}
@@ -137,7 +148,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-
       </section>
     </main>
   );
