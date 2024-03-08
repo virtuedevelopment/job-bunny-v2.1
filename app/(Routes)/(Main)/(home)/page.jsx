@@ -45,7 +45,7 @@ export default function Home() {
 
             <StaticSearch />
 
-            <div className={styles.popularBox} >
+            <div className={styles.popularBox}>
               <p>Popular Searches:</p>
               <div className={styles.popular}>
                 {configurations.popSearches.map((search) => (
@@ -70,8 +70,8 @@ export default function Home() {
         <div className={styles.heroImageBox}>
           <Image
             src={"/heroImage.svg"}
-            width={200}
-            height={200}
+            width={1750}
+            height={1750}
             alt="Computer displaying Job Bunny Application"
           />
         </div>
@@ -81,14 +81,14 @@ export default function Home() {
         <h2>Job listings pulled from</h2>
         <div>
           {configurations.job_Boards.map((board) => (
-            <small key={board.name}>
+            <span key={board.name}>
               <Image
                 src={board.icon}
                 width={150}
                 height={100}
                 alt="Logos"
               ></Image>
-            </small>
+            </span>
           ))}
         </div>
       </section>

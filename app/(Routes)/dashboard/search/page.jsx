@@ -5,6 +5,7 @@ import Loading from "@/app/loading";
 import styles from "./search.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import DisplayJobs from "../(Main)/DisplayJobs";
 import JobDisplay from "@/app/Components/(Misc)/Object Displays/JobDisplay";
 
 //set filter options
@@ -113,8 +114,6 @@ export default function Search() {
       filters: activeFilters,
     };
 
-    console.log(requestBody);
-
     // Execute API request
     const response = await fetch(apiEndpoint, {
       method: "POST",
@@ -197,10 +196,10 @@ export default function Search() {
   };
   const setFilterValue = (e) => {
     const { name, value } = e.target;
-  
+
     // Handle the default option correctly
     const selectedValue = value === "null" ? null : parseInt(value);
-  
+
     setFilters((prevFilters) => ({
       ...prevFilters,
       [name]:
@@ -393,7 +392,8 @@ export default function Search() {
         className={styles.searchDisplay}
       >
         {isLoading && <Loading />}
-        {!isLoading && jobs.length === 0 && (
+        {!isLoading && search === "" && jobs.length === 0 && <DisplayJobs/>}
+        {!isLoading && search !== "" && jobs.length === 0 && (
           <div className={styles.noJobs}>
             <p>
               <FontAwesomeIcon icon={faMagnifyingGlass} /> Please enter a search
