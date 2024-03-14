@@ -197,17 +197,26 @@ export default function Search() {
   const setFilterValue = (e) => {
     const { name, value } = e.target;
 
-    // Handle the default option correctly
-    const selectedValue = value === "null" ? null : parseInt(value);
+    // Determine if the current filter should be treated as a numeric value
+    const isNumericFilter = [
+      "date_range",
+      "visa_sponsored",
+      "min_salary",
+    ].includes(name);
+
+    let selectedValue;
+    if (isNumericFilter) {
+      // Parse numeric values, handling 'null' or empty string as null
+      selectedValue =
+        value === "null" || value === "" ? null : parseInt(value, 10);
+    } else {
+      // Non-numeric filters, treat 'null' string as null
+      selectedValue = value === "null" ? null : value;
+    }
 
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [name]:
-        name === "min_salary" || name === "date_range"
-          ? selectedValue === "" || selectedValue === "null"
-            ? null
-            : parseInt(selectedValue, 10)
-          : selectedValue,
+      [name]: selectedValue,
     }));
   };
   const setSearchValue = (value) => {
@@ -392,7 +401,7 @@ export default function Search() {
         className={styles.searchDisplay}
       >
         {isLoading && <Loading />}
-        {!isLoading && search === "" && jobs.length === 0 && <DisplayJobs/>}
+        {!isLoading && search === "" && jobs.length === 0 && <DisplayJobs />}
         {!isLoading && search !== "" && jobs.length === 0 && (
           <div className={styles.noJobs}>
             <p>
