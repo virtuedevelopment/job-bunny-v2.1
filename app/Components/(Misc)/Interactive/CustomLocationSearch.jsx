@@ -30,7 +30,7 @@ export default function CustomLocationSearch({ update }) {
         });
 
         const response = await fetch(
-          `http://api.geonames.org/searchJSON?${params}`
+          `https://api.geonames.org/searchJSON?${params}`
         );
         const data = await response.json();
         setDropdown(data.geonames || []);
