@@ -6,6 +6,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import FilterBox from "./FilterBox";
 import DisplayJobs from "../(Main)/DisplayJobs";
 import JobDisplay from "@/app/Components/(Misc)/Object Displays/JobDisplay";
+import InifiniteScroll from "@/app/Components/(Misc)/Interactive/InifiniteScroll";
 import Loading from "@/app/loading";
 import styles from "./search.module.css";
 
@@ -145,8 +146,6 @@ export default function Search() {
       filters: activeFilters,
     };
 
-    console.log(requestBody);
-
     //execute request
     const response = await fetch(apiEndpoint, {
       method: "POST",
@@ -168,6 +167,55 @@ export default function Search() {
     } else {
       setSearchError("Error fetching jobs please try again");
       setIsLoading(false);
+    }
+  };
+  const updateResults = async () => {
+    //this function updates the list of results with new entries it is triggered by the child component.
+    // the child component has both the results state and this function
+
+    const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/job_search";
+
+    const activeFilters = Object.entries(filters).reduce(
+      (acc, [key, value]) => {
+        // Check if the value is an object and if it's empty
+        const isObject = typeof value === "object" && value !== null;
+        const isEmptyObject = isObject && Object.keys(value).length === 0;
+
+        // Exclude filters marked as "remove" or empty objects
+        if (value !== "remove" && !isEmptyObject) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {}
+    );
+
+    const requestBody = {
+      username: data.user.email,
+      jb_token: data.user.jb_token,
+      job_title: searchValue,
+      start: start, //the start state holds the length of the previous search so we can keep the same index
+      count: 30,
+      filters: activeFilters,
+    };
+
+    //execute request
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    //process response
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.status === 200 && responseData.data.length > 0) {
+        // Set jobs to the newly fetched jobs
+        setResults((prevResults) => [...prevResults, ...responseData.data]);
+        setStart(start + responseData.data.length); // set start for next Api call
+      }
+    } else {
+      setSearchError("Error fetching jobs please try again");
     }
   };
 
@@ -229,11 +277,7 @@ export default function Search() {
         </section>
       )}
       {!isLoading && results.length > 0 && (
-        <section className={styles.listings}>
-          {results.map((job, index) => (
-            <JobDisplay job={job} index={index} key={index} />
-          ))}
-        </section>
+        <InifiniteScroll listings={results} update={updateResults} />
       )}
     </main>
   );
