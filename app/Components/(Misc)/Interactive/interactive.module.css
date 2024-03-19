@@ -1,0 +1,92 @@
+/* CUSTOM DROPDOWN */
+.container {
+  position: relative;
+}
+.selection {
+  border-radius: var(--border-rad-large);
+  background-color: var(--primary);
+  color: var(--main-white);
+  padding: 0.75rem;
+  border: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+}
+.selection svg {
+  width: 15px;
+  height: 15px;
+  color: var(--accent-primary);
+}
+.selection p {
+  font-weight: 500;
+}
+.dropdown {
+  position: absolute;
+  width: 100%;
+  padding: 0.5rem;
+  top: 110%;
+  background-color: var(--main-white);
+  border-radius: var(--border-rad-large);
+  box-shadow: var(--box-shadow);
+  display: grid;
+  gap: 0.5rem;
+  z-index: 3;
+
+  height: 200px;
+  overflow-y: scroll;
+}
+.item {
+  padding: 0.5rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--accent-primary);
+  border-radius: var(--border-rad-large);
+  transition: var(--transition-out);
+  cursor: pointer;
+}
+.item p {
+  text-align: left;
+}
+.item svg {
+  width: 10px;
+  height: 10px;
+}
+.item:hover {
+  transition: var(--transition-in);
+  background-color: var(--accent-primary);
+  color: var(--main-white);
+}
+
+/* CUSTOM LOCATION SEARCH */
+.locationItem {
+  border: none;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  background-color: transparent;
+  cursor: pointer;
+
+  transition: var(--transition-out);
+  color: var(--accent-black);
+}
+.locationItem:hover {
+  color: var(--accent-primary);
+  transition: var(--transition-in);
+}
+.locationItem svg {
+  width: 12px;
+  height: 12px;
+}
+.locationItem p {
+  font-size: var(--body-text);
+}

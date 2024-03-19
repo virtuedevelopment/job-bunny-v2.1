@@ -1,247 +1,77 @@
 "use client";
 import { useSession } from "next-auth/react";
-import React, { useState, useEffect } from "react";
-import Loading from "@/app/loading";
-import styles from "./search.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
+import React, { useState, useEffect, useCallback } from "react";
+
+import FilterBox from "./FilterBox";
 import DisplayJobs from "../(Main)/DisplayJobs";
 import JobDisplay from "@/app/Components/(Misc)/Object Displays/JobDisplay";
+import Loading from "@/app/loading";
+import styles from "./search.module.css";
 
-//set filter options
-const boards = ["Indeed", "LinkedIn", "Glassdoor"];
-const experience = [
-  "Internship",
-  "Entry level",
-  "Associate",
-  "Mid-Senior level",
-  "Director",
-  "Executive",
-];
-const job_type = [
-  "Full-time",
-  "Part-time",
-  "Contract",
-  "Temporary",
-  "Volunteer",
-  "Internship",
-  "Other",
-];
-const job_type_cat = ["On-site", "Hybrid", "Remote"];
-const salary = [
-  20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 110000,
-  120000, 130000, 140000, 150000, 160000, 170000, 180000, 190000, 200000,
-  210000, 220000, 230000, 240000, 250000, 260000, 270000, 280000, 290000,
-  300000,
-];
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func(...args);
+    }, wait);
+  };
+}
 
 export default function Search() {
-  const { data, status } = useSession();
-  const [jobs, setJobs] = useState([]); //job list
-  const [countries, setCountries] = useState([]);
-  const [filters, setFilters] = useState({
-    job_site: null,
-    experience: null,
-    job_type: null,
-    job_type_cat: null,
-    visa_sponsored: null,
-    date_range: null,
-    min_salary: null,
-    country: null,
-  });
-  const [search, setSearch] = useState(""); //search value
-  const [previousSearch, setPreviousSearch] = useState(""); // for research and adding more to the list
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [start, setStart] = useState(0);
-  const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const count = 30;
+  //init states
+  const router = useRouter(); // incase users are not logged in
+  const { data } = useSession(); // getting user information
+  const [searchValue, setSearchValue] = useState(""); //the search value
+  const [jobTitles, setJobTitles] = useState([]); //suggested job titles
+  const [start, setStart] = useState(0); //index for searching
+  const [searchError, setSearchError] = useState(); //dealing with search issues
+  const [isLoading, setIsLoading] = useState(false); // for suspense loading
+  const [filters, setFilters] = useState({}); //managed by the filterbox component
+  const [showDropdown, setShowDropdown] = useState(false); // To control the visibility of the dropdown
+  const [results, setResults] = useState([]); //result list for job search
 
-  const fetchCountries = async () => {
-    try {
-      const response = await fetch(
-        "https://countriesnow.space/api/v0.1/countries/capital"
-      );
-      const data = await response.json();
-      if (data.error === false) {
-        setCountries(data.data);
+  //Utilitiy functions
+  const setFilter = useCallback(({ name, value }) => {
+    setFilters((currentFilters) => {
+      const updatedFilters = { ...currentFilters };
+
+      // Mark the filter for removal instead of deleting it
+      if (value === null || value === undefined) {
+        updatedFilters[name] = "remove";
       } else {
-        // Handle error here
-        console.error("Error fetching countries:", data.msg);
+        updatedFilters[name] = value;
       }
-    } catch (error) {
-      // Handle fetch error here
-      console.error("Fetch error:", error);
-    }
-  };
-  const getResults = async (e) => {
-    setIsLoading(true); // Start loading state
 
-    // Always treat the search as a new search
-    setAutocompleteSuggestions([]);
-    setShowDropdown(false);
-    setJobs([]); // Clear current jobs list to start fresh
-    setStart(0); // Reset pagination start index for the search
-
-    // Check if the search query is empty
-    if (search === "") {
-      setError("Please Enter a search");
-      setIsLoading(false); // Stop loading due to error (empty search query)
-      return; // Early return to prevent further execution
-    }
-
-    // Prepare API request
-    const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/job_search";
-
-    // Filter out null or undefined values from filters
-    const activeFilters = Object.entries(filters).reduce(
-      (acc, [key, value]) => {
-        if (value !== null && value !== undefined && !Number.isNaN(value)) {
-          acc[key] = value;
-        }
-        return acc;
-      },
-      {}
-    );
-
-    const requestBody = {
-      username: data.user.email,
-      jb_token: data.user.jb_token,
-      job_title: search,
-      start: 0, // Always start from the beginning for every search
-      count: count,
-      filters: activeFilters,
-    };
-
-    // Execute API request
-    const response = await fetch(apiEndpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
+      return updatedFilters;
     });
+  }, []);
+  const setSearch = (value) => {
+    const search = typeof value === "string" ? value : value.target.value;
+    setSearchValue(search); // This is the correct usage
+    setSearchError("");
 
-    // Process response from the API
-    if (response.status === 200) {
-      const responseData = await response.json();
-      if (responseData.data.length > 0) {
-        // Set jobs to the newly fetched jobs
-        setJobs(responseData.data);
-        setPreviousSearch(search); // Update the previous search state
-        setIsLoading(false); // Stop loading after successfully fetching jobs
-      } else {
-        setIsLoading(false); // Stop loading when no data is returned
-      }
+    if (search.length > 1) {
+      debouncedApiCall(search); // Pass the correct variable to debouncedApiCall
     } else {
-      setError("Failed to fetch jobs"); // Handle non-200 responses
-      setIsLoading(false); // Ensure loading is stopped on error
-    }
-  };
-  const addResults = async (e) => {
-    setIsLoading(true);
-
-    // Prepare API request
-
-    setStart(jobs.length);
-    const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/job_search";
-
-    // Filter out null or undefined values from filters
-    const activeFilters = Object.entries(filters).reduce(
-      (acc, [key, value]) => {
-        if (value !== null && value !== undefined && !Number.isNaN(value)) {
-          acc[key] = value;
-        }
-        return acc;
-      },
-      {}
-    );
-
-    const requestBody = {
-      username: data.user.email,
-      jb_token: data.user.jb_token,
-      job_title: search,
-      start: start, //set to the length of the current list so it can add more to the list
-      count: count,
-      filters: activeFilters,
-    };
-
-    // Execute API request
-    const response = await fetch(apiEndpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
-    });
-
-    // Process response from the API
-    if (response.status === 200) {
-      const responseData = await response.json();
-      if (responseData.data.length > 0) {
-        // Append new jobs to the existing list
-        setJobs((prevJobs) => [...prevJobs, ...responseData.data]);
-        setPreviousSearch(search); // Update the previous search state
-        setIsLoading(false); // Stop loading after successfully fetching jobs
-      } else {
-        setIsLoading(false); // Stop loading when no data is returned
-      }
-    } else {
-      setError("There was a problem getting more jobs"); // Handle non-200 responses
-      setIsLoading(false); // Ensure loading is stopped on error
-    }
-  };
-  const checkKey = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      getResults();
-    }
-  };
-  const setFilterValue = (e) => {
-    const { name, value } = e.target;
-
-    // Determine if the current filter should be treated as a numeric value
-    const isNumericFilter = [
-      "date_range",
-      "visa_sponsored",
-      "min_salary",
-    ].includes(name);
-
-    let selectedValue;
-    if (isNumericFilter) {
-      // Parse numeric values, handling 'null' or empty string as null
-      selectedValue =
-        value === "null" || value === "" ? null : parseInt(value, 10);
-    } else {
-      // Non-numeric filters, treat 'null' string as null
-      selectedValue = value === "null" ? null : value;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: selectedValue,
-    }));
-  };
-  const setSearchValue = (value) => {
-    const searchValue = typeof value === "string" ? value : value.target.value;
-    setSearch(searchValue);
-    setError("");
-
-    if (searchValue.length > 1) {
-      debouncedApiCall(searchValue);
-    } else {
-      setAutocompleteSuggestions([]);
+      setJobTitles([]);
       setShowDropdown(false);
     }
   };
-  function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
+
+  const checkKey = (e) => {};
+  const selectSuggestion = (suggestion) => {
+    setSearchValue(suggestion); // Update the search state
+    setJobTitles([]); // remove suggestions
+    setShowDropdown(false); // Close the dropdown
+    getResults();
+  };
+
+  //Debounce calls
   const debouncedApiCall = debounce(async (input) => {
     try {
       const response = await fetch(
@@ -257,7 +87,7 @@ export default function Search() {
       );
       const data = await response.json();
       if (data.status === 200) {
-        setAutocompleteSuggestions(data.data);
+        setJobTitles(data.data);
         setShowDropdown(true);
       } else {
         setShowDropdown(false);
@@ -265,177 +95,146 @@ export default function Search() {
     } catch (error) {
       console.error("Error fetching job title suggestions:", error);
     }
-  }, 30); // Adjust debounce time as needed
+  }, 30);
 
-  const selectSuggestion = (suggestion, e) => {
-    setSearch(suggestion); // Update the search state
-    setShowDropdown(false); // Close the dropdown
-    getResults(); // Optionally trigger the search immediately
-  };
+  //Results display logic
+  const getResults = async () => {
+    //set states
+    setShowDropdown(false);
+    setJobTitles([]);
+    setResults([]);
+    setIsLoading(true);
+    setStart(0);
 
-  useEffect(() => {
-    const getCountries = async () => {
-      await fetchCountries();
+    if (!data) {
+      router.push("/login");
+    }
+
+    // Check if the search query is empty
+    if (searchValue === "") {
+      setSearchError("Please Enter a search");
+      setIsLoading(false); // Stop loading due to error (empty search query)
+      return; // Early return to prevent further execution
+    }
+
+    // Prepare API request
+    const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/job_search";
+
+    const activeFilters = Object.entries(filters).reduce(
+      (acc, [key, value]) => {
+        // Check if the value is an object and if it's empty
+        const isObject = typeof value === "object" && value !== null;
+        const isEmptyObject = isObject && Object.keys(value).length === 0;
+
+        // Exclude filters marked as "remove" or empty objects
+        if (value !== "remove" && !isEmptyObject) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {}
+    );
+
+    // set request body here
+    const requestBody = {
+      username: data.user.email,
+      jb_token: data.user.jb_token,
+      job_title: searchValue,
+      start: 0,
+      count: 30,
+      filters: activeFilters,
     };
 
-    getCountries();
-  }, []);
+    console.log(requestBody);
+
+    //execute request
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    //process response
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.status === 200 && responseData.data.length > 0) {
+        // Set jobs to the newly fetched jobs
+        setResults(responseData.data);
+        setStart(start + responseData.data.length); // set start for next Api call
+        setIsLoading(false); // Stop loading after successfully fetching jobs
+      } else {
+        setIsLoading(false); // Stop loading when no data is returned
+      }
+    } else {
+      setSearchError("Error fetching jobs please try again");
+      setIsLoading(false);
+    }
+  };
 
   return (
     <main className={styles.main}>
-      {/* SEARCH BAR NATIVE */}
-      <section className={styles.searchBox}>
-        <div style={{ animationDelay: "0.5s" }} className={styles.inputBox}>
+      {/* SEARCH BOX */}
+      <section className={styles.container}>
+        <div style={{ position: "relative" }} className="inputbox">
           <span>
             <input
-              onChange={setSearchValue}
               type="text"
-              name="search"
+              required
               placeholder="Search..."
-              value={search}
+              value={searchValue}
               onKeyDown={checkKey}
+              onChange={setSearch}
             />
-            <small className="error">{error && error}</small>
+            {searchError && <small className="error">{searchError}</small>}
           </span>
-          <FontAwesomeIcon
-            icon={faMagnifyingGlass}
-            className={styles.icon}
-            onClick={getResults}
-          />
-        </div>
+          <button style={{ border: "none" }} onClick={getResults}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
 
-        {/* Filters */}
-        <div style={{ animationDelay: "0.75s" }} className={styles.inputBox}>
-          <span className={styles.filterSpan}>
-            <small>Filters</small>
-            <div>
-              <select name="job_site" onChange={setFilterValue}>
-                <option value={null}>Select Job Board</option>
-                {boards.map((board) => (
-                  <option key={board} value={board}>
-                    {board}
-                  </option>
-                ))}
-              </select>
-
-              <select name="experience" onChange={setFilterValue}>
-                <option value={null}>Select Experience Level</option>
-                {experience.map((exp) => (
-                  <option key={exp} value={exp}>
-                    {exp}
-                  </option>
-                ))}
-              </select>
-
-              <select name="job_type" onChange={setFilterValue}>
-                <option value={null}>Select Employment Type</option>
-                {job_type.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-
-              <select name="job_type_cat" onChange={setFilterValue}>
-                <option value={null}>Select Work Location</option>
-                {job_type_cat.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-
-              <select name="date_range" onChange={setFilterValue}>
-                <option value={null}>Select Date Range</option>
-                <option value={1}>Last 7 Days</option>
-                <option value={2}>Last 14 Days</option>
-                <option value={3}>Last 30 Days</option>
-              </select>
-
-              <select name="min_salary" onChange={setFilterValue}>
-                <option value={0}>Select Minimum Salary</option>
-                {salary.map((option) => (
-                  <option key={option} value={option}>
-                    ${option}/Year (USD)
-                  </option>
-                ))}
-              </select>
-
-              <select name="country" onChange={setFilterValue}>
-                <option value={null}>Select Preferred Country</option>
-                {countries.map((country) => (
-                  <option key={country.name} value={country.name}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
-
-              <select name="visa_sponsored" onChange={setFilterValue}>
-                <option value={null}>Select Visa Preference</option>
-                <option value={0}>No Visa Required</option>
-                <option value={1}>Visa Required</option>
-              </select>
-            </div>
-          </span>
-        </div>
-
-        {/* Dropdown */}
-        {showDropdown && autocompleteSuggestions.length > 0 && (
-          <div className={styles.dropdown}>
-            {autocompleteSuggestions.map((suggestion, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={(e) => selectSuggestion(suggestion, e)}
-              >
-                {suggestion}
-              </button>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* CONDITIONALLY DISPLAYED JOB DISPLAY */}
-      <section
-        style={{ animationDelay: "1s" }}
-        className={styles.searchDisplay}
-      >
-        {isLoading && <Loading />}
-        {!isLoading && search === "" && jobs.length === 0 && <DisplayJobs />}
-        {!isLoading && search !== "" && jobs.length === 0 && (
-          <div className={styles.noJobs}>
-            <p>
-              <FontAwesomeIcon icon={faMagnifyingGlass} /> Please enter a search
-              in our premium search engine.
-            </p>
-            <small>
-              There are {jobs.length} results for your search &quot;{search}
-              &quot;.
-            </small>
-          </div>
-        )}
-        {!isLoading && jobs.length > 0 && (
-          <div className={styles.jobListing}>
-            <div className="job-1x-display">
-              {jobs.map((job, index) => (
-                <JobDisplay job={job} index={index} key={index} />
+          {showDropdown && jobTitles.length > 0 && (
+            <div className={styles.dropdown}>
+              {jobTitles.map((suggestion, index) => (
+                <button
+                  className={styles.item}
+                  key={index}
+                  type="button"
+                  onClick={(e) => selectSuggestion(suggestion)}
+                >
+                  {suggestion}
+                </button>
               ))}
             </div>
-          </div>
-        )}
-        {!isLoading && jobs.length > 0 && (
-          <button
-            style={{ display: "block", width: "100%" }}
-            onClick={addResults}
-            type="button"
-            className="primary-button"
-          >
-            More results for &ldquo;{search}&rdquo;
-          </button>
-        )}
+          )}
+        </div>
+
+        <FilterBox filter={filters} update={setFilter} />
       </section>
 
-      {/* NEXT BUTTON TO TRIGGER MORE SEARCHES */}
+      {/* DISPLAY STORIES */}
+      {isLoading && <Loading />}
+      {!isLoading && searchValue === "" && results.length === 0 && (
+        <DisplayJobs />
+      )}
+      {!isLoading && searchValue !== "" && results.length === 0 && (
+        <section className={styles.noJobs}>
+          <p>
+            <FontAwesomeIcon icon={faMagnifyingGlass} /> Please enter a search
+            in our premium search engine.
+          </p>
+          <small>
+            There are {results.length} results for your search &quot;
+            {searchValue}
+            &quot;.
+          </small>
+        </section>
+      )}
+      {!isLoading && results.length > 0 && (
+        <section className={styles.listings}>
+          {results.map((job, index) => (
+            <JobDisplay job={job} index={index} key={index} />
+          ))}
+        </section>
+      )}
     </main>
   );
 }
