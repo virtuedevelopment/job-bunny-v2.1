@@ -146,6 +146,8 @@ export default function Search() {
       filters: activeFilters,
     };
 
+    console.log(requestBody)
+
     //execute request
     const response = await fetch(apiEndpoint, {
       method: "POST",

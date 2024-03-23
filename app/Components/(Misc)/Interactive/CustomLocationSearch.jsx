@@ -1,65 +1,86 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import styles from "./interactive.module.css";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      func(...args);
-    }, wait);
-  };
-}
-
 export default function CustomLocationSearch({ update }) {
-  const [location, setLocation] = useState("");
+  const [locationInput, setLocationInput] = useState("");
   const [dropdown, setDropdown] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const fetchPlaces = async (searchText) => {
-    if (searchText.length > 2) {
-      try {
-        const params = new URLSearchParams({
-          q: searchText,
-          maxRows: 50,
-          username: "virtuetechnologies",
-          style: "FULL",
-          featureClass: "P",
-        });
+  // Debounce function similar to the provided example
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func(...args);
+      }, wait);
+    };
+  }
 
-        const response = await fetch(
-          `https://api.geonames.org/searchJSON?${params}`
-        );
-        const data = await response.json();
-        setDropdown(data.geonames || []);
+  // Function to call the API
+  const fetchLocations = async (query) => {
+    try {
+      const response = await fetch(
+        "https://virtue-engine.vercel.app/getlocations",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        }
+      );
+      const data = await response.json();
+
+      if (data && data.data.length > 0) {
+        setDropdown(data.data);
         setDropdownVisible(true);
-      } catch (error) {
-        console.error("Error fetching places:", error);
+      } else {
         setDropdown([]);
         setDropdownVisible(false);
       }
+    } catch (error) {
+      console.error("Failed to fetch locations:", error);
+      setDropdownVisible(false);
+    }
+  };
+
+  // Debounced version of fetchLocations
+  const debouncedFetchLocations = debounce(fetchLocations, 113);
+
+  const handleLocationInputChange = (e) => {
+    const input = e.target.value;
+    setLocationInput(input);
+    if (input.length > 1) {
+      debouncedFetchLocations(input);
     } else {
       setDropdown([]);
       setDropdownVisible(false);
     }
   };
 
-  // Wrapped fetchPlaces with debounce
-  const debouncedFetchPlaces = debounce(fetchPlaces, 300);
+  const selectLocation = (location) => {
+    // Construct the display string with city, state (if available), and country
+    const displayString = `${location.city}${
+      location.state?.full ? `, ${location.state.full}` : ""
+    }, ${location.country}`;
+    setLocationInput(displayString);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setLocation(value);
-    debouncedFetchPlaces(value);
-  };
+    // Construct the object to pass to the update method
+    const updateObject = {
+      city: location.city,
+      country: location.country,
+    };
 
-  const setPreferredLocation = (loc) => {
-    const state = loc.adminCodes1 ? loc.adminCodes1.ISO3166_2 : loc.adminName1;
-    setLocation(`${loc.name}, ${state}, ${loc.countryName}`);
-    update({ country: loc.countryName, state: state, city: loc.name });
-    setDropdownVisible(false); // This ensures dropdown is not visible after selection
+    // Conditionally add state and state_short if they exist
+    if (location.state) {
+      updateObject.state = location.state.full;
+      updateObject.state_short = location.state.short;
+    }
+
+    update(updateObject);
+    setDropdownVisible(false); // Optionally hide the dropdown after selection
   };
 
   return (
@@ -73,9 +94,9 @@ export default function CustomLocationSearch({ update }) {
             <small>Enter preferred location</small>
             <input
               type="text"
-              placeholder="Austin, TX, United States"
-              value={location}
-              onChange={handleChange}
+              placeholder="Enter a city"
+              value={locationInput}
+              onChange={handleLocationInputChange}
             />
           </span>
           <FontAwesomeIcon icon={faLocationDot} />
@@ -83,14 +104,17 @@ export default function CustomLocationSearch({ update }) {
 
         {dropdownVisible && dropdown.length > 0 && (
           <div className={styles.dropdown}>
-            {dropdown.map((qlocation) => (
+            {dropdown.map((loc, index) => (
               <button
                 className={styles.locationItem}
-                key={qlocation.geonameId}
-                onClick={() => setPreferredLocation(qlocation)}
+                key={index}
+                onClick={() => selectLocation(loc)}
               >
                 <FontAwesomeIcon icon={faLocationDot} />
-                <p>{`${qlocation.name}, ${qlocation.adminName1}, ${qlocation.countryName}`}</p>
+                <p>
+                  {loc.city}
+                  {loc.state?.full ? `, ${loc.state.full}` : ""}, {loc.country}
+                </p>
               </button>
             ))}
           </div>
