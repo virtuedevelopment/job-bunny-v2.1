@@ -6,7 +6,7 @@ import JobDisplay from "../Object Displays/JobDisplay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
-export default function InifiniteScroll({ listings, update, info }) {
+export default function InifiniteScroll({ listings, update, count }) {
   //initialize scroll position listener for the listings component
   const [isLoading, setIsLoading] = useState(false);
   const listingsRef = useRef(null); // Ref for the scrollable section
@@ -42,10 +42,10 @@ export default function InifiniteScroll({ listings, update, info }) {
   return (
     <section className={styles.listings} ref={listingsRef}>
       <div className={styles.informationBox}>
-          <span>
-            <FontAwesomeIcon icon={faCircleInfo}/>
-            <p>750 Results</p>
-          </span>
+        <span>
+          <FontAwesomeIcon icon={faCircleInfo} />
+          <p>{count && count} Results</p>
+        </span>
       </div>
       {listings &&
         listings.map((job, index) => (

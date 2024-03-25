@@ -70,7 +70,7 @@ const date_range = [
 ];
 const visa_sponsored = [
   { name: "No sponsorship required", value: 0 },
-  { name: "Visa sponsorship required", value: 1 },
+  { name: "Sponsorship required", value: 1 },
 ];
 
 //gets empty filter object from parent function
@@ -146,7 +146,7 @@ export default function FilterBox({ filter, update }) {
         update={setJobTypeCat}
       />
       <CustomDropdown
-        title={"Visa Sponsorship"}
+        title={"Set Visa Preference"}
         list={visa_sponsored}
         icon={faPlane}
         update={setVisaSponsored}

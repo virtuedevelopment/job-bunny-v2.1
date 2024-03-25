@@ -77,7 +77,11 @@ export default function DisplayJobs() {
       {/* Show message when not loading and no jobs */}
       {jobs.length > 0 && (
         <div className={styles.jobListing}>
-          <h3>Recommended jobs from our premium search engine:</h3>
+          {jobs.length > 0 && (
+            <h3 className={styles.title}>
+              Recommended jobs from our premium search engine:
+            </h3>
+          )}
           <div className="job-1x-display">
             {jobs.map((job, index) => (
               <JobDisplay job={job} index={index} key={index} />

@@ -370,10 +370,7 @@
 
 /* MEDIA QUERY */
 @media (max-width: 1200px) {
-  .job-1x-display {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
-  }
+
 }
 
 @media (max-width: 750px) {

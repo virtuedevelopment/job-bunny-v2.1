@@ -47,7 +47,7 @@ export default function CustomLocationSearch({ update }) {
   };
 
   // Debounced version of fetchLocations
-  const debouncedFetchLocations = debounce(fetchLocations, 113);
+  const debouncedFetchLocations = debounce(fetchLocations, 50);
 
   const handleLocationInputChange = (e) => {
     const input = e.target.value;
@@ -94,7 +94,7 @@ export default function CustomLocationSearch({ update }) {
             <small>Enter preferred location</small>
             <input
               type="text"
-              placeholder="Enter a city"
+              placeholder="Enter preferred city.."
               value={locationInput}
               onChange={handleLocationInputChange}
             />

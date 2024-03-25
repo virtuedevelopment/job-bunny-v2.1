@@ -45,6 +45,7 @@
   gap: 0.75rem;
 }
 .item {
+  width: 100%;
   padding: 0.75rem;
   border: none;
   display: flex;

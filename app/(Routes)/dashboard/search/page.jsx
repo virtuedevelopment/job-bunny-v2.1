@@ -35,6 +35,7 @@ export default function Search() {
   const [filters, setFilters] = useState({}); //managed by the filterbox component
   const [showDropdown, setShowDropdown] = useState(false); // To control the visibility of the dropdown
   const [results, setResults] = useState([]); //result list for job search
+  const [count, setCount] = useState(0);
 
   //Utilitiy functions
   const setFilter = useCallback(({ name, value }) => {
@@ -99,7 +100,8 @@ export default function Search() {
   }, 30);
 
   //Results display logic
-  const getResults = async () => {
+  const getResults = async (e) => {
+    e.preventDefault();
     //set states
     setShowDropdown(false);
     setJobTitles([]);
@@ -146,7 +148,7 @@ export default function Search() {
       filters: activeFilters,
     };
 
-    console.log(requestBody)
+    console.log(requestBody);
 
     //execute request
     const response = await fetch(apiEndpoint, {
@@ -160,6 +162,7 @@ export default function Search() {
       const responseData = await response.json();
       if (responseData.status === 200 && responseData.data.length > 0) {
         // Set jobs to the newly fetched jobs
+        setCount(responseData.count);
         setResults(responseData.data);
         setStart(start + responseData.data.length); // set start for next Api call
         setIsLoading(false); // Stop loading after successfully fetching jobs
@@ -225,37 +228,39 @@ export default function Search() {
     <main className={styles.main}>
       {/* SEARCH BOX */}
       <section className={styles.container}>
-        <div style={{ position: "relative" }} className="inputbox">
-          <span>
-            <input
-              type="text"
-              required
-              placeholder="Search..."
-              value={searchValue}
-              onKeyDown={checkKey}
-              onChange={setSearch}
-            />
-            {searchError && <small className="error">{searchError}</small>}
-          </span>
-          <button style={{ border: "none" }} onClick={getResults}>
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
+        <form onSubmit={getResults}>
+          <div style={{ position: "relative" }} className="inputbox">
+            <span>
+              <input
+                type="text"
+                required
+                placeholder="Search..."
+                value={searchValue}
+                onKeyDown={checkKey}
+                onChange={setSearch}
+              />
+              {searchError && <small className="error">{searchError}</small>}
+            </span>
+            <button style={{ border: "none" }} type="submit">
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
 
-          {showDropdown && jobTitles.length > 0 && (
-            <div className={styles.dropdown}>
-              {jobTitles.map((suggestion, index) => (
-                <button
-                  className={styles.item}
-                  key={index}
-                  type="button"
-                  onClick={(e) => selectSuggestion(suggestion)}
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+            {showDropdown && jobTitles.length > 0 && (
+              <div className={styles.dropdown}>
+                {jobTitles.map((suggestion, index) => (
+                  <button
+                    className={styles.item}
+                    key={index}
+                    type="button"
+                    onClick={(e) => selectSuggestion(suggestion)}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </form>
 
         <FilterBox filter={filters} update={setFilter} />
       </section>
@@ -279,7 +284,11 @@ export default function Search() {
         </section>
       )}
       {!isLoading && results.length > 0 && (
-        <InifiniteScroll listings={results} update={updateResults} />
+        <InifiniteScroll
+          listings={results}
+          update={updateResults}
+          count={count}
+        />
       )}
     </main>
   );

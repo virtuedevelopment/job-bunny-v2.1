@@ -1,47 +1,123 @@
 .jobItem {
   width: 100%;
+  position: relative;
   padding: 1rem 1.5rem;
-  border-radius: var(--border-rad-small);
+  border-radius: var(--border-rad-large);
   box-shadow: var(--box-shadow);
   transition: var(--transition-out);
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1rem;
+  background: rgb(252, 253, 253);
+  background: linear-gradient(
+    90deg,
+    rgba(252, 253, 253, 1) 63%,
+    rgba(157, 172, 255, 0.5) 100%
+  );
 }
 .jobItem:hover {
   transition: var(--transition-in);
-  background-color: var(--secondary);
+  background: linear-gradient(
+    90deg,
+    rgba(252, 253, 253, 1) 25%,
+    rgba(157, 172, 255, 0.95) 100%
+  );
 }
-.jobItem p {
-  color: var(--accent-black);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.jobItem span {
+.jobtag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.35rem 0.5rem;
+  border-top-left-radius: var(--border-rad-large);
+  border-bottom-right-radius: var(--border-rad-large);
+  background-color: var(--success);
+  color: #248f24;
+  font-weight: 600;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
-.jobItem span small {
+.jobtagPremium {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.35rem 0.5rem;
+  border-top-left-radius: var(--border-rad-large);
+  border-bottom-right-radius: var(--border-rad-large);
+  background-color: var(--accent-secondary);
+  color: var(--main-white);
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.75rem;
-  padding: 0.15rem 0.5rem;
-  background-color: var(--primary);
-  color: var(--accent-black);
-  border-radius: var(--border-rad-small);
-  font-size: var(--mini-text);
+  gap: 0.5rem;
 }
 
-.jobItem small {
-  padding: 0.15rem 0.5rem;
-  background-color: var(--primary);
+.jobItem h3 {
+  margin-top: 2.25rem;
+  font-size: var(--subtitle);
   color: var(--accent-black);
-  border-radius: var(--border-rad-small);
-  font-size: var(--mini-text);
+  transition: var(--transition-out);
+}
+.jobItem .location {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.jobItem .location p {
+  color: var(--accent-grey);
+  font-weight: 500;
+}
+.jobItem .details {
+  margin-top: 0.75rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.jobItem .details span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  background-color: var(--accent-primary);
+  border-radius: var(--border-rad-large);
+  color: var(--accent-white);
+  font-size: 14px;
+  padding: 0.25rem 0.5rem;
+}
+.jobItem .description {
+  margin-top: 1rem;
+  width: 100%;
+  color: var(--accent-black);
+  line-height: 2;
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.jobItem:hover h3 {
+  color: var(--accent-primary);
+  transition: var(--transition-in);
+}
+
+.jobItem .additional {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.jobItem .additional span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  background-color: var(--accent-primary);
+  border-radius: var(--border-rad-large);
+  color: var(--accent-white);
+  font-size: 12px;
+  padding: 0.25rem 0.5rem;
 }
 
 .imageIcon {
@@ -67,10 +143,10 @@
   cursor: pointer;
   padding: 0.75rem 1.25rem;
 }
-.faq:hover{
-    transition: var(--transition-in);
-    background-color: var(--accent-secondary);
-    color: var(--main-white);
+.faq:hover {
+  transition: var(--transition-in);
+  background-color: var(--accent-secondary);
+  color: var(--main-white);
 }
 .faq h4 {
   font-size: var(--subhead);
@@ -86,16 +162,23 @@
 }
 
 @media (max-width: 1200px) {
-  .jobItem {
-    grid-template-columns: 1fr;
-    row-gap: 1.5rem;
+  .jobItem .details {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .jobItem .location {
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 }
-@media (max-width:750px) {
-    .faq h4{
-        font-size: var(--body-text);
-    }
-    .faq p{
-        font-size: var(--mini-text);
-    }
+@media (max-width: 750px) {
+  .jobItem h3 {
+    font-size: var(--subhead);
+  }
+  .faq h4 {
+    font-size: var(--body-text);
+  }
+  .faq p {
+    font-size: var(--mini-text);
+  }
 }
