@@ -35,6 +35,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
+  font-weight: 400;
 }
 .jobtagPremium {
   position: absolute;
@@ -175,12 +176,18 @@
 }
 @media (max-width: 750px) {
   .jobItem h3 {
-    font-size: var(--subhead);
+    font-size: var(--body-text);
+  }
+  .jobItem .location p {
+    font-size: 10px;
   }
   .faq h4 {
     font-size: var(--body-text);
   }
   .faq p {
     font-size: var(--mini-text);
+  }
+  .jobItem .details span {
+    font-size: 10px;
   }
 }

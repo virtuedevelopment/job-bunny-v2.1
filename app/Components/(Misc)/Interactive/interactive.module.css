@@ -115,9 +115,6 @@
   scroll-behavior: smooth;
   border-radius: var(--border-rad-large);
 }
-.listings::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
 .informationBox{
   position: absolute;
   top: 0;
