@@ -8,8 +8,31 @@
 }
 .container {
   width: 100%;
-  display: grid;
-  row-gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.toggleButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--border-rad-small);
+  background-color: var(--accent-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-out);
+  color: var(--accent-primary);
+}
+.toggleButton:hover {
+  transition: var(--transition-in);
+  background-color: var(--accent-primary);
+  color: var(--main-white);
+}
+.toggleButton svg {
+  width: 15px;
+  height: 15px;
 }
 .filters {
   background-color: var(--accent-white);

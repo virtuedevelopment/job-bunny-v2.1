@@ -10,7 +10,11 @@ import Loading from "@/app/loading";
 import styles from "./search.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faList,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 function debounce(func, wait) {
   let timeout;
@@ -23,7 +27,6 @@ function debounce(func, wait) {
 }
 
 export default function Search() {
-  
   //init states
   const router = useRouter(); // incase users are not logged in
   const { data } = useSession(); // getting user information
@@ -33,11 +36,15 @@ export default function Search() {
   const [searchError, setSearchError] = useState(); //dealing with search issues
   const [isLoading, setIsLoading] = useState(false); // for suspense loading
   const [filters, setFilters] = useState({}); //managed by the filterbox component
+  const [filterToggle, setFilterToggle] = useState(false); //toggle filter box showing
   const [showDropdown, setShowDropdown] = useState(false); // To control the visibility of the dropdown
   const [results, setResults] = useState([]); //result list for job search
   const [count, setCount] = useState(0);
 
   //Utilitiy functions
+  const toggleFilter = () => {
+    setFilterToggle(!filterToggle);
+  };
   const setFilter = useCallback(({ name, value }) => {
     setFilters((currentFilters) => {
       const updatedFilters = { ...currentFilters };
@@ -108,6 +115,7 @@ export default function Search() {
   const getResults = async (e) => {
     //set states
     setShowDropdown(false);
+    setSearchError("");
     setJobTitles([]);
     setResults([]);
     setIsLoading(true);
@@ -232,39 +240,57 @@ export default function Search() {
     <main className={styles.main}>
       {/* SEARCH BOX */}
       <section className={styles.container}>
-        <div style={{ position: "relative" }} className="inputbox">
-          <span>
-            <input
-              type="text"
-              required
-              placeholder="Search..."
-              value={searchValue}
-              onKeyDown={checkKey}
-              onChange={setSearch}
-            />
-            {searchError && <small className="error">{searchError}</small>}
-          </span>
-          <button style={{ border: "none" }} onClick={getResults}>
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
+        <span
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "1rem",
+            width: "100%",
+          }}
+        >
+          <div style={{ position: "relative" }} className="inputbox">
+            <span>
+              <input
+                type="text"
+                required
+                placeholder="Search..."
+                value={searchValue}
+                onKeyDown={checkKey}
+                onChange={setSearch}
+              />
+              {searchError && <small className="error">{searchError}</small>}
+            </span>
+            <button style={{ border: "none" }} onClick={getResults}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
+
+            {showDropdown && jobTitles.length > 0 && (
+              <div className={styles.dropdown}>
+                {jobTitles.map((suggestion, index) => (
+                  <button
+                    className={styles.item}
+                    key={index}
+                    type="button"
+                    onClick={(e) => selectSuggestion(suggestion)}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <button className={styles.toggleButton} onClick={toggleFilter}>
+            {filterToggle ? (
+              <FontAwesomeIcon icon={faCircleXmark} />
+            ) : (
+              <FontAwesomeIcon icon={faList} />
+            )}
           </button>
+        </span>
 
-          {showDropdown && jobTitles.length > 0 && (
-            <div className={styles.dropdown}>
-              {jobTitles.map((suggestion, index) => (
-                <button
-                  className={styles.item}
-                  key={index}
-                  type="button"
-                  onClick={(e) => selectSuggestion(suggestion)}
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <FilterBox filter={filters} update={setFilter} />
+        {filterToggle && <FilterBox filter={filters} update={setFilter} />}
       </section>
 
       {/* DISPLAY STORIES */}
