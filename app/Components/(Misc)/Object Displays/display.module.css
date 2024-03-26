@@ -8,8 +8,8 @@
   background: rgb(252, 253, 253);
   background: linear-gradient(
     90deg,
-    rgba(252, 253, 253, 1) 63%,
-    rgba(157, 172, 255, 0.5) 100%
+    rgba(252, 253, 253, 1) 75%,
+    rgba(157, 172, 255, 0.25) 100%
   );
 }
 .jobItem:hover {
@@ -28,6 +28,7 @@
   border-top-left-radius: var(--border-rad-large);
   border-bottom-right-radius: var(--border-rad-large);
   background-color: var(--success);
+  font-size: var(--tiny-text);
   color: #248f24;
   font-weight: 600;
   display: flex;
@@ -44,6 +45,7 @@
   border-bottom-right-radius: var(--border-rad-large);
   background-color: var(--accent-secondary);
   color: var(--main-white);
+  font-size: var(--tiny-text);
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -52,13 +54,13 @@
 }
 
 .jobItem h3 {
-  margin-top: 2.25rem;
-  font-size: var(--subtitle);
+  margin-top: 1rem;
+  font-size: var(--subhead);
   color: var(--accent-black);
   transition: var(--transition-out);
 }
 .jobItem .location {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -66,10 +68,10 @@
 }
 .jobItem .location p {
   color: var(--accent-grey);
-  font-weight: 500;
+  font-weight: 300;
 }
 .jobItem .details {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -84,7 +86,7 @@
   background-color: var(--accent-primary);
   border-radius: var(--border-rad-large);
   color: var(--accent-white);
-  font-size: 14px;
+  font-size: 12px;
   padding: 0.25rem 0.5rem;
 }
 .jobItem .description {
@@ -102,7 +104,7 @@
 }
 
 .jobItem .additional {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;

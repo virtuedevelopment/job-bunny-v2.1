@@ -5,7 +5,6 @@ import React, { useState, useEffect, useCallback } from "react";
 
 import FilterBox from "./FilterBox";
 import DisplayJobs from "../(Main)/DisplayJobs";
-import JobDisplay from "@/app/Components/(Misc)/Object Displays/JobDisplay";
 import InifiniteScroll from "@/app/Components/(Misc)/Interactive/InifiniteScroll";
 import Loading from "@/app/loading";
 import styles from "./search.module.css";
@@ -24,6 +23,7 @@ function debounce(func, wait) {
 }
 
 export default function Search() {
+  
   //init states
   const router = useRouter(); // incase users are not logged in
   const { data } = useSession(); // getting user information
@@ -65,7 +65,12 @@ export default function Search() {
     }
   };
 
-  const checkKey = (e) => {};
+  const checkKey = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      getResults();
+    }
+  };
   const selectSuggestion = (suggestion) => {
     setSearchValue(suggestion); // Update the search state
     setJobTitles([]); // remove suggestions
@@ -101,7 +106,6 @@ export default function Search() {
 
   //Results display logic
   const getResults = async (e) => {
-    e.preventDefault();
     //set states
     setShowDropdown(false);
     setJobTitles([]);
@@ -228,39 +232,37 @@ export default function Search() {
     <main className={styles.main}>
       {/* SEARCH BOX */}
       <section className={styles.container}>
-        <form onSubmit={getResults}>
-          <div style={{ position: "relative" }} className="inputbox">
-            <span>
-              <input
-                type="text"
-                required
-                placeholder="Search..."
-                value={searchValue}
-                onKeyDown={checkKey}
-                onChange={setSearch}
-              />
-              {searchError && <small className="error">{searchError}</small>}
-            </span>
-            <button style={{ border: "none" }} type="submit">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
+        <div style={{ position: "relative" }} className="inputbox">
+          <span>
+            <input
+              type="text"
+              required
+              placeholder="Search..."
+              value={searchValue}
+              onKeyDown={checkKey}
+              onChange={setSearch}
+            />
+            {searchError && <small className="error">{searchError}</small>}
+          </span>
+          <button style={{ border: "none" }} onClick={getResults}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
 
-            {showDropdown && jobTitles.length > 0 && (
-              <div className={styles.dropdown}>
-                {jobTitles.map((suggestion, index) => (
-                  <button
-                    className={styles.item}
-                    key={index}
-                    type="button"
-                    onClick={(e) => selectSuggestion(suggestion)}
-                  >
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </form>
+          {showDropdown && jobTitles.length > 0 && (
+            <div className={styles.dropdown}>
+              {jobTitles.map((suggestion, index) => (
+                <button
+                  className={styles.item}
+                  key={index}
+                  type="button"
+                  onClick={(e) => selectSuggestion(suggestion)}
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <FilterBox filter={filters} update={setFilter} />
       </section>
