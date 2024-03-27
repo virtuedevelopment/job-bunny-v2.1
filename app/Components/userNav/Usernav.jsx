@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Usernav() {
-  const [toggleMenu, setToggleMenu] = useState(true);
+  const [toggleMenu, setToggleMenu] = useState(false);
   const { data, status } = useSession();
 
   const handleToggle = (e) => {
@@ -25,7 +25,11 @@ export default function Usernav() {
   };
 
   return (
-    <aside className={`${styles.menu} ${toggleMenu ? styles.menuOpened : styles.menuClosed}`}>
+    <aside
+      className={`${styles.menu} ${
+        toggleMenu ? styles.menuOpened : styles.menuClosed
+      }`}
+    >
       <div className={styles.menuOption}>
         {toggleMenu && <p>Welcome, &nbsp;{data?.user?.name?.first}</p>}
         <button type="button" onClick={handleToggle}>
@@ -36,13 +40,16 @@ export default function Usernav() {
         </button>
       </div>
 
-      <div className={styles.menuLinkList} >
-      {configurations.userRoutes.map((route) => (
-        <Link href={route.url} key={route.url} className={styles.menuLink}>
-          <FontAwesomeIcon icon={route.icon} className={styles.menuToggleLink} />
-          {toggleMenu && <p>{route.route}</p>}
-        </Link>
-      ))}
+      <div className={styles.menuLinkList}>
+        {configurations.userRoutes.map((route) => (
+          <Link href={route.url} key={route.url} className={styles.menuLink}>
+            <FontAwesomeIcon
+              icon={route.icon}
+              className={styles.menuToggleLink}
+            />
+            {toggleMenu && <p>{route.route}</p>}
+          </Link>
+        ))}
       </div>
 
       <div className={styles.menuOption}>

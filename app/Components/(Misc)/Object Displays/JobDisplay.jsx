@@ -10,6 +10,8 @@ import {
   faBuilding,
   faClock,
   faStar,
+  faBriefcase,
+  faCompass
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function JobDisplay({ job, index }) {
@@ -43,7 +45,7 @@ export default function JobDisplay({ job, index }) {
   return (
     <>
       {job && (
-        <Link className={styles.jobItem} href={job.job_Url}>
+        <Link target="_blank" className={styles.jobItem} href={job.job_Url}>
           <span className={premium ? styles.jobtagPremium : styles.jobtag}>
             {premium ? (
               <>
@@ -61,8 +63,8 @@ export default function JobDisplay({ job, index }) {
           <h3>{job.job_title}</h3>
 
           <span className={styles.location}>
-            <p>{job.company}</p>
-            <p>{job.location}</p>
+            <p><FontAwesomeIcon icon={faBriefcase}/> {job.company}</p>
+            <p><FontAwesomeIcon icon={faCompass}/> {job.location}</p>
           </span>
 
           <div className={styles.details}>

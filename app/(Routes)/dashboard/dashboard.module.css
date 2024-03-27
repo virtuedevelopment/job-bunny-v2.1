@@ -31,27 +31,22 @@
 
 /* GET JOBS COMPONENT */
 .DisplayJobs {
-  margin-top: 2rem;
-  padding: var(--dashboard-padding);
+  margin-top: 1rem;
+  padding-right: 1rem;
   border-radius: var(--border-rad-small);
-  -webkit-box-shadow: var(--box-shadow);
-  box-shadow: var(--box-shadow);
   width: 100%;
   scroll-behavior: smooth;
   /* opacity: 0; */
 
   /* animation: var(--fadeInFast);
   animation-delay: 1.25s; */
-  height: 60svh;
+  height: 125svh;
   overflow-y: scroll;
 }
-.DisplayJobs::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
 .DisplayJobs .title{
-  color: var(--main-black);
-  font-size: var(--subtitle);
-  margin-bottom: 1.25rem;
+  color: var(--accent-black);
+  font-size: var(--subhead);
+  margin-bottom: 0.75rem;
 }
 
 

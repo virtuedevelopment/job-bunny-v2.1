@@ -244,8 +244,8 @@ export default function Search() {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            gap: "1rem",
+            justifyContent: "space-between",
+            gap: "0.75rem",
             width: "100%",
           }}
         >

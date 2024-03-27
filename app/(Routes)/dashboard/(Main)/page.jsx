@@ -12,7 +12,7 @@ export default function Dashboard() {
   return (
     <main className={styles.main} > 
         <WelcomeBox/>
-        <DashboardStatistics/>
+        {/* <DashboardStatistics/> */}
         <DisplayJobs/>
         <div className={styles.secondaryApps} >
             
