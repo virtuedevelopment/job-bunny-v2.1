@@ -39,7 +39,7 @@ box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.05);
 .menuToggle {
   width: 15px;
   height: 15px;
-  color: var(--accent-primary);
+  color: var(--main-white);
   transition: var(--transition-out);
   cursor: pointer;
 }

@@ -78,6 +78,12 @@
   /* animation: var(--fadeInFast);
   animation-delay: 1s; */
 }
+.mobileImg{
+  display: none;
+}
+.desktopImg{
+  display: block;
+}
 
 /* Job Boards Section */
 .jobBoards {
@@ -298,6 +304,12 @@
   }
   .heroImageBox img {
     object-fit: contain;
+  }
+  .mobileImg{
+    display: block;
+  }
+  .desktopImg{
+    display: none;
   }
 
   .features {

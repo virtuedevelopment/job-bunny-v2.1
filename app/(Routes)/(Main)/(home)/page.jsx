@@ -69,11 +69,21 @@ export default function Home() {
 
         <div className={styles.heroImageBox}>
           <Image
+            className={styles.desktopImg}
             src={"/heroImage.svg"}
             width={1750}
             height={1750}
             alt="Computer displaying Job Bunny Application"
           />
+          
+          <Image
+            className={styles.mobileImg}
+            src={"/desktop.svg"}
+            width={1750}
+            height={1750}
+            alt="Computer displaying Job Bunny Application"
+          />
+
         </div>
       </section>
 

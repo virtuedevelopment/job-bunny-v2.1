@@ -63,8 +63,8 @@ export default function JobDisplay({ job, index }) {
           <h3>{job.job_title}</h3>
 
           <span className={styles.location}>
-            <p><FontAwesomeIcon icon={faBriefcase}/> {job.company}</p>
-            <p><FontAwesomeIcon icon={faCompass}/> {job.location}</p>
+            {job.company && (<p><FontAwesomeIcon icon={faBriefcase}/> {job.company}</p>)}
+            {job.location && (<p><FontAwesomeIcon icon={faCompass}/> {job.location}</p>)}
           </span>
 
           <div className={styles.details}>

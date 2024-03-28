@@ -1,12 +1,25 @@
 .nav {
   background-color: var(--primary);
   padding: var(--navigation-padding-regular);
+  /* padding: var(--navigation-padding-regular);
 
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   align-items: center;
-  position: relative;
+  position: relative; */
 }
+
+.navbox {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  position: relative;
+  border: solid 1px var(--accent-black);
+  border-radius: var(--border-rad-large);
+  padding: 0.75rem 1rem;
+}
+
 .nav ul {
   display: flex;
   align-items: center;
@@ -23,10 +36,10 @@
   color: var(--accent-primary);
   transition: var(--transition-in);
 }
-.mobilenavbutton{
+.mobilenavbutton {
   display: none;
 }
-.mobileAside{
+.mobileAside {
   position: fixed;
   left: -275px;
   top: 0;
@@ -44,7 +57,7 @@
   justify-content: flex-start;
   gap: 1rem;
 }
-.mobileAsideOpen{
+.mobileAsideOpen {
   position: fixed;
   left: 0px;
   top: 0;
@@ -61,37 +74,37 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 1rem;
-  -webkit-box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.25); 
-  box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.25);
+  -webkit-box-shadow: 5px 0px 8px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 0px 8px 1px rgba(0, 0, 0, 0.25);
 }
-.closeButton{
+.closeButton {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--button-padding-small);
 }
-.closeButton p{
+.closeButton p {
   color: var(--primary);
 }
-.closeButton button{
+.closeButton button {
   border: none;
   background-color: transparent;
   color: var(--primary) !important;
   cursor: pointer;
 }
-.closeButton button .icon{
+.closeButton button .icon {
   width: 20px;
   height: 20px;
   color: var(--primary);
   transition: var(--transition-out);
 }
-.closeButton button .icon:hover{
+.closeButton button .icon:hover {
   transition: var(--transition-in);
   color: var(--accent-black);
 }
 
-.asideLink{
+.asideLink {
   width: 100%;
   border-radius: var(--border-rad-small);
   padding: var(--button-padding-small);
@@ -101,42 +114,44 @@
   border: none;
   cursor: pointer;
 }
-.asideLink span{
+.asideLink span {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 0.75rem;
 }
-.asideLink:hover{
+.asideLink:hover {
   background-color: var(--accent-white);
   color: var(--accent-primary);
   transition: var(--transition-in);
 }
 
 /* Auth Box Styling */
-.authbox{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1rem;
+.authbox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 @media (max-width: 1200px) {
-  .authbox{
+  .authbox {
     display: none;
   }
-  .nav ul{
+  .nav ul {
     display: none;
   }
-  .nav{
+  .nav {
     padding: var(--navigation-padding-mobile);
+  }
+  .navbox {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .mobilenavbutton{
+  .mobilenavbutton {
     display: block;
     width: 50px;
     height: 50px;
@@ -144,10 +159,9 @@
     border: none;
     cursor: pointer;
   }
-  .mobilenavbutton .icon{
+  .mobilenavbutton .icon {
     width: 25px;
     height: 25px;
     color: var(--main-black);
   }
-
 }

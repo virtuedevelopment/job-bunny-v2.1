@@ -8,21 +8,23 @@ import Mobilenav from "./Mobilenav";
 export default function Navbar() {
   return (
     <nav className={styles.nav}>
-      <Mobilenav />
+      <div className={styles.navbox}>
+        <Mobilenav />
 
-      <Link className="logo" href={"/"}>
-        #jobbunny
-      </Link>
+        <Link className="logo" href={"/"}>
+          #jobbunny
+        </Link>
 
-      <ul>
-        {configurations.mainRoutes.map((route) => (
-          <li key={route.route} >
-            <Link href={route.url}>{route.route}</Link>
-          </li>
-        ))}
-      </ul>
+        <ul>
+          {configurations.mainRoutes.map((route) => (
+            <li key={route.route}>
+              <Link href={route.url}>{route.route}</Link>
+            </li>
+          ))}
+        </ul>
 
-      <Authbox />
+        <Authbox />
+      </div>
     </nav>
   );
 }
