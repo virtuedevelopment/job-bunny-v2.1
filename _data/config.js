@@ -76,7 +76,7 @@ const configurations = {
     userRoutes: [
         { route: 'Dashbaord', url: '/dashboard', icon: faGauge },
         { route: 'Search Engine', url: '/dashboard/search', icon: faMagnifyingGlass },
-        { route: 'Auto Applications', url: 'dashboard/auto-apply', icon: faCheckCircle },
+        { route: 'Auto Applications', url: '/dashboard/auto-apply', icon: faCheckCircle },
         { route: 'Company Watch', url: '/dashboard/company-watch', icon: faEye },
         { route: 'Profile and Settings', url: '/dashboard/settings', icon: faGear }
     ],

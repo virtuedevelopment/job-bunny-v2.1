@@ -13,7 +13,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 //set filter options
-const boards = ["Indeed", "LinkedIn", "Glassdoor", "Zip Recruiter"];
+const boards = [
+  { name: "Indeed", value: "indeed" },
+  { name: "LinkedIn", value: "linkedin" },
+  { name: "Glassdoor", value: "glassdoor" },
+  { name: "Zip Recruiter", value: "ziprecruiter" },
+];
 const experienceList = [
   "Internship",
   "Entry level",
