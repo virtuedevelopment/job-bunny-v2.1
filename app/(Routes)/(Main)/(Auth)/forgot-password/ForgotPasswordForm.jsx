@@ -11,19 +11,6 @@ import {
 import Link from "next/link";
 import Loading from "@/app/loading";
 
-//get user to put in email for request ->
-// if request fails set error to "no user with (specified email exists)"
-// if request is successfull send user to next sub componenet "update"
-
-//update component will store the email state and prompt user for recieved code
-//if user didnt recieve the code, they can co back and change email
-//or they can click resend button which will retrigger request api
-
-// user enters code:
-//if code is incorrect error state will say incorrect
-//if user correct && password requirements are met
-//success message is triggered and a button will prompt users to go to login page
-
 const Request = ({ changeStep, user, setUser, loading, request }) => {
   const [emailError, setEmailError] = useState("");
 
@@ -33,34 +20,27 @@ const Request = ({ changeStep, user, setUser, loading, request }) => {
     loading(true);
     let isValid = true;
 
-    if (user.email === "") {
+    if (user === "") {
       setEmailError("Please enter an email address");
       isValid = false;
       loading(false);
-    } else if (!user.email.trim() || !/\S+@\S+\.\S+/.test(user.email)) {
+    } else if (!user.trim() || !/\S+@\S+\.\S+/.test(user)) {
       setEmailError("Please enter a valid email");
       isValid = false;
       loading(false);
     }
 
     if (isValid) {
-      const data = await request(user);
+      const response = await request(user);
 
-      if (data === 200) {
+      if (response.status === 200) {
         changeStep();
         loading(false);
       } else {
-        console.log("the error is,", data);
-        setEmailError(data.message);
+        setEmailError(response.message);
         loading(false);
       }
     }
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    setUser({ ...user, email: e.target.value });
-    setEmailError("");
   };
 
   return (
@@ -70,12 +50,12 @@ const Request = ({ changeStep, user, setUser, loading, request }) => {
           <small>Please enter your account email</small>
           <input
             name="email"
-            value={user.email}
+            value={user}
             type="email"
             required
             placeholder="johndoe@mail.com"
-            onChange={handleChange}
-            onBlur={handleChange}
+            onChange={(e) => setUser(e.target.value)}
+            onBlur={(e) => setUser(e.target.value)}
           />
           <small className="error">{emailError}</small>
         </span>
@@ -94,8 +74,12 @@ const Request = ({ changeStep, user, setUser, loading, request }) => {
   );
 };
 
-const Update = ({ changeStep, user, loading }) => {
+const Update = ({ changeStep, user, loading, update, router }) => {
+  const [code, setCode] = useState("");
   const [codeError, setCodeError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
@@ -105,8 +89,77 @@ const Update = ({ changeStep, user, loading }) => {
     setToggleSeePassword(!toggleSeePassword);
   };
 
-  const checkFields = (e) => {
+  const checkFields = async (e) => {
     e.preventDefault();
+    loading(true);
+    let isValid = true;
+
+    if (code === "") {
+      setCodeError("Please enter an code");
+      isValid = false;
+      loading(false);
+    }
+
+    // Validate password
+    let passwordValid = true;
+    if (!password) {
+      setPasswordError("Please enter a password");
+      passwordValid = false;
+      isValid = false;
+    } else {
+      let passwordErrors = [];
+
+      // Check for minimum length
+      if (password.length < 8) {
+        passwordErrors.push("at least 8 characters long");
+      }
+
+      if (!/[A-Z]/.test(password)) {
+        passwordErrors.push("at least one capital letter");
+      }
+
+      if (!/\d/.test(password)) {
+        passwordErrors.push("at least one number");
+      }
+
+      // Include checks for lowercase and special characters if needed
+
+      if (passwordErrors.length > 0) {
+        setPasswordError(`Password must be ${passwordErrors.join(", ")}`);
+        passwordValid = false;
+        isValid = false;
+      }
+    }
+
+    // Validate confirm password
+    if (passwordValid) {
+      if (confirmPassword !== password) {
+        setConfirmPasswordError("Passwords do not match");
+        isValid = false;
+      } else {
+        setConfirmPasswordError("");
+      }
+    } else {
+      setConfirmPasswordError(passwordError);
+    }
+
+    //run operation if is valid is true else stop loading
+    if (isValid) {
+      const response = await update(user, password, code);
+
+      if (response.status === 201) {
+        setSuccess(
+          "Password successfully changed please go to our login page to sign!"
+        );
+        loading(false);
+        router.push("/login");
+      } else {
+        setError(response.message);
+        loading(false);
+      }
+    } else {
+      loading(false);
+    }
   };
 
   return (
@@ -116,12 +169,12 @@ const Update = ({ changeStep, user, loading }) => {
           <small>Please enter code sent to {user.email}</small>
           <input
             name="code"
-            value={user.code}
+            value={code}
             type="text"
             required
             placeholder="Confirmation Code"
-            // onChange={handleChange}
-            // onBlur={handleChange}
+            onChange={(e) => setCode(e.target.value)}
+            onBlur={(e) => setCode(e.target.value)}
           />
           <small className="error">{codeError}</small>
         </span>
@@ -133,12 +186,12 @@ const Update = ({ changeStep, user, loading }) => {
           <small>New Password</small>
           <input
             name="password"
-            value={user.password}
+            value={password}
             type={toggleSeePassword ? "text" : "password"}
             required
             placeholder="**************"
-            // onChange={handleChange}
-            // onBlur={handleChange}
+            onChange={(e) => setPassword(e.target.value)}
+            onBlur={(e) => setPassword(e.target.value)}
           />
           <small className="error">{passwordError}</small>
         </span>
@@ -158,8 +211,8 @@ const Update = ({ changeStep, user, loading }) => {
             type={toggleSeePassword ? "text" : "password"}
             required
             placeholder="**************"
-            // onChange={handleChange}
-            // onBlur={handleChange}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            onBlur={(e) => setConfirmPassword(e.target.value)}
           />
           <small className="error">{confirmPasswordError}</small>
         </span>
@@ -168,6 +221,14 @@ const Update = ({ changeStep, user, loading }) => {
           onClick={togglePassworView}
           className={styles.icon}
         />
+      </div>
+
+      <div style={{ gridColumn: "span 2" }} className="success">
+        {success}
+      </div>
+
+      <div style={{ gridColumn: "span 2" }} className="error">
+        {error}
       </div>
 
       <button
@@ -183,63 +244,70 @@ const Update = ({ changeStep, user, loading }) => {
         Previous
       </button>
 
-      <button type="button" onClick={changeStep} className="main-button">
+      {/* <button type="button" onClick={changeStep} className="main-button">
         Resend Email
-      </button>
+      </button> */}
     </form>
   );
 };
 
 const requestCode = async (user) => {
-  const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/forgot_pass_request";
-  const response = await fetch(apiEndpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: user.email }),
-  });
-  const responseData = await response.json();
+  const apiEndpoint =
+    "https://jobbunnyapi.com/jobbunnyapi/v1/forgot_pass_request";
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: user }),
+    });
+    const responseData = await response.json();
 
-  if (responseData.ok) {
-    return 200;
-  } else {
-    console.log(responseData);
-    return responseData;
+    // Directly use the HTTP status code from the response
+    // And ensure responseData.status is passed through if it's available
+    const status = responseData.status || response.status;
+    const message = responseData.message || "An unexpected error occurred";
+
+    return { status, message };
+  } catch (error) {
+    console.error("Request error:", error);
+    return {
+      status: 500,
+      message: "Network error or unable to connect to the server",
+    };
   }
 };
 
-const updatePassword = async (user) => {
+const updatePassword = async (user, password, code) => {
   const apiEndpoint = "https://jobbunnyapi.com/jobbunnyapi/v1/update_password";
   const response = await fetch(apiEndpoint, {
-    method: "POST",
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      username: user.email,
-      security_code: user.code,
-      new_pass: user.password,
+      username: user,
+      security_code: code,
+      new_pass: password,
     }),
   });
   const responseData = await response.json();
-  if (responseData.ok) {
-    return 200;
+  if (response.ok && response.status === 201) {
+    return { status: 200, message: "Success" }; // Assuming a successful operation returns HTTP 200
   } else {
-    return responseData;
+    return {
+      status: response.status,
+      message: responseData.message || "An error occurred",
+    };
   }
 };
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    code: "",
-  });
+  const [user, setUser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(true); //request -> true , update -> false
 
   const changeStep = () => {
     setStep(!step);
   };
-
   return (
     <div className={styles.forgotPasswordBox}>
       <div className={styles.title}>
@@ -263,7 +331,13 @@ export default function ForgotPasswordForm() {
         />
       )}
       {!isLoading && !step && (
-        <Update user={user} changeStep={changeStep} loading={isLoading} />
+        <Update
+          user={user}
+          changeStep={changeStep}
+          loading={setIsLoading}
+          update={updatePassword}
+          router={router}
+        />
       )}
     </div>
   );
