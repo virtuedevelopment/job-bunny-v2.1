@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { signIn, getSession } from "next-auth/react";
+import { signIn, getSession, useSession } from "next-auth/react";
 import styles from "../auth.module.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -9,7 +9,6 @@ import { faIdBadge, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function LoginForm() {
-
   const submit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Start loading immediately upon form submission
@@ -34,19 +33,26 @@ export default function LoginForm() {
       if (!hasError) {
         // Perform your login logic here if there are no errors
         // Example: await loginUser({ email, password });
-        const result = await signIn('credentials', {
+        const result = await signIn("credentials", {
           username: email,
           password: password,
           redirect: false,
-        })
+        });
 
-        if(result.error){
-          setAuthError("Username or password is incorrect please try again.")
-          setIsLoading(false); // Stop loading after the delay
+        if (result && result.ok) {
+          console.log("The API wenth through:", result);
+
+          const session = await getSession();
+          console.log(session);
+
+          if (session && session.user && session.user.jb_token) {
+            console.log("Logged in with jb_token:", session.user.jb_token);
+          } else {
+            console.log("Session or jb_token not found");
+          }
         } else {
-          await getSession();
-          router.push('/dashboard')
-          window.location.href = window.location.origin + '/dashboard';
+          setAuthError("Username or password is incorrect. Please try again.");
+          setIsLoading(false); // Stop loading after the delay
         }
       }
       // If there are errors, the function simply ends here after stopping the loading state
@@ -66,8 +72,8 @@ export default function LoginForm() {
       setPasswordError(""); // Clear the password error message
     }
   };
-  const togglePassworView = () =>{
-    setToggleSeePassword(!toggleSeePassword)
+  const togglePassworView = () => {
+    setToggleSeePassword(!toggleSeePassword);
   };
 
   const router = useRouter();
@@ -119,7 +125,7 @@ export default function LoginForm() {
               <input
                 name="password"
                 value={password}
-                type={toggleSeePassword ? ('text'):('password')}
+                type={toggleSeePassword ? "text" : "password"}
                 required
                 placeholder="************"
                 onChange={handleChange}
@@ -127,10 +133,21 @@ export default function LoginForm() {
               />
               <small className="error">{passwordError}</small>
             </span>
-            <FontAwesomeIcon onClick={togglePassworView} icon={faEye} className={styles.icon} />
+            <FontAwesomeIcon
+              onClick={togglePassworView}
+              icon={faEye}
+              className={styles.icon}
+            />
           </div>
 
-          {authError && (<span className={styles.loginError} style={{ gridColumn: "span 2" }} >{authError}</span>)}
+          {authError && (
+            <span
+              className={styles.loginError}
+              style={{ gridColumn: "span 2" }}
+            >
+              {authError}
+            </span>
+          )}
 
           <button
             type="submit"

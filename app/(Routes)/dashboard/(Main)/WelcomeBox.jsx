@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import configurations from "@/_data/config";
 import { faCrown, faRocket, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,16 @@ import Link from "next/link";
 
 export default function WelcomeBox() {
   const { data, status } = useSession();
+
+  useEffect(() => {
+    if (data && data.user) {
+      alert("The session is found");
+      console.log(data);
+    } else {
+      alert("No session found");
+      console.log(data);
+    }
+  }, [data]);
   return (
     <div className={styles.welcomeBox}>
       <span

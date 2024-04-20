@@ -58,6 +58,7 @@
   --scrollIn: scrollFade linear forwards;
   --hover: hoverEffect 1.5s ease-in-out infinite;
   --hover-fast: bounce 0.75s infinite;
+  --slideUp: slideUp 2s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 /* CSS NORMAILIZE */
@@ -367,10 +368,19 @@
     opacity: 0.75;
   }
 }
+@keyframes slideUp {
+  from {
+    transform: translateY(100%); /* Start off-screen, below the view */
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
 /* MEDIA QUERY */
 @media (max-width: 1200px) {
-
 }
 
 @media (max-width: 750px) {

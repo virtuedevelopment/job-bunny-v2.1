@@ -2,15 +2,15 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 
 export const authOptions = {
-    session:{
+    session: {
         strategy: 'jwt'
     },
-    providers:[CredentialsProvider({
+    providers: [CredentialsProvider({
         credentials: {
-            username: { },
-            password: { },
-          },
-          async authorize(credentials, req) {
+            username: {},
+            password: {},
+        },
+        async authorize(credentials, req) {
             try {
                 const response = await fetch('https://jobbunnyapi.com/jobbunnyapi/v1/login', {
                     method: 'POST',
@@ -26,19 +26,19 @@ export const authOptions = {
                 const user = await response.json();
                 console.log(user);
 
-                if (user.status === 404){
+                if (user.status === 404) {
                     throw new Error(user.message)
                 }
-        
+
                 if (!response.ok) {
                     console.error('Login request failed:', response.status, response.statusText);
                     return response;
                 }
-        
+
                 if (user.jb_token) {
                     console.log(user)
                     return {
-                        name: { first: user.firstname, last: user.lastname},
+                        name: { first: user.firstname, last: user.lastname },
                         email: user.username,
                         image: '',
                         jb_token: user.jb_token
@@ -61,19 +61,19 @@ export const authOptions = {
         },
         async jwt({ token, user }) {
             if (user) {
-                token.jb_token = user.jb_token; 
+                token.jb_token = user.jb_token;
             }
             return token;
         },
-        async signOut(signOutOptions){
+        async signOut(signOutOptions) {
             const { token } = signOutOptions
 
-            const logoutResponse = await fetch('https://jobbunnyapi.com/jobbunnyapi/v1/logout',{
+            const logoutResponse = await fetch('https://jobbunnyapi.com/jobbunnyapi/v1/logout', {
                 method: 'POST',
-                headers:{
+                headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({username: token.email})
+                body: JSON.stringify({ username: token.email })
             })
 
             console.log(logoutResponse)

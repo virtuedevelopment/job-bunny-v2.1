@@ -134,3 +134,102 @@
   color: var(--accent-black);
   font-weight: 700;
 }
+
+/* MESSAGE MODAL */
+.modalBox {
+  position: fixed;
+  width: 100%;
+  height: 100svh;
+  z-index: 999;
+  opacity: 0;
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  top: 0;
+  left: 0;
+  animation: var(--slideUp);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modalControl {
+  width: 50%;
+  height: 60%;
+  background-color: var(--main-white);
+  border-radius: var(--border-rad-large);
+  box-shadow: var(--box-shadow);
+  padding: var(--container-padding-regular);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.modalControlImage {
+  position: absolute;
+  width: 100%;
+  opacity: 0.08;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.modalControl button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-out);
+  color: var(--primary);
+  z-index: 2;
+}
+.modalControl button:hover {
+  transition: var(--transition-in);
+  color: var(--accent-black);
+}
+.modalControl button svg {
+  width: 20px;
+  height: 20px;
+}
+.modalMessageBox {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.modalMessageBox svg {
+  width: 100px;
+  height: 100px;
+}
+.modalMessageBox h3 {
+  font-size: 7vw;
+  color: var(--accent-black);
+}
+.modalMessageBox p {
+  font-size: var(--subhead);
+  color: var(--accent-black);
+  width: 70%;
+  text-align: center;
+}
+
+@media (max-width: 750px) {
+  .modalControl {
+    width: 80%;
+    height: 60%;
+  }
+
+  .modalMessageBox svg {
+    width: 50px;
+    height: 50px;
+  }
+  .modalMessageBox h3 {
+    font-size: 8vw;
+  }
+  .modalMessageBox p {
+    font-size: var(--body-text);
+    width: 100%;
+  }
+}
