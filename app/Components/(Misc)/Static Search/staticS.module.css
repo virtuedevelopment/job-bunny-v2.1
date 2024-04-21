@@ -1,7 +1,7 @@
 .inputbox {
   /* opacity: 0; */
   width: 100%;
-  display: grid ;
+  display: grid;
   grid-template-columns: 1fr;
   gap: 0.25rem;
   border-radius: var(--border-rad-large);
@@ -23,11 +23,11 @@
   border: none;
   background-color: transparent;
 }
-.inputbox input::placeholder{
+.inputbox input::placeholder {
   color: var(--accent-black);
 }
 
-.inputbox .input{
+.inputbox .input {
   width: 100%;
   display: flex;
 }
@@ -45,21 +45,20 @@
   color: var(--primary);
 }
 
-
-.dropdown{
+.dropdown {
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   gap: 0.5rem;
   height: 150px;
   overflow-y: scroll;
 }
-.dropdown button{
+.dropdown button {
   width: 100%;
   text-align: start;
-
 }
-
 
 @media (max-width: 1200px) {
   .inputbox {

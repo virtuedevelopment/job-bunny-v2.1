@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import styles from "./staticS.module.css";
@@ -14,8 +15,11 @@ export default function StaticSearch() {
 
   const router = useRouter();
   const sendToRoute = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    const effectiveSearch = encodeURIComponent(search);
+
     if (data && data.user) {
-      router.push("/dashboard/search");
+      router.push(`/dashboard/search?search=${effectiveSearch}`);
     } else {
       router.push("/signup");
     }
@@ -56,10 +60,12 @@ export default function StaticSearch() {
       console.error("Error fetching job title suggestions:", error);
     }
   }, 30); // Adjust debounce time as needed
-  const selectSuggestion = (suggestion, e) => {
-    setSearch(suggestion); // Update the search state
-    setShowDropdown(false); // Close the dropdown
-    sendToRoute(); // Optionally trigger the search immediately
+  const selectSuggestion = (suggestion) => {
+    if (data && data.user) {
+      router.push(`/dashboard/search?search=${suggestion}`);
+    } else {
+      router.push("/signup");
+    }
   };
   const setSearchValue = (value) => {
     const searchValue = typeof value === "string" ? value : value.target.value;

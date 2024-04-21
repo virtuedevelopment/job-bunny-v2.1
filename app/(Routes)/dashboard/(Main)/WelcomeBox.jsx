@@ -10,15 +10,6 @@ import Link from "next/link";
 export default function WelcomeBox() {
   const { data, status } = useSession();
 
-  useEffect(() => {
-    if (data && data.user) {
-      alert("The session is found");
-      console.log(data);
-    } else {
-      alert("No session found");
-      console.log(data);
-    }
-  }, [data]);
   return (
     <div className={styles.welcomeBox}>
       <span

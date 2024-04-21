@@ -42,7 +42,7 @@ export default function DisplayJobs() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (data && data.user) {
+      if (data && data.user && jobs.length < 1) {
         setIsLoading(true); // Ensure loading is true at the start of fetch
         try {
           const response = await getJobs(data);

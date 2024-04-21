@@ -1,6 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import React, { useState, useEffect, useCallback } from "react";
 
 import FilterBox from "./FilterBox";
@@ -27,6 +28,10 @@ function debounce(func, wait) {
 }
 
 export default function Search() {
+  //search params from other page
+  const searchParams = useSearchParams();
+  const [routeTrigger, setRouteTrigger] = useState(false); //trigger search for redirect
+
   //init states
   const router = useRouter(); // incase users are not logged in
   const { data } = useSession(); // getting user information
@@ -235,6 +240,28 @@ export default function Search() {
       setSearchError("Error fetching jobs please try again");
     }
   };
+
+  //redirect search use effects
+  useEffect(() => {
+    //set route search to search params
+    const redirectSearch = async () => {
+      const query = searchParams.get("search") || "";
+      setSearchValue(query);
+      if (query) {
+        setRouteTrigger(true);
+      }
+    };
+    redirectSearch();
+  }, [searchParams]);
+  useEffect(() => {
+    const routeSearch = async () => {
+      if (routeTrigger && searchValue) {
+        getResults();
+        setRouteTrigger(false);
+      }
+    };
+    routeSearch();
+  }, [routeTrigger, searchValue]);
 
   return (
     <main className={styles.main}>

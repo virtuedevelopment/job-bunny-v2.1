@@ -166,7 +166,7 @@
 .modalControlImage {
   position: absolute;
   width: 100%;
-  opacity: 0.08;
+  opacity: 0.035;
   bottom: 0;
   left: 0;
   z-index: 1;

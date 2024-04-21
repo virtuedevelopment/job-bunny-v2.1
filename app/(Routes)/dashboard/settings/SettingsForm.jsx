@@ -260,6 +260,7 @@ export default function SettingsForm() {
 
       if (responseData.status === 201) {
         fetchUserSettings();
+        // await fetch('/api/auth/session', { method: 'POST' });
         setIsLoading(false);
         router.refresh();
       } else {

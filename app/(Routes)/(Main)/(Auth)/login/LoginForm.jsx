@@ -46,9 +46,12 @@ export default function LoginForm() {
           console.log(session);
 
           if (session && session.user && session.user.jb_token) {
-            console.log("Logged in with jb_token:", session.user.jb_token);
+            router.push("/dashboard");
           } else {
-            console.log("Session or jb_token not found");
+            setAuthError(
+              "Something went wrong. Please try again."
+            );
+            setIsLoading(false); // Stop loading after the delay
           }
         } else {
           setAuthError("Username or password is incorrect. Please try again.");
