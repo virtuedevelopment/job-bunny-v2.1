@@ -6,6 +6,7 @@ import configurations from "@/_data/config";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/_data/auth";
 import AuthProvider from "@/_data/AuthProvider";
+import CheckToken from "./Components/(Misc)/Utils/CheckToken";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <CheckToken />
       <AuthProvider>
         <body className={outfit.className}>
           <Navbar />

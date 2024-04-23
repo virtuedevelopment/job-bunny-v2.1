@@ -14,9 +14,6 @@ export default function Dashboard() {
         <WelcomeBox/>
         {/* <DashboardStatistics/> */}
         <DisplayJobs/>
-        <div className={styles.secondaryApps} >
-            
-        </div>
     </main>
   )
 }

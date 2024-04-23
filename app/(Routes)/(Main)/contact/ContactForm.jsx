@@ -9,7 +9,7 @@ export default function ContactForm() {
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
   const [failure, setFailure] = useState(false);
   const [loading, setIsLoading] = useState(false);
   const [response, setResponse] = useState("");
