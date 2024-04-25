@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Loading from "@/app/loading";
+import MessageModal from "@/app/Components/(Misc)/Interactive/MessageModal";
 
 const Request = ({ changeStep, user, setUser, loading, request }) => {
   const [emailError, setEmailError] = useState("");
@@ -74,7 +75,15 @@ const Request = ({ changeStep, user, setUser, loading, request }) => {
   );
 };
 
-const Update = ({ changeStep, user, loading, update, router }) => {
+const Update = ({
+  changeStep,
+  user,
+  loading,
+  update,
+  router,
+  successModal,
+  failureModal,
+}) => {
   const [code, setCode] = useState("");
   const [codeError, setCodeError] = useState("");
   const [success, setSuccess] = useState("");
@@ -146,19 +155,21 @@ const Update = ({ changeStep, user, loading, update, router }) => {
     //run operation if is valid is true else stop loading
     if (isValid) {
       const response = await update(user, password, code);
-
-      if (response.status === 201) {
+      if (response.status === 200) {
         setSuccess(
           "Password successfully changed please go to our login page to sign!"
         );
         loading(false);
-        router.push("/login");
+        successModal();
+        // router.push("/login");
       } else {
         setError(response.message);
         loading(false);
+        failureModal();
       }
     } else {
       loading(false);
+      failureModal();
     }
   };
 
@@ -302,43 +313,78 @@ const updatePassword = async (user, password, code) => {
 export default function ForgotPasswordForm() {
   const router = useRouter();
   const [user, setUser] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [failure, setFailure] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(true); //request -> true , update -> false
 
   const changeStep = () => {
     setStep(!step);
   };
-  return (
-    <div className={styles.forgotPasswordBox}>
-      <div className={styles.title}>
-        <big>GET BACK ON TRACK</big>
-        <h1>
-          Change your password<span>.</span>
-        </h1>
-        <small>
-          Remembered your password? <Link href={"/login"}>Log in</Link>
-        </small>
-      </div>
 
-      {isLoading && <Loading />}
-      {!isLoading && step && (
-        <Request
-          user={user}
-          changeStep={changeStep}
-          loading={setIsLoading}
-          setUser={setUser}
-          request={requestCode}
+  const toggleSuccess = () => {
+    setSuccess(!success);
+  };
+
+  const toggleFailure = () => {
+    setFailure(!failure);
+  };
+
+  return (
+    <>
+      {success && (
+        <MessageModal
+          status={"Success"}
+          message={
+            "Your password has successefully changed! Please navigate to the login page and try logging in."
+          }
+          close={toggleSuccess}
         />
       )}
-      {!isLoading && !step && (
-        <Update
-          user={user}
-          changeStep={changeStep}
-          loading={setIsLoading}
-          update={updatePassword}
-          router={router}
+
+      {failure && (
+        <MessageModal
+          status={"Failure"}
+          message={
+            "It seems like something went wrong, please reload the page and try again."
+          }
+          close={toggleFailure}
         />
       )}
-    </div>
+
+      <div className={styles.forgotPasswordBox}>
+        <div className={styles.title}>
+          <big>GET BACK ON TRACK</big>
+          <h1>
+            Change your password<span>.</span>
+          </h1>
+          <small>
+            Remembered your password? <Link href={"/login"}>Log in</Link>
+          </small>
+        </div>
+
+        {isLoading && <Loading />}
+        {!isLoading && step && (
+          <Request
+            user={user}
+            changeStep={changeStep}
+            loading={setIsLoading}
+            setUser={setUser}
+            request={requestCode}
+          />
+        )}
+        {!isLoading && !step && (
+          <Update
+            user={user}
+            changeStep={changeStep}
+            loading={setIsLoading}
+            update={updatePassword}
+            router={router}
+            successModal={toggleSuccess}
+            failureModal={toggleFailure}
+          />
+        )}
+      </div>
+    </>
   );
 }
