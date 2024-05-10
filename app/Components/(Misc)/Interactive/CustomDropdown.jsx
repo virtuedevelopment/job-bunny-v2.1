@@ -7,7 +7,14 @@ import {
   faCircleChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function CustomDropdown({ title, list, icon, update }) {
+export default function CustomDropdown({
+  title,
+  list,
+  icon,
+  update,
+  isCurrent,
+  onToggle,
+}) {
   const [current, setCurrent] = useState(null); // for current selection
   const [options, setOptions] = useState([]); // list used for selection
   const [toggled, setToggled] = useState(false); //toggling the dropdown
@@ -18,7 +25,8 @@ export default function CustomDropdown({ title, list, icon, update }) {
 
   //util
   const setToggle = () => {
-    setToggled(!toggled);
+    setToggled((prev) => !prev);
+    onToggle();
   };
 
   //useEffects
@@ -31,9 +39,15 @@ export default function CustomDropdown({ title, list, icon, update }) {
   useEffect(() => {
     if (current && update) {
       // Directly call update with either the current.value or current itself
-      update(current.value? current.value : current);
-    } 
+      update(current.value ? current.value : current);
+    }
   }, [current, update, containsObjects]);
+
+  useEffect(() => {
+    if (!isCurrent) {
+      setToggled(false);
+    }
+  }, [isCurrent]);
 
   return (
     <>

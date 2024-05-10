@@ -93,6 +93,12 @@ export default function FilterBox({ filter, update }) {
   const [minSalary, setMinSalary] = useState();
   const [location, setLocation] = useState({});
 
+  //dropdown updated states and functions:
+  const [currentOpenDropdown, setCurrentOpenDropdown] = useState(null);
+  const handleDropdownToggle = (dropdownId) => {
+    setCurrentOpenDropdown((prev) => (prev === dropdownId ? null : dropdownId));
+  };
+
   useEffect(() => {
     // Define a helper to conditionally call update for each state
     const updateFilter = (filterName, stateValue) => {
@@ -131,42 +137,56 @@ export default function FilterBox({ filter, update }) {
         list={boards}
         icon={faBriefcase}
         update={setJobSite}
+        isCurrent={currentOpenDropdown === "jobBoard"}
+        onToggle={() => handleDropdownToggle("jobBoard")}
       />
       <CustomDropdown
         title={"Select Experience"}
         list={experienceList}
         icon={faFile}
         update={setExperience}
+        isCurrent={currentOpenDropdown === "experience"}
+        onToggle={() => handleDropdownToggle("experience")}
       />
       <CustomDropdown
         title={"Select Contract"}
         list={job_type}
         icon={faBuilding}
         update={setJobType}
+        isCurrent={currentOpenDropdown === "contract"}
+        onToggle={() => handleDropdownToggle("contract")}
       />
       <CustomDropdown
         title={"Select Job Type"}
         list={job_type_cat}
         icon={faBriefcase}
         update={setJobTypeCat}
+        isCurrent={currentOpenDropdown === "jobType"}
+        onToggle={() => handleDropdownToggle("jobType")}
       />
       <CustomDropdown
         title={"Set Visa Preference"}
         list={visa_sponsored}
         icon={faPlane}
         update={setVisaSponsored}
+        isCurrent={currentOpenDropdown === "visa"}
+        onToggle={() => handleDropdownToggle("visa")}
       />
       <CustomDropdown
         title={"Select Date Range"}
         list={date_range}
         icon={faCalendar}
         update={setDateRange}
+        isCurrent={currentOpenDropdown === "date"}
+        onToggle={() => handleDropdownToggle("date")}
       />
       <CustomDropdown
         title={"Select Salary"}
         list={salary}
         icon={faMoneyBill}
         update={setMinSalary}
+        isCurrent={currentOpenDropdown === "salary"}
+        onToggle={() => handleDropdownToggle("salary")}
       />
 
       <CustomLocationSearch update={setLocation} />
