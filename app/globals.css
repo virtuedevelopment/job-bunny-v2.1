@@ -71,6 +71,14 @@
   font-family: inherit;
 }
 
+/* styles/globals.css */
+input,
+textarea,
+select {
+  font-size: inherit;
+  touch-action: manipulation;
+}
+
 /* UTILITY CLASSES */
 .logo {
   color: var(--main-black);
