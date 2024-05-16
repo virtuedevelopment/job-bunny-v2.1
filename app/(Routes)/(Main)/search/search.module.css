@@ -1,0 +1,124 @@
+.main {
+  padding: var(--dashboard-padding);
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+}
+.toggleButton {
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: var(--border-rad-small);
+  background-color: var(--accent-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-out);
+  color: var(--accent-primary);
+}
+.toggleButton:hover {
+  transition: var(--transition-in);
+  background-color: var(--accent-primary);
+  color: var(--main-white);
+}
+.toggleButton svg {
+  width: 15px;
+  height: 15px;
+}
+.filters {
+  background-color: var(--accent-white);
+  border-radius: var(--border-rad-large);
+  padding: 1rem;
+  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 400px;
+  position: absolute;
+  top: 55px;
+  right: 0;
+  z-index: 999;
+}
+.dropdown {
+  position: absolute;
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+  top: 110%;
+  left: 0;
+  padding: 1rem;
+  background-color: var(--accent-white);
+  border-radius: var(--border-rad-large);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  row-gap: 0.75rem;
+  z-index: 5;
+}
+.item {
+  width: 100%;
+  height: 40px;
+  text-align: left;
+  padding: 0.75rem;
+  border: none;
+  background-color: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-out);
+  color: var(--accent-black);
+}
+.item:hover {
+  transition: var(--transition-in);
+  color: var(--accent-primary);
+}
+
+.noJobs {
+  width: 100%;
+  padding: 1rem;
+  height: 60svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  text-align: center;
+}
+.noJobs p {
+  color: var(--primary);
+  font-weight: 500;
+}
+.noJobs small {
+  font-weight: 200;
+  color: var(--accent-black);
+}
+.noJobs svg {
+  display: block;
+  margin: auto;
+}
+.listings {
+  width: 100%;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+@media (max-width: 500px) {
+  .filters {
+    grid-template-columns: 1fr;
+    width: 100% !important;
+  }
+}

@@ -21,7 +21,7 @@ export default function StaticSearch() {
     if (data && data.user) {
       router.push(`/dashboard/search?search=${effectiveSearch}`);
     } else {
-      router.push("/signup");
+      router.push(`/search?search=${effectiveSearch}`);
     }
   };
 
@@ -64,7 +64,7 @@ export default function StaticSearch() {
     if (data && data.user) {
       router.push(`/dashboard/search?search=${suggestion}`);
     } else {
-      router.push("/signup");
+      router.push(`/search?search=${suggestion}`);
     }
   };
   const setSearchValue = (value) => {

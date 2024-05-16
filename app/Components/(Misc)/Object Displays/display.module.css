@@ -1,5 +1,6 @@
 .jobItem {
   width: 100%;
+  min-height: fit-content;
   position: relative;
   padding: 0.75rem 0.5rem;
   border: solid 1px var(--accent-white);
@@ -66,7 +67,7 @@
   color: var(--accent-grey);
   font-weight: 300;
 }
-.location p svg{
+.location p svg {
   width: 10px;
   height: 10px;
 }

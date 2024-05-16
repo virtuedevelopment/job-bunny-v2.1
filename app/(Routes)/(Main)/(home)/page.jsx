@@ -24,12 +24,27 @@ const exampleUser2 = {
   url: "/fernanda.png",
 };
 const steps = [
-  { step: "Create a profile, upload your resume.", graphic: "/step1.svg" },
   {
-    step: "Set preferences, answer pre-filled quetions.",
-    graphic: "/step2.svg",
+    step: "Build and upload resume",
+    graphic: "/step1.svg",
+    url: "/",
+    message:
+      "Upload your resume to unlock personalized job recommendations tailored just for you. Our advanced algorithms analyze your skills and experience to match you with the perfect positions",
   },
-  { step: "Start searching, auto apply and more.", graphic: "/jobs.svg" },
+  {
+    step: "Update your preferences",
+    graphic: "/step2.svg",
+    url: "/",
+    message:
+      "Update your preferences to help us understand your unique skills and career goals. By doing so, we can match you with the perfect job opportunities that align with your aspirations. ",
+  },
+  {
+    step: "Start your job search",
+    graphic: "/step3.svg",
+    url: "/",
+    message:
+      "Start your search now! Explore our premium job search engine to discover the perfect opportunities manually. Take charge of your job hunt and find the ideal fit for your skills and aspirations.",
+  },
 ];
 
 export default function Home() {
@@ -75,7 +90,7 @@ export default function Home() {
             height={1750}
             alt="Computer displaying Job Bunny Application"
           />
-          
+
           <Image
             className={styles.mobileImg}
             src={"/desktop.svg"}
@@ -83,12 +98,10 @@ export default function Home() {
             height={1750}
             alt="Computer displaying Job Bunny Application"
           />
-
         </div>
       </section>
 
       <section className={styles.jobBoards}>
-        <h2>Job listings pulled from</h2>
         <div>
           {configurations.job_Boards.map((board) => (
             <span key={board.name}>
@@ -122,7 +135,9 @@ export default function Home() {
             <GraphicCard
               key={step.step}
               graphic={step.graphic}
-              message={step.step}
+              title={step.step}
+              url={step.url}
+              message={step.message}
             />
           ))}
         </div>

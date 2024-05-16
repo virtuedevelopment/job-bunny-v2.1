@@ -1,32 +1,59 @@
 .graphicCard {
   width: 350px;
-  height: 425px;
-  border-radius: var(--border-rad-large);
-  background: linear-gradient(
-    var(--primary),
-    35%,
-    var(--main-white) 65%,
-    var(--main-white)
-  );
+  border-radius: 3.5px;
+  background-color: var(--main-white);
   box-shadow: var(--box-shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem;
-  align-self: center;
-  justify-self: center;
 }
-.graphicCard img {
+.graphicCard .imagebox {
   width: 100%;
-  height: 350px;
-  object-fit: contain;
+  background-color: var(--accent-black);
+  height: 250px;
+  border-top-left-radius: 3.5px;
+  border-top-right-radius: 3.5px;
 }
-.graphicCard h2 {
-  color: var(--primary);
-  font-size: var(--subtitle);
+.imagebox img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  opacity: 0.45;
 }
 
+.graphicCard .infobox {
+  width: 100%;
+  padding: 1.5rem 1rem;
+  text-align: left;
+}
+.infobox h2 {
+  color: var(--primary);
+  font-size: var(--subhead);
+  font-weight: 500;
+}
+.infobox a {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  border: solid 1px var(--primary);
+  border-radius: var(--border-rad-large);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--primary);
+  font-size: var(--mini-text);
+  gap: 2rem;
+  transition: var(--transition-out);
+}
+.infobox a:hover {
+  transition: var(--transition-in);
+  background-color: var(--primary);
+  color: var(--main-white);
+}
+.infobox p {
+  font-size: var(--mini-text);
+  color: var(--primary);
+  font-weight: 200;
+  line-height: 1.75;
+  margin-block: 0.75rem;
+}
 .feature {
   width: 275px;
   height: 350px;
@@ -79,7 +106,7 @@
   gap: 0.25rem;
   padding: 0.5rem;
 }
-.jobFeatureCard:hover{
+.jobFeatureCard:hover {
   transition: var(--transition-in);
   color: var(--accent-black);
   background-color: var(--secondary);
@@ -94,14 +121,7 @@
 
 @media (max-width: 1200px) {
   .graphicCard {
-    width: 275px;
-    height: 325px;
-  }
-  .graphicCard img {
-    height: 275px;
-  }
-  .graphicCard h2 {
-    font-size: var(--subhead);
+    width: 325px;
   }
 
   .feature {
