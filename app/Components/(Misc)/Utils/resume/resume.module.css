@@ -1,0 +1,252 @@
+.modalback {
+  position: fixed;
+  width: 100%;
+  height: 100svh;
+  top: 0;
+  left: 0;
+  background-color: rgba(56, 67, 72, 0.75);
+  backdrop-filter: blur(3.5px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalbox {
+  width: 75%;
+  height: 70%;
+  background-color: var(--main-white);
+  border-radius: var(--border-rad-small);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--box-shadow);
+}
+.modalbox img {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-rad-small);
+}
+.uploadbox {
+  border-radius: var(--border-rad-small);
+  width: 50%;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  animation: var(--fadeInFast);
+  text-align: center;
+}
+.title big {
+  letter-spacing: 3px;
+  font-size: var(--body-text);
+  color: var(--accent-black);
+  font-weight: 600;
+}
+.title h1 {
+  font-size: var(--subtitle);
+  color: var(--main-black);
+}
+.title h1 span {
+  color: var(--primary);
+}
+.title small {
+  font-size: var(--body-text);
+  color: var(--accent-black);
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+.title small a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.uploadModule {
+  animation: var(--fadeInFast);
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1rem;
+}
+.uploadButton {
+  background-color: var(--main-white);
+  padding: 1rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  transition: var(--transition-out);
+  border-radius: var(--border-rad-small);
+}
+.uploadButton svg {
+  width: 75px;
+  height: 75px;
+}
+.uploadModule span {
+  padding: 0.5rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--secondary);
+  border-radius: var(--border-rad-small);
+  color: var(--primary);
+  cursor: pointer;
+}
+.uploadModule button {
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: var(--secondary);
+  color: var(--primary);
+  border-radius: var(--border-rad-small);
+  transition: var(--transition-out);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.uploadModule button:hover {
+  transition: var(--transition-in);
+  background-color: var(--accent-black);
+  color: var(--main-white);
+}
+
+.complete {
+  animation: var(--fadeInFast);
+  padding: 1rem;
+  flex-grow: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.complete svg {
+  width: 75px;
+  height: 75px;
+  color: var(--success);
+}
+.complete h3 {
+  font-size: var(--subtitle);
+  color: var(--accent-black);
+}
+.complete p {
+  color: var(--accent-black);
+  width: 75%;
+  text-align: center;
+  font-weight: 400;
+}
+.complete button {
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: var(--secondary);
+  color: var(--primary);
+  border-radius: var(--border-rad-small);
+  transition: var(--transition-out);
+}
+.complete button:hover {
+  transition: var(--transition-in);
+  background-color: var(--accent-black);
+  color: var(--main-white);
+}
+
+@media (max-width: 750px) {
+  .modalbox {
+    width: 90%;
+    height: 90%;
+    flex-direction: column;
+  }
+  .modalbox img {
+    width: 100%;
+    height: 40%;
+  }
+  .uploadbox {
+    width: 100%;
+    height: 60%;
+
+    align-items: center;
+    justify-content: center;
+  }
+  .uploadButton svg {
+    width: 50px;
+    height: 50px;
+  }
+  .uploadModule span {
+    padding: 0.5rem 1.25rem;
+    font-size: var(--mini-text);
+  }
+  .uploadModule button {
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    background-color: var(--secondary);
+    color: var(--primary);
+    border-radius: var(--border-rad-small);
+    transition: var(--transition-out);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .uploadModule button:hover {
+    transition: var(--transition-in);
+    background-color: var(--accent-black);
+    color: var(--main-white);
+  }
+
+  .title {
+    padding: 0.5rem 1rem;
+  }
+  .title big {
+    letter-spacing: 1px;
+    font-size: var(--mini-text);
+    color: var(--accent-black);
+    font-weight: 600;
+  }
+  .title h1 {
+    font-size: var(--subhead);
+    color: var(--main-black);
+  }
+
+  .complete svg {
+    width: 35px;
+    height: 35px;
+    color: var(--success);
+  }
+  .complete h3 {
+    font-size: var(--subhead);
+    color: var(--accent-black);
+  }
+  .complete p {
+    color: var(--accent-black);
+    font-size: var(--mini-text);
+    width: 85%;
+    text-align: center;
+    font-weight: 400;
+  }
+}

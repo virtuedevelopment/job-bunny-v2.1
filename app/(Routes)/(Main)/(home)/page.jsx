@@ -25,22 +25,25 @@ const exampleUser2 = {
 };
 const steps = [
   {
-    step: "Build and upload resume",
-    graphic: "/step1.svg",
+    step: "Create and update your profile ",
+    graphic:
+      "https://img.freepik.com/premium-vector/recruit-job-employee-hr-hire-search-interview-resume-concept-cartoon-graphic-design-element_133260-5596.jpg",
     url: "/",
     message:
       "Upload your resume to unlock personalized job recommendations tailored just for you. Our advanced algorithms analyze your skills and experience to match you with the perfect positions",
   },
   {
     step: "Update your preferences",
-    graphic: "/step2.svg",
+    graphic:
+      "https://cdn3.vectorstock.com/i/1000x1000/96/22/graphic-cartoon-character-of-system-update-vector-44899622.jpg",
     url: "/",
     message:
       "Update your preferences to help us understand your unique skills and career goals. By doing so, we can match you with the perfect job opportunities that align with your aspirations. ",
   },
   {
     step: "Start your job search",
-    graphic: "/step3.svg",
+    graphic:
+      "https://cdn1.vectorstock.com/i/1000x1000/52/35/graphic-cartoon-character-job-search-vector-37535235.jpg",
     url: "/",
     message:
       "Start your search now! Explore our premium job search engine to discover the perfect opportunities manually. Take charge of your job hunt and find the ideal fit for your skills and aspirations.",
