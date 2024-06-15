@@ -8,6 +8,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { ScanEye } from "lucide-react";
 
 export default function AuthModal({ close, push_search }) {
   const router = useRouter();
@@ -16,86 +17,36 @@ export default function AuthModal({ close, push_search }) {
   return (
     <section className={styles.modalBox}>
       <div className={styles.modalView}>
-        <button onClick={close} className={styles.modalclose} type="button">
-          <FontAwesomeIcon icon={faCircleXmark} />
-        </button>
+        <div className={styles.buttons}>
+          <button onClick={()=>close()}>Close window</button>
+        </div>
 
-        {data && data.user ? (
-          <div className={styles.container}>
-            <div className={styles.imagebox}>
-              <Image
-                src={"/loginbackground.svg"}
-                width={500}
-                height={500}
-                alt="image"
-              />
-            </div>
-            <div className={styles.infobox}>
-              <h2>
-                Discover our premium search engine<span>.</span>
-              </h2>
-              <h4>
-                HEY {data?.user?.name?.first?.toUpperCase()}, YOU CAN CHECK OUT
-                THE FULL SEARCH ENGINE BELOW.{" "}
-              </h4>
-              <span
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "1rem",
-                  marginBlock: "1rem",
-                }}
-              >
-                <Link
-                  className="main-button"
-                  href={{
-                    pathname: "/dashboard/search",
-                    query: { search: push_search },
-                  }}
-                >
-                  Search Engine
-                </Link>
-                <Link className="primary-button" href={"/dashboard"}>
-                  Dashboard
-                </Link>
-              </span>
-            </div>
-          </div>
-        ) : (
-          <div className={styles.container}>
-            <div className={styles.imagebox}>
-              <Image
-                src={"/loginbackground.svg"}
-                width={500}
-                height={500}
-                alt="image"
-              />
-            </div>
-            <div className={styles.infobox}>
-              <h2>
-                We would love to help you<span>.</span>
-              </h2>
-              <h4>LOGIN OR SIGNUP TO SEE OUR FULL SEARCH ENGINE.</h4>
-              <span
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "1rem",
-                  marginBlock: "1rem",
-                }}
-              >
-                <Link className="main-button" href={"/login"}>
-                  Login
-                </Link>
-                <Link className="primary-button" href={"/signup"}>
-                  Signup
-                </Link>
-              </span>
-            </div>
-          </div>
-        )}
+        <h3>We would love to help you.</h3>
+        <p>please login or signup to use our full search engine.</p>
+
+        <div className={styles.options}>
+          <Link href={"/signup"}>
+            <ScanEye />
+            <span>
+              <big>Sign up now</big>
+              <small>
+                Job Bunny has various features that help make yoour job search
+                easier.
+              </small>
+            </span>
+          </Link>
+
+          <Link href={"/login"}>
+            <ScanEye />
+            <span>
+              <big>Login now</big>
+              <small>
+                Continue the journey of your job search and check in on your
+                previous applications.
+              </small>
+            </span>
+          </Link>
+        </div>
       </div>
     </section>
   );

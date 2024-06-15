@@ -279,7 +279,7 @@ select {
 /* Input Boxes */
 .inputbox {
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   border-radius: var(--border-rad-large);
   background-color: var(--accent-white);
   display: flex;
@@ -291,12 +291,13 @@ select {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 0.2rem;
+  gap: 0;
   width: 100%;
 }
 .inputbox small {
   font-size: var(--tiny-text);
   color: var(--primary);
+  font-family: var(--body-style);
 }
 .inputbox input {
   background-color: transparent;
@@ -305,7 +306,7 @@ select {
   width: 90%;
 
   font-weight: 600;
-  color: var(--accent-black);
+  color: var(--accent-grey);
   font-family: var(--body-style);
   outline: none;
 }
@@ -329,7 +330,7 @@ select {
   resize: none;
 
   font-weight: 600;
-  color: var(--accent-black);
+  color: var(--accent-grey);
   font-family: var(--body-style);
   outline: none;
 }

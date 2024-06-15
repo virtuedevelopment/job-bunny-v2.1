@@ -118,29 +118,33 @@
 }
 
 .faq {
+  width: 100%;
   background-color: var(--main-white);
   border-radius: var(--border-rad-large);
-  box-shadow: var(--box-shadow);
+  border: solid 0.5px var(--accent-grey);
   transition: var(--transition-out);
-  cursor: pointer;
-  padding: 0.75rem 1.25rem;
+  padding: 1.25rem;
 }
-.faq:hover {
-  transition: var(--transition-in);
-  background-color: var(--accent-secondary);
-  color: var(--main-white);
-}
+
 .faq h4 {
-  font-size: var(--subhead);
-  color: var(--accent-primary);
+  font-family: var(--body-style);
+  color: var(--accent-grey);
   font-weight: 500;
+  width: 100%;
+  padding-bottom: 0.5rem;
+  border-bottom: solid 0.5px var(--accent-grey);
 }
 .faq p {
   font-size: var(--body-text);
-  color: var(--accent-black);
+  font-family: var(--body-style);
+  color: var(--accent-grey);
   margin-top: 0.5rem;
   font-weight: 300;
   line-height: 1.5;
+}
+.faq svg{
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 1200px) {

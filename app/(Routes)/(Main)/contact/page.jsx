@@ -23,9 +23,16 @@ export default function Contact() {
       <ContactForm />
 
       <section className={styles.faq}>
-        {configurations.faq.map((question) => (
+        {/* {configurations.faq.map((question) => (
           <FaqDisplay key={question.title} faqs={question} />
-        ))}
+        ))} */}
+
+        <h3>General Questions</h3>
+        <div className={styles.questions}>
+          {configurations.faq.map((question) => (
+            <FaqDisplay key={question.title} faqs={question} />
+          ))}
+        </div>
       </section>
     </main>
   );

@@ -276,7 +276,9 @@
   background-color: var(--clr-accent-primary-2);
   color: var(--accent-black);
   font-family: var(--body-style);
+  font-size: 0.9rem;
   border-radius: var(--border-rad-large);
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;

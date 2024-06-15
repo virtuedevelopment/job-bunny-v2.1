@@ -144,60 +144,98 @@
   width: 100%;
   height: 100svh;
   z-index: 999;
-  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px); /* Apply blur effect */
   top: 0;
   left: 0;
-  animation: var(--slideUp);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .modalControl {
-  width: 50%;
-  height: 60%;
+  width: 400px;
+  height: 75%;
   background-color: var(--main-white);
   border-radius: var(--border-rad-large);
   box-shadow: var(--box-shadow);
-  padding: var(--container-padding-regular);
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalControl img {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: var(--border-rad-large);
+  border-top-right-radius: var(--border-rad-large);
+}
+
+.buttons {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  align-items: center;
+  display: flex;
+  justify-items: center;
+}
+.buttons button {
+  border: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--border-rad-large);
+  background-color: var(--clr-accent-primary-2);
+  color: var(--accent-primary);
+  transition: var(--transition-out);
+  cursor: pointer;
+}
+.buttons button:hover {
+  background-color: var(--main-black);
+  color: var(--main-white);
+  transition: var(--transition-in);
+}
+
+.modalControl .message {
+  width: 100%;
+  flex-grow: 1;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
-.modalControlImage {
-  position: absolute;
+.message .box {
   width: 100%;
-  opacity: 0.035;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
+  height: 100%;
+  border: dashed 1px var(--accent-grey);
+  border-radius: var(--border-rad-large);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+.box svg {
+  width: 50px;
+  height: 50px;
+}
+.box h3 {
+  font-size: 2rem;
+  font-family: var(--body-style);
+  color: var(--accent-grey);
+}
+.box p {
+  font-family: var(--body-style);
+  color: var(--accent-grey);
+  padding: 0 0.75rem;
+  text-align: center;
+  line-height: 1.5;
 }
 
-.modalControl button {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition-out);
-  color: var(--primary);
-  z-index: 2;
-}
-.modalControl button:hover {
-  transition: var(--transition-in);
-  color: var(--accent-black);
-}
-.modalControl button svg {
-  width: 20px;
-  height: 20px;
-}
 .modalMessageBox {
   width: 100%;
   padding: 1rem;
   display: flex;
+
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -221,84 +259,80 @@
 /* AUTHENTICATION MODAL  */
 
 .modalView {
-  width: 60%;
-  height: 65%;
+  width: 500px;
   background-color: var(--main-white);
   border-radius: var(--border-rad-large);
   box-shadow: var(--box-shadow);
-  padding: var(--container-padding-regular);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.modalclose {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 1rem;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition-out);
-  color: var(--accent-primary);
-  background-color: transparent;
-  z-index: 2;
-}
-.modalclose:hover {
-  color: var(--accent-black);
-  transition: var(--transition-in);
-}
-.modalclose svg {
-  width: 18px;
-  height: 18px;
-}
-
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-.imagebox {
-  width: 50%;
-  height: 100%;
-}
-.imagebox img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.infobox {
-  width: 50%;
-  height: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 2rem;
+}
+.modalView h3 {
+  font-size: 1.75rem;
   text-align: center;
-  gap: 1.5rem;
-
-  padding: 1rem 1.25rem;
-}
-.infobox h2 {
-  font-size: var(--heading);
-  color: var(--main-black);
-}
-.infobox h2 span {
-  color: var(--primary);
-}
-.infobox h4 {
-  letter-spacing: 2px;
-  font-size: var(--body-text);
   color: var(--accent-black);
-  font-weight: 600;
+  text-align: center;
+  font-family: var(--body-style);
+}
+.modalView p {
+  color: var(--accent-grey);
+  font-family: var(--body-style);
+  text-align: center;
+  width: 75%;
+}
+.modalView .options {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.options a {
+  padding: 0.5rem 1rem;
+  background-color: var(--accent-white);
+  border-radius: var(--border-rad-large);
+  transition: var(--transition-out);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.75rem;
+}
+.options a:hover {
+  background-color: var(--clr-accent-primary-2);
+  transition: var(--transition-in);
+}
+.options a:hover span small {
+  color: var(--accent-primary);
+}
+.options a svg {
+  color: var(--accent-primary);
+  width: 30px;
+  height: 30px;
+}
+.options a span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.25rem;
+}
+.options a span big {
+  color: var(--accent-black);
+  font-family: var(--body-style);
+  font-weight: 700;
+}
+.options a span small {
+  color: var(--accent-grey);
+  font-family: var(--body-style);
 }
 
 @media (max-width: 750px) {
   .modalControl {
-    width: 80%;
-    height: 60%;
+    width: 90%;
+    height: 80%;
   }
 
   .modalMessageBox svg {
@@ -315,7 +349,7 @@
 
   .modalView {
     width: 85%;
-    height: 75%;
+    padding: 0;
   }
 
   .container {

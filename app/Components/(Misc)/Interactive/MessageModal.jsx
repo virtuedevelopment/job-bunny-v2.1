@@ -3,6 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import styles from "./interactive.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import {
   faCircleCheck,
   faCircleExclamation,
@@ -19,12 +20,31 @@ export default function MessageModal({ status, message, close }) {
   return (
     <div className={styles.modalBox}>
       <div className={styles.modalControl}>
-        <img
-          className={styles.modalControlImage}
-          src={"/modal_graphic.svg"}
-          alt="modal graphic"
+        <Image
+          src={"/loginbackground.svg"}
+          width={500}
+          height={500}
+          alt="background img"
         />
-        <button onClick={handleClick}>
+
+        <div className={styles.message}>
+          <div className={styles.box}>
+            <FontAwesomeIcon
+              style={{ color: status === "Success" ? "#77dd77" : "#e34234" }}
+              icon={status === "Success" ? faCircleCheck : faCircleExclamation}
+            />
+
+            <h3>{status}</h3>
+
+            <p>{message ? message : "message goes here for the text."}</p>
+          </div>
+        </div>
+
+        <div className={styles.buttons}>
+          <button onClick={handleClick} >Close Window</button>
+        </div>
+
+        {/* <button onClick={handleClick}>
           <FontAwesomeIcon icon={faCircleXmark} />
         </button>
         <div className={styles.modalMessageBox}>
@@ -33,8 +53,8 @@ export default function MessageModal({ status, message, close }) {
             icon={status === "Success" ? faCircleCheck : faCircleExclamation}
           />
           <h3>{status}</h3>
-          <p>{message}</p>
-        </div>
+          <p>{message ? (message):("message goes here for the text.")}</p>
+        </div> */}
       </div>
     </div>
   );
