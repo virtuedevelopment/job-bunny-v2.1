@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../dashboard.module.css";
 import Link from "next/link";
 
+import { User } from "lucide-react";
+
 export default function WelcomeBox() {
   const { data, status } = useSession();
 
@@ -21,7 +23,7 @@ export default function WelcomeBox() {
         }}
       >
         <div className={styles.userBox}>
-          <FontAwesomeIcon icon={faUser} />
+          <User />
         </div>
         <div>
           <p>

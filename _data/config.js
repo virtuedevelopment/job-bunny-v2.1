@@ -116,11 +116,13 @@ const configurations = {
     features: [
         {
             name: 'Search Engine',
-            icon: faMagnifyingGlass
+            icon: faMagnifyingGlass,
+            description: 'Utilize our advanced search engine to find job listings that match your skills and preferences.'
         },
         {
             name: 'Auto Applications',
-            icon: faRepeat
+            icon: faRepeat,
+            description: 'Save time with our auto-application feature that automatically submits applications on your behalf.'
         },
         {
             name: 'Company Alerts',
@@ -130,20 +132,20 @@ const configurations = {
         {
             name: 'Application Tracking',
             icon: faLocationCrosshairs,
-            description: 'Get instant alerts on new openings at companies you want to work at.'
-
+            description: 'Keep track of your job applications and their statuses in one place.'
         },
         {
             name: 'Unique Filters',
             icon: faSliders,
-            description: 'Get instant alerts on new openings at companies you want to work at.'
+            description: 'Apply unique filters to refine your job search and find the best matches.'
         },
         {
             name: 'Real Time Updates',
             icon: faClock,
-            description: 'Get instant alerts on new openings at companies you want to work at.'
+            description: 'Receive real-time updates on job listings and application statuses.'
         }
     ],
+
     faq: [
         {
             title: 'Sources of our Job Listings',

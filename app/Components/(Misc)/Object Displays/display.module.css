@@ -2,44 +2,38 @@
   width: 100%;
   min-height: fit-content;
   position: relative;
-  padding: 0.75rem 0.5rem;
+  padding: 1rem;
+  background-color: var(--main-white);
   border: solid 1px var(--accent-white);
   border-radius: var(--border-rad-large);
   transition: var(--transition-out);
 }
 .jobItem:hover {
   transition: var(--transition-in);
-  box-shadow: var(--box-shadow);
+  background-color: var(--accent-white);
 }
 .jobtag {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0.35rem 0.5rem;
-  border-top-left-radius: var(--border-rad-large);
-  border-bottom-right-radius: var(--border-rad-large);
   background-color: var(--success);
   font-size: var(--tiny-text);
+  font-family: var(--body-style);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--border-rad-large);
   color: #248f24;
   font-weight: 600;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
-  font-weight: 400;
 }
 .jobtagPremium {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0.35rem 0.5rem;
-  border-top-left-radius: var(--border-rad-large);
-  border-bottom-right-radius: var(--border-rad-large);
-  background-color: var(--accent-secondary);
-  color: var(--main-white);
+  background-color: var(--clr-accent-primary-2);
   font-size: var(--tiny-text);
+  font-family: var(--body-style);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--border-rad-large);
+  color: var(--accent-primary);
   font-weight: 600;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
@@ -47,16 +41,19 @@
 
 .jobItem h3 {
   margin-top: 0.95rem;
-  font-size: var(--body-text);
+  font-size: 1.25rem;
   color: var(--accent-black);
   transition: var(--transition-out);
+  font-family: var(--body-style);
+  font-weight: 700;
 }
 .jobItem .location {
-  margin-top: 0.5rem;
+  margin-block: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 0.75rem;
+  font-family: var(--body-style);
 }
 .jobItem .location p {
   display: flex;
@@ -83,12 +80,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
-  background-color: var(--accent-primary);
+  gap: 0.5rem;
+  background-color: var(--clr-accent-primary-2);
   border-radius: var(--border-rad-large);
-  color: var(--accent-white);
-  font-size: 12px;
-  padding: 0.25rem 0.5rem;
+  color: var(--accent-black);
+  font-size: 14px;
+  padding: 0.3rem 0.75rem;
+  font-family: var(--body-style);
 }
 .jobItem .description {
   margin-top: 1rem;

@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation"; // for incoming searches
 import React, { useState, useEffect, useCallback } from "react";
+import seo_config from "@/_data/seo";
 
 import Loading from "@/app/loading";
 import JobDisplay from "@/app/Components/(Misc)/Object Displays/JobDisplay";
@@ -24,6 +25,13 @@ function debounce(func, wait) {
     }, wait);
   };
 }
+
+// export const metadata = {
+//   title: seo_config.search.title,
+//   description: seo_config.search.description,
+//   keywords: seo_config.search.keywords,
+//   author: seo_config.search.author,
+// };
 
 export default function GuestSearch() {
   //states

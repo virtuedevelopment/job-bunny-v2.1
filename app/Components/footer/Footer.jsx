@@ -1,43 +1,58 @@
+"use client"
+
 import React from "react";
 import configurations from "@/_data/config";
 import styles from "./footer.module.css";
 import RedirectButton from "../(Misc)/RedirectButton";
 import Link from "next/link";
+import { ChevronUp, ChevronRight } from "lucide-react";
 
 export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section className={styles.main}>
-      <div className="grid-3x-display">
-        <span>
-          <h2>Want to apply to 400+ jobs?</h2>
-          <small>Use our auto apply feature</small>
-        </span>
+      <div className={styles.navigation}>
+        <div className={styles.navigationpoint}>
+          <h4>Applying to jobs?</h4>
+          <p>Try out our new auto apply feature!</p>
+          <Link href={"/"}>View</Link>
+        </div>
 
-        <span>
-          <h2>Want to immigrate via a job?</h2>
-          <small>Use our sponsorship filter</small>
-        </span>
+        <div className={styles.navigationpoint}>
+          <h4>Looking for a work visa?</h4>
+          <p>Try using our sponsorship filter!</p>
+          <Link href={"/"}>View</Link>
+        </div>
 
-        <span>
-          <h2>Want to work at a top company?</h2>
-          <small>Use our company alerts feature</small>
-        </span>
+        <div className={styles.navigationpoint}>
+          <h4>Looking for a top company?</h4>
+          <p>Check out our company alerts feature!</p>
+          <Link href={"/"}>View</Link>
+        </div>
       </div>
-      <RedirectButton
-        prompt={"Get Started"}
-        loggedin={"/dashboard"}
-        loggedout={"/signup"}
-        theme={"main-button"}
-      />
-      <p className="logo">#jobbunny</p>
-      <div className={styles.footerOptions}>
-        <p>{configurations.copyright}</p>
-        {configurations.footerRoutes.map((route) => (
-          <Link key={route.url} href={route.url}>
-            {route.route}
-          </Link>
-        ))}
+
+      <div className={styles.footermenu}>
+        <nav className={styles.footeroptions}>
+          {configurations.footerRoutes.map((route, index) => (
+            <Link key={index} href={route.url}>
+              {route.route} <ChevronRight />{" "}
+            </Link>
+          ))}
+        </nav>
+        <button onClick={scrollToTop} >
+          <ChevronUp />
+        </button>
       </div>
+
+      <small className={styles.copy}>
+        ©2024 Job Bunny. All rights reserved.
+      </small>
     </section>
   );
 }

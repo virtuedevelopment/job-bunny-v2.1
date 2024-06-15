@@ -13,159 +13,180 @@
 }
 
 .modalbox {
-  width: 75%;
+  width: 450px;
   height: 70%;
   background-color: var(--main-white);
-  border-radius: var(--border-rad-small);
+  border-radius: var(--border-rad-large);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.modalbox h2 {
+  font-family: var(--body-style);
+  color: var(--accent-black);
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+.modalbox small {
+  font-family: var(--body-style);
+  color: var(--accent-grey);
+}
+
+.upload {
+  width: 100%;
+  margin-top: 1rem;
+  animation: var(--fadeInFast);
+  border: dashed 1px var(--accent-grey);
+  border-radius: var(--border-rad-large);
+
+  display: flex;
+  gap: 0.75rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+.upload svg {
+  color: var(--accent-grey);
+}
+.upload p {
+  font-family: var(--body-style);
+  color: var(--accent-grey);
+}
+.upload p label {
+  text-decoration: underline;
+  color: var(--clr-accent-primary-2);
+  cursor: pointer;
+}
+
+.filedisplay {
+  margin-top: 1rem;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--box-shadow);
-}
-.modalbox img {
-  width: 50%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--border-rad-small);
-}
-.uploadbox {
-  border-radius: var(--border-rad-small);
-  width: 50%;
-  height: 100%;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 2rem;
-  animation: var(--fadeInFast);
-  text-align: center;
-}
-.title big {
-  letter-spacing: 3px;
-  font-size: var(--body-text);
-  color: var(--accent-black);
-  font-weight: 600;
-}
-.title h1 {
-  font-size: var(--subtitle);
-  color: var(--main-black);
-}
-.title h1 span {
-  color: var(--primary);
-}
-.title small {
-  font-size: var(--body-text);
-  color: var(--accent-black);
-  font-weight: 600;
-  margin-top: 0.5rem;
-}
-.title small a {
-  color: var(--primary);
-  text-decoration: underline;
-}
-
-.uploadModule {
-  animation: var(--fadeInFast);
-  width: 100%;
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 1.5rem;
-  gap: 1rem;
-}
-.uploadButton {
-  background-color: var(--main-white);
-  padding: 1rem 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  color: var(--primary);
+  gap: 0.5rem;
   cursor: pointer;
-  transition: var(--transition-out);
-  border-radius: var(--border-rad-small);
+  background-color: var(--accent-white);
 }
-.uploadButton svg {
-  width: 75px;
-  height: 75px;
-}
-.uploadModule span {
-  padding: 0.5rem 5rem;
+.filedisplay span {
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: var(--secondary);
-  border-radius: var(--border-rad-small);
-  color: var(--primary);
-  cursor: pointer;
-}
-.uploadModule button {
-  border: none;
-  cursor: pointer;
-  margin-top: 1rem;
-  padding: 0.5rem 1.5rem;
-  background-color: var(--secondary);
-  color: var(--primary);
-  border-radius: var(--border-rad-small);
-  transition: var(--transition-out);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.5rem;
 }
-.uploadModule button:hover {
+.filedisplay span big {
+  font-family: var(--body-style);
+  font-size: 1rem;
+  color: var(--accent-grey);
+}
+.filedisplay svg {
+  color: var(--accent-grey);
+}
+
+.buttons {
+  margin-top: 1rem;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0;
+  border-top: solid 0.5px var(--accent-grey);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.buttons #cancel {
+  font-family: var(--body-style);
+  border: none;
+  background-color: transparent;
+  border: solid 0.5px var(--accent-grey);
+  border-radius: var(--border-rad-large);
+  transition: var(--transition-out);
+  color: var(--accent-grey);
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+.buttons #upload {
+  font-family: var(--body-style);
+  border: none;
+  background-color: var(--clr-accent-primary-2);
+  border-radius: var(--border-rad-large);
+  color: var(--accent-primary);
+  transition: var(--transition-out);
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+.buttons #cancel:hover {
+  transition: var(--transition-in);
+  background-color: var(--accent-black);
+  color: var(--main-white);
+}
+.buttons #upload:hover {
   transition: var(--transition-in);
   background-color: var(--accent-black);
   color: var(--main-white);
 }
 
-.complete {
-  animation: var(--fadeInFast);
-  padding: 1rem;
+.loading {
+  margin-top: 1rem;
+  width: 100%;
   flex-grow: 1;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
+}
+.loading p {
+  font-family: var(--body-style);
+  color: var(--accent-grey);
+}
+.loading svg {
+  color: var(--accent-grey);
+  animation: spin 1s linear infinite;
 }
 
+.complete {
+  width: 100%;
+  flex-grow: 1;
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
 .complete svg {
   width: 75px;
   height: 75px;
   color: var(--success);
 }
-.complete h3 {
-  font-size: var(--subtitle);
+.complete big {
+  font-family: var(--body-style);
+  font-weight: 700;
   color: var(--accent-black);
-}
-.complete p {
-  color: var(--accent-black);
-  width: 75%;
-  text-align: center;
-  font-weight: 400;
 }
 .complete button {
+  font-family: var(--body-style);
   border: none;
-  cursor: pointer;
-  margin-top: 1rem;
-  padding: 0.5rem 1.5rem;
-  background-color: var(--secondary);
-  color: var(--primary);
-  border-radius: var(--border-rad-small);
+  background-color: var(--clr-accent-primary-2);
+  border-radius: var(--border-rad-large);
+  color: var(--accent-primary);
   transition: var(--transition-out);
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
 }
 .complete button:hover {
   transition: var(--transition-in);
@@ -173,80 +194,19 @@
   color: var(--main-white);
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 750px) {
   .modalbox {
+    padding: 1.5rem;
     width: 90%;
     height: 90%;
-    flex-direction: column;
-  }
-  .modalbox img {
-    width: 100%;
-    height: 40%;
-  }
-  .uploadbox {
-    width: 100%;
-    height: 60%;
-
-    align-items: center;
-    justify-content: center;
-  }
-  .uploadButton svg {
-    width: 50px;
-    height: 50px;
-  }
-  .uploadModule span {
-    padding: 0.5rem 1.25rem;
-    font-size: var(--mini-text);
-  }
-  .uploadModule button {
-    border: none;
-    cursor: pointer;
-    margin-top: 1rem;
-    padding: 0.5rem 1.5rem;
-    background-color: var(--secondary);
-    color: var(--primary);
-    border-radius: var(--border-rad-small);
-    transition: var(--transition-out);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  .uploadModule button:hover {
-    transition: var(--transition-in);
-    background-color: var(--accent-black);
-    color: var(--main-white);
-  }
-
-  .title {
-    padding: 0.5rem 1rem;
-  }
-  .title big {
-    letter-spacing: 1px;
-    font-size: var(--mini-text);
-    color: var(--accent-black);
-    font-weight: 600;
-  }
-  .title h1 {
-    font-size: var(--subhead);
-    color: var(--main-black);
-  }
-
-  .complete svg {
-    width: 35px;
-    height: 35px;
-    color: var(--success);
-  }
-  .complete h3 {
-    font-size: var(--subhead);
-    color: var(--accent-black);
-  }
-  .complete p {
-    color: var(--accent-black);
-    font-size: var(--mini-text);
-    width: 85%;
-    text-align: center;
-    font-weight: 400;
   }
 }

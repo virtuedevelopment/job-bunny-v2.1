@@ -3,6 +3,14 @@ import styles from "./contact.module.css";
 import ContactForm from "./ContactForm";
 import configurations from "@/_data/config";
 import FaqDisplay from "@/app/Components/(Misc)/Object Displays/FaqDisplay";
+import seo_config from "@/_data/seo";
+
+export const metadata = {
+  title: seo_config.contact.title,
+  description: seo_config.contact.description,
+  keywords: seo_config.contact.keywords,
+  author: seo_config.contact.author,
+};
 
 export default function Contact() {
   return (

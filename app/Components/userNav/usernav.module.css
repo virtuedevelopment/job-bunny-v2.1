@@ -1,12 +1,11 @@
 .menu {
   background-color: var(--main-white);
+  border-right: solid 0.5px var(--accent-white);
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   row-gap: 7rem;
-  -webkit-box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.05); 
-box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.05);
 }
 .menu button {
   height: 25px;
@@ -34,6 +33,7 @@ box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.05);
 .menuOption p {
   font-weight: 700;
   color: var(--main-white);
+  font-family: var(--body-style);
 }
 
 .menuToggle {
@@ -60,14 +60,14 @@ box-shadow: 5px 0px 8px 1px rgba(0,0,0,0.05);
 }
 .menuLink {
   width: 100%;
-  padding: 1rem;
-  border-radius: var(--border-rad-small);
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 0.75rem;
   color: var(--primary);
   transition: var(--transition-out);
+  font-family: var(--body-style);
 }
 .menuLink:hover {
   background-color: var(--accent-white);

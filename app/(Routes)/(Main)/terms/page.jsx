@@ -1,5 +1,13 @@
 import React from "react";
+import seo_config from "@/_data/seo";
 import styles from "./terms.module.css";
+
+export const metadata = {
+  title: seo_config.terms.title,
+  description: seo_config.terms.description,
+  keywords: seo_config.terms.keywords,
+  author: seo_config.terms.author,
+};
 
 export default function page() {
   return (

@@ -1,4 +1,5 @@
 import React from "react";
+import seo_config from "@/_data/seo";
 import styles from "./features.module.css";
 import configurations from "@/_data/config";
 import RedirectButton from "@/app/Components/(Misc)/RedirectButton";
@@ -8,12 +9,20 @@ import FeatureCard from "@/app/Components/(Misc)/Cards/FeatureCard";
 import Image from "next/image";
 import Link from "next/link";
 
+import {Zap} from "lucide-react"
+
 const list = [
   "View Jobs from multiple platforms",
   "Automatically Apply to multiple jobs",
   "Get Access to positions in different countries",
   "Get alerts for updates",
 ];
+export const metadata = {
+  title: seo_config.features.title,
+  description: seo_config.features.description,
+  keywords: seo_config.features.keywords,
+  author: seo_config.features.author,
+};
 
 export default function Features() {
   return (
@@ -45,25 +54,44 @@ export default function Features() {
       </section>
 
       <section className={styles.auto}>
-        <div>
-          <FontAwesomeIcon icon={faCopy} />
-          <h2>It can take up to 30 minutes to complete a job application.</h2>
-          <p>Imagine spending no time at all.</p>
-          <RedirectButton
-            prompt={"Get Started"}
-            loggedin={"/dashboard"}
-            loggedout={"/signup"}
-            theme={"primary-button"}
-          />
-        </div>
+        <div className={styles.information}>
+          <small>Automatic Applications</small>
 
-        <div>
-          <Image src={"/jobs.svg"} width={500} height={500} alt="jobs" />
+          <h2>
+            Imagine completing job applications <span>instantly <Zap /> </span>
+          </h2>
+
+          <big>Other platforms can take up to 30 minutes.</big>
+
+          <p>
+            Job Bunny is introducing an auto-application feature that will
+            streamline the job application process by automatically matching
+            your profile to suitable job listings and submitting your
+            applications for you.
+          </p>
+
+          <span style={{ alignSelf: "flex-start" }}>
+            <RedirectButton
+              prompt={"Get Started"}
+              loggedin={"/dashboard"}
+              loggedout={"/login"}
+              theme={"alt-button-1"}
+            />
+          </span>
+        </div>
+        <div className={styles.imagebox}>
+          <div className={styles.circle}></div>
+          <Image
+            src={"/phonexlaptop.svg"}
+            width={500}
+            height={500}
+            alt="image"
+          />
         </div>
       </section>
 
       <section className={styles.advantage}>
-        <h2>Our Other Advantages</h2>
+        <h2>Various advantages of using Job Bunny</h2>
         <div className={styles.advantageList}>
           <FeatureCard feature={configurations.features[2]} />
           <FeatureCard feature={configurations.features[3]} />

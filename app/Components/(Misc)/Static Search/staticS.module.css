@@ -5,9 +5,8 @@
   grid-template-columns: 1fr;
   gap: 0.25rem;
   border-radius: var(--border-rad-large);
-  background-color: var(--secondary);
+  background-color: var(--main-white);
   padding: 0.5rem 0.75rem;
-  box-shadow: var(--box-shadow);
   /* animation: var(--fadeInFast);
     animation-delay: 0.5s; */
 }
@@ -22,6 +21,8 @@
   outline: none;
   border: none;
   background-color: transparent;
+  font-weight: 700;
+  font-family: var(--body-style);
 }
 .inputbox input::placeholder {
   color: var(--accent-black);
@@ -36,7 +37,7 @@
   padding: 0.5rem;
   background-color: transparent;
   border: none;
-  color: var(--accent-black);
+  color: var(--primary);
   transition: var(--tranisition-out);
   cursor: pointer;
 }
@@ -58,6 +59,8 @@
 .dropdown button {
   width: 100%;
   text-align: start;
+  color: var(--accent-black);
+  font-family: var(--body-style);
 }
 
 @media (max-width: 1200px) {

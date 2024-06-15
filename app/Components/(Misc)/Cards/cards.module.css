@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+
 .graphicCard {
   width: 350px;
   border-radius: 3.5px;
@@ -56,57 +58,71 @@
   line-height: 1.75;
   margin-block: 0.75rem;
 }
+
 .feature {
-  width: 275px;
-  height: 350px;
-  padding: 2.5rem 1.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-
-  background-color: var(--primary);
+  background-color: rgba(0, 0, 0, 0.045);
   border-radius: var(--border-rad-large);
-  box-shadow: var(--box-shadow);
-}
-.feature span {
+
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.feature small {
+  color: var(--accent-primary);
+}
+.feature .info {
+  flex-direction: column;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
 }
-.feature svg {
-  width: 40px;
-  height: 40px;
-  color: var(--main-white);
-  margin: auto;
+.feature .info h2 {
+  text-align: left;
+  display: block;
+  width: 100%;
+  font-size: 1.5rem;
+  color: var(--accent-black);
+  margin: 0;
 }
-.feature h2 {
-  font-size: 2.5rem;
-  color: var(--main-white);
-  text-align: center;
+.feature .info p {
+  color: var(--accent-grey);
+  font-family: var(--body-style);
 }
-.feature p {
-  text-align: center;
-  font-size: var(--body-text);
-  color: var(--main-white);
+.feature button {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.15rem;
+  color: var(--accent-primary);
+  transition: var(--transition-out);
+  border: none;
+  cursor: pointer;
+}
+.feature button:hover {
+  transition: var(--transition-in);
+  padding-left: 1rem;
+  color: var(--accent-black);
 }
 
 .jobFeatureCard {
-  background-color: var(--primary);
+  background-color: var(--clr-accent-primary-2);
   border-radius: var(--border-rad-large);
-  box-shadow: var(--box-shadow);
-  color: var(--main-white);
+  color: var(--accent-primary);
   transition: var(--transition-out);
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
-  padding: 0.5rem;
+  gap: 0.5rem;
+  padding: 0.75rem 0.5rem;
 }
 .jobFeatureCard:hover {
   transition: var(--transition-in);
@@ -119,25 +135,12 @@
 }
 .jobFeatureCard small {
   font-size: var(--tiny-text);
+  font-family: var(--body-style);
 }
 
 @media (max-width: 1200px) {
   .graphicCard {
     width: 325px;
-  }
-
-  .feature {
-    padding: 1.5rem;
-    width: 250px;
-    height: 300px;
-    justify-content: center;
-  }
-  .feature svg {
-    width: 35px;
-    height: 35px;
-  }
-  .feature h2 {
-    font-size: var(--subtitle);
   }
 }
 @media (max-width: 750px) {

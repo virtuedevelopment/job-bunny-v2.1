@@ -1,5 +1,13 @@
 import React from "react";
 import styles from "../terms/terms.module.css";
+import seo_config from "@/_data/seo";
+
+export const metadata = {
+  title: seo_config.privacy.title,
+  description: seo_config.privacy.description,
+  keywords: seo_config.privacy.keywords,
+  author: seo_config.privacy.author,
+};
 
 export default function page() {
   return (

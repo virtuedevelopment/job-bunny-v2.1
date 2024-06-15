@@ -1,4 +1,6 @@
 import configurations from "@/_data/config";
+import seo_config from "@/_data/seo";
+
 import UserExample from "./UserExample";
 import styles from "./home.module.css";
 import Link from "next/link";
@@ -7,7 +9,10 @@ import StaticSearch from "@/app/Components/(Misc)/Static Search/StaticSearch";
 import GraphicCard from "@/app/Components/(Misc)/Cards/GraphicCard";
 import RedirectButton from "@/app/Components/(Misc)/RedirectButton";
 import JobFeatureCard from "@/app/Components/(Misc)/Cards/JobFeatureCard";
+import FeatureCard from "@/app/Components/(Misc)/Cards/FeatureCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { Zap } from "lucide-react";
 
 const exampleUser = {
   name: "David",
@@ -25,27 +30,34 @@ const exampleUser2 = {
 };
 const steps = [
   {
-    step: "Create and update your profile ",
+    name: "Create and update your profile ",
     graphic: "/step1.svg",
     url: "/",
-    message:
+    description:
       "Upload your resume to unlock personalized job recommendations tailored just for you. Our advanced algorithms analyze your skills and experience to match you with the perfect positions",
   },
   {
-    step: "Update your preferences",
+    name: "Update your preferences",
     graphic: "/step2.svg",
     url: "/",
-    message:
+    description:
       "Update your preferences to help us understand your unique skills and career goals. By doing so, we can match you with the perfect job opportunities that align with your aspirations. ",
   },
   {
-    step: "Start your job search",
+    name: "Start your job search",
     graphic: "/step3.svg",
     url: "/",
-    message:
+    description:
       "Start your search now! Explore our premium job search engine to discover the perfect opportunities manually. Take charge of your job hunt and find the ideal fit for your skills and aspirations.",
   },
 ];
+
+export const metadata = {
+  title: seo_config.home.title,
+  description: seo_config.home.description,
+  keywords: seo_config.home.keywords,
+  author: seo_config.home.author,
+};
 
 export default function Home() {
   return (
@@ -55,7 +67,7 @@ export default function Home() {
           <div className={styles.heroPrompt}>
             <h1>
               Search for jobs. <span>Automate applications</span>. Get instant
-              alerts. Track all applications.
+              alerts. Track all applications <Zap />
             </h1>
 
             <StaticSearch />
@@ -129,19 +141,13 @@ export default function Home() {
       </section>
 
       <section className={styles.easySteps}>
-        <h3>How It Works</h3>
+        <h3>Begin your job search</h3>
         <div className={styles.graphicDisplay}>
           {steps.map((step) => (
-            <GraphicCard
-              key={step.step}
-              graphic={step.graphic}
-              title={step.step}
-              url={step.url}
-              message={step.message}
-            />
+            <FeatureCard key={step.name} feature={step} />
           ))}
         </div>
-        <p>Maximize your employment opportunities by using our app</p>
+        <big>Maximize your employment opportunities by using our app</big>
         <RedirectButton
           prompt={"Get Started"}
           loggedin={"/dashboard"}
@@ -150,28 +156,34 @@ export default function Home() {
         />
       </section>
 
-      <section className={styles.features}>
-        <div className={styles.displays}>
+      <section className={styles.auto}>
+        <div className={styles.imagebox}>
+          <div className={styles.circle}></div>
           <Image
-            src={"/jobApply.svg"}
-            width={450}
-            height={450}
-            alt="Job Apply"
+            src={"/laptop.svg"}
+            width={500}
+            height={500}
+            alt="image"
           />
-          <Image src={"/joblist.svg"} width={450} height={450} alt="Job List" />
         </div>
 
-        <h3>
-          Get on step closer to your <span>future job</span>
-        </h3>
+        <div className={styles.information}>
+          <small>Our key features</small>
 
-        <div className={styles.featuresList}>
-          {configurations.features.map((feature) => (
-            <div key={feature.name}>
-              <FontAwesomeIcon className={styles.icon} icon={feature.icon} />
-              <small>{feature.name}</small>
-            </div>
-          ))}
+          <h2>
+            Get one step coloser to your future job with our{" "}
+            <span>
+              key features <Zap />{" "}
+            </span>
+          </h2>
+
+          <big>We do these features better than everyone else.</big>
+
+          <div className={styles.features}>
+            {configurations.features.map((feat, index)=>(
+              <span key={index} className={styles.featuredisplay}>{feat.name}</span>
+            ))}
+          </div>
         </div>
       </section>
     </main>

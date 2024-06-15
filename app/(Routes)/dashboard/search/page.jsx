@@ -1,5 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
+import seo_config from "@/_data/seo";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import React, { useState, useEffect, useCallback } from "react";
@@ -26,6 +27,13 @@ function debounce(func, wait) {
     }, wait);
   };
 }
+
+// export const metadata = {
+//   title: seo_config.searchEngine.title,
+//   description: seo_config.searchEngine.description,
+//   keywords: seo_config.searchEngine.keywords,
+//   author: seo_config.searchEngine.author,
+// };
 
 export default function Search() {
   //search params from other page

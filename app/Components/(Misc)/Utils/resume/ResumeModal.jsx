@@ -7,6 +7,8 @@ import {
   faCloudArrowUp,
   faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { FileText, LoaderCircle, BadgeCheck } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from "@/app/loading";
 
@@ -40,8 +42,6 @@ export default function ResumeModal() {
           if (response.ok) {
             const data = await response.json();
 
-            console.log(data);
-
             if (data.result === false) {
               setModalToggled(true);
             }
@@ -68,6 +68,9 @@ export default function ResumeModal() {
       setResume(file);
       setNoFile(false); // Reset noFile state when a file is selected
     }
+  };
+  const formatFileSize = (size) => {
+    return (size / (1024 * 1024)).toFixed(2) + " MB"; // Convert bytes to MB and format to 2 decimal places
   };
 
   const uploadResume = async () => {
@@ -113,41 +116,32 @@ export default function ResumeModal() {
       {modalToggled && (
         <section className={styles.modalback}>
           <div className={styles.modalbox}>
-            <Image
-              width={250}
-              height={250}
-              src={"/loginbackground.svg"}
-              alt="background"
-            />
+            <div>
+              <h2>Upload Resume File</h2>
+              <small>Upload your resume to your account (PDF)</small>
+            </div>
 
-            <div className={styles.uploadbox}>
-              <div className={styles.title}>
-                <big>GET YOUR JOB SEARCH STARTED</big>
-                <h1>
-                  Upload Your Resume<span>.</span>
-                </h1>
+            {isLoading ? (
+              <div className={styles.loading}>
+                <LoaderCircle strokeWidth={1.25} />
+                <p>Loading please wait...</p>
               </div>
-
-              {isLoading ? (
-                <Loading />
-              ) : isUploaded ? (
-                <div className={styles.complete}>
-                  <FontAwesomeIcon icon={faCircleCheck} />
-                  <h3>Resume Upload Complete!</h3>
-                  <p>
-                    Thank you for uploading your resume, your job searches will
-                    now be tailored to you.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setModalToggled(false);
-                    }}
-                  >
-                    Close Window
-                  </button>
-                </div>
-              ) : (
-                <div className={styles.uploadModule}>
+            ) : isUploaded ? (
+              <div className={styles.complete}>
+                <BadgeCheck strokeWidth={1.5} />
+                <big>Thank you for uploading your resume!</big>
+                <small>Now we can help you find more accurate jobs.</small>
+                <button
+                  onClick={() => {
+                    setModalToggled(false);
+                  }}
+                >
+                  close
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className={styles.upload}>
                   <input
                     type="file"
                     accept=".pdf"
@@ -155,26 +149,38 @@ export default function ResumeModal() {
                     id="file-upload"
                     onChange={handleFileUpload}
                   />
-                  <label htmlFor="file-upload" className={styles.uploadButton}>
-                    <FontAwesomeIcon icon={faCloudArrowUp} />
-                  </label>
-                  <label htmlFor="file-upload">
-                    <span
-                      style={{
-                        border: noFile ? "solid 1px red" : "none",
-                      }}
-                    >
-                      {resume ? resume.name : "No file selected"}
-                    </span>
-                  </label>
+                  <FileText strokeWidth={1.25} />
+                  <p>
+                    Not uploaded?{" "}
+                    <label htmlFor="file-upload">choose file(s)</label>{" "}
+                  </p>
+                </div>
 
-                  <button onClick={uploadResume}>
-                    Upload Resume
-                    <FontAwesomeIcon icon={faCloudArrowUp} />
+                <label className={styles.filedisplay} htmlFor="file-upload">
+                  <span>
+                    <FileText strokeWidth={1.25} />
+                    <big> {resume ? resume.name : "No file selected"}</big>
+                  </span>
+                  <small>
+                    {resume ? formatFileSize(resume.size) : "0.00 MB"}
+                  </small>
+                </label>
+
+                <div className={styles.buttons}>
+                  <button
+                    onClick={() => {
+                      setModalToggled(false);
+                    }}
+                    id={styles.cancel}
+                  >
+                    Cancel
+                  </button>
+                  <button onClick={uploadResume} id={styles.upload}>
+                    Upload
                   </button>
                 </div>
-              )}
-            </div>
+              </>
+            )}
           </div>
         </section>
       )}

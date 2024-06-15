@@ -1,5 +1,8 @@
 /* ROOT VARIABLES  */
+
 :root {
+  @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+
   /* COLORS */
   --main-black: #21282b;
   --accent-black: #384348;
@@ -12,6 +15,7 @@
 
   --primary: #9dacff;
   --accent-primary: #8093ff;
+  --clr-accent-primary-2: #bdc7f5;
 
   --secondary: #dddbfb;
   --accent-secondary: #c7c3f8;
@@ -30,19 +34,19 @@
   --mini-text: 0.85rem;
   --tiny-text: 0.625rem;
 
-  --body-style: "Outfit", sans-serif;
+  --body-style: "Mulish", sans-serif;
 
   /* Container and Formatting */
   --border-rad-small: 2.75px;
-  --border-rad-large: 7px;
+  --border-rad-large: 4.5px;
 
   --dashboard-padding: 1rem 1.5rem;
 
   --container-padding-large: 1.75rem 4rem;
   --container-padding-regular: 1rem 1.25rem;
 
-  --navigation-padding-regular: 1.5rem 2.5rem;
-  --navigation-padding-mobile: 1rem 1.5rem;
+  --navigation-padding-regular: 1.25rem 2rem;
+  --navigation-padding-mobile: 0.5rem 1rem;
 
   --button-padding-regular: 0.75rem 2rem;
   --button-padding-small: 0.5rem 0.75rem;
@@ -100,13 +104,13 @@ select {
 }
 
 .main-button {
+  font-family: var(--body-style);
   background-color: var(--main-black);
   color: var(--accent-white);
   padding: var(--button-padding-regular);
   border-radius: var(--border-rad-large);
   font-size: var(--mini-text);
   transition: var(--transition-out);
-  box-shadow: var(--box-shadow);
   border: none;
   cursor: pointer;
 }
@@ -117,6 +121,7 @@ select {
 }
 
 .secondary-button {
+  font-family: var(--body-style);
   background-color: var(--main-white);
   color: var(--accent-black);
   padding: var(--button-padding-regular);
@@ -138,7 +143,7 @@ select {
 }
 
 .primary-button {
-  font-weight: 600;
+  font-family: var(--body-style);
   background-color: var(--accent-primary);
   color: var(--accent-white);
   padding: var(--button-padding-regular);
@@ -149,6 +154,23 @@ select {
   border: none;
 }
 .primary-button:hover {
+  background-color: var(--secondary);
+  transition: var(--transition-in);
+}
+
+.alt-button-1 {
+  font-family: var(--body-style);
+  background-color: var(--clr-accent-primary-2);
+  color: var(--accent-primary);
+  padding: var(--button-padding-regular);
+  border-radius: var(--border-rad-large);
+  font-size: var(--mini-text);
+  transition: var(--transition-out);
+  cursor: pointer;
+  border: none;
+}
+.alt-button-1:hover {
+  color: var(--main-white);
   background-color: var(--secondary);
   transition: var(--transition-in);
 }
