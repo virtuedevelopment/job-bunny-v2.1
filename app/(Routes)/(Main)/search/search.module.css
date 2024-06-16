@@ -32,8 +32,8 @@
   color: var(--main-white);
 }
 .toggleButton svg {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
 }
 .filters {
   background-color: var(--accent-white);

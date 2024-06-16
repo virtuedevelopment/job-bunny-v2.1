@@ -51,7 +51,7 @@ export default function CustomDropdown({
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.dropcontainer}>
         <button onClick={setToggle} className={styles.selection}>
           <p>
             {current

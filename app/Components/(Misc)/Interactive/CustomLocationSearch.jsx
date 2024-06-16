@@ -85,25 +85,16 @@ export default function CustomLocationSearch({ update }) {
 
   return (
     <>
-      <div style={{ gridColumn: "1/-1" }} className={styles.container}>
-        <div
-          style={{ backgroundColor: "var(--main-white)" }}
-          className="inputbox"
-        >
-          <span>
-            <small>Enter preferred location</small>
-            <input
-              type="text"
-              placeholder="Enter preferred city.."
-              value={locationInput}
-              onChange={handleLocationInputChange}
-            />
-          </span>
-          <FontAwesomeIcon icon={faLocationDot} />
-        </div>
+      <div className={styles.dropcontainer}>
+        <input
+          type="text"
+          placeholder="Enter preferred city.."
+          value={locationInput}
+          onChange={handleLocationInputChange}
+        />
 
         {dropdownVisible && dropdown.length > 0 && (
-          <div className={styles.dropdown}>
+          <div className={styles.locdropdown}>
             {dropdown.map((loc, index) => (
               <button
                 className={styles.locationItem}

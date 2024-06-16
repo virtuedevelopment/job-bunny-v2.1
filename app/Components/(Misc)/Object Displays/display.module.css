@@ -14,7 +14,7 @@
 }
 .jobtag {
   background-color: var(--success);
-  font-size: var(--tiny-text);
+  font-size: 9px;
   font-family: var(--body-style);
   padding: 0.35rem 0.75rem;
   border-radius: var(--border-rad-large);
@@ -84,7 +84,7 @@
   background-color: var(--clr-accent-primary-2);
   border-radius: var(--border-rad-large);
   color: var(--accent-black);
-  font-size: 14px;
+  font-size: 12px;
   padding: 0.3rem 0.75rem;
   font-family: var(--body-style);
 }

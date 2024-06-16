@@ -8,6 +8,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import FilterBox from "./FilterBox";
 import DisplayJobs from "../(Main)/DisplayJobs";
 import InifiniteScroll from "@/app/Components/(Misc)/Interactive/InifiniteScroll";
+import CustomLocationSearch from "@/app/Components/(Misc)/Interactive/CustomLocationSearch";
 import Loading from "@/app/loading";
 import styles from "./search.module.css";
 
@@ -48,6 +49,8 @@ export default function Search() {
   const [start, setStart] = useState(0); //index for searching
   const [searchError, setSearchError] = useState(); //dealing with search issues
   const [isLoading, setIsLoading] = useState(false); // for suspense loading
+
+  const [location, setLocation] = useState({}); //location state set by customLocationSearch
   const [filters, setFilters] = useState({}); //managed by the filterbox component
   const [filterToggle, setFilterToggle] = useState(false); //toggle filter box showing
   const [showDropdown, setShowDropdown] = useState(false); // To control the visibility of the dropdown
@@ -173,6 +176,10 @@ export default function Search() {
       filters: activeFilters,
     };
 
+    if (Object.keys(location).length > 0) {
+      requestBody.filters.location = location;
+    }
+
     console.log(requestBody);
 
     //execute request
@@ -284,36 +291,53 @@ export default function Search() {
             width: "100%",
           }}
         >
-          <div style={{ position: "relative" }} className="inputbox">
-            <span>
-              <input
-                type="text"
-                required
-                placeholder="Search..."
-                value={searchValue}
-                onKeyDown={checkKey}
-                onChange={setSearch}
-              />
-              {searchError && <small className="error">{searchError}</small>}
-            </span>
-            <button style={{ border: "none" }} onClick={getResults}>
+          <div style={{ position: "relative" }} className={styles.searchbox}>
+            <div id={styles.searchinput}>
+              <div id={styles.searchtools}>
+                <div
+                  style={{
+                    position: "relative",
+                    // borderRight: "solid 0.5px var(--accent-grey)",
+                  }}
+                >
+                  <input
+                    type="text"
+                    required
+                    placeholder="Search.."
+                    value={searchValue}
+                    onKeyDown={checkKey}
+                    onChange={setSearch}
+                  />
+
+                  {showDropdown && jobTitles.length > 0 && (
+                    <div className={styles.dropdown}>
+                      {jobTitles.map((suggestion, index) => (
+                        <button
+                          className={styles.item}
+                          key={index}
+                          type="button"
+                          onClick={(e) => selectSuggestion(suggestion)}
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <CustomLocationSearch update={setLocation} />
+              </div>
+
+              {searchError && <small id={styles.error} className="error">{searchError}</small>}
+            </div>
+
+            <button
+              id={styles.resultsbutton}
+              style={{ border: "none" }}
+              onClick={getResults}
+            >
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
-
-            {showDropdown && jobTitles.length > 0 && (
-              <div className={styles.dropdown}>
-                {jobTitles.map((suggestion, index) => (
-                  <button
-                    className={styles.item}
-                    key={index}
-                    type="button"
-                    onClick={(e) => selectSuggestion(suggestion)}
-                  >
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
           <button className={styles.toggleButton} onClick={toggleFilter}>

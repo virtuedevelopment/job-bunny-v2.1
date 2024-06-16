@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./search.module.css";
 import CustomDropdown from "@/app/Components/(Misc)/Interactive/CustomDropdown";
-import CustomLocationSearch from "@/app/Components/(Misc)/Interactive/CustomLocationSearch";
 import {
   faBriefcase,
   faFile,
@@ -91,7 +90,7 @@ export default function FilterBox({ filter, update }) {
   const [VisaSponsored, setVisaSponsored] = useState();
   const [dateRange, setDateRange] = useState();
   const [minSalary, setMinSalary] = useState();
-  const [location, setLocation] = useState({});
+
 
   //dropdown updated states and functions:
   const [currentOpenDropdown, setCurrentOpenDropdown] = useState(null);
@@ -127,7 +126,6 @@ export default function FilterBox({ filter, update }) {
     dateRange,
     minSalary,
     update,
-    location,
   ]); // Include all states and 'update' in the dependency array
 
   return (
@@ -188,8 +186,6 @@ export default function FilterBox({ filter, update }) {
         isCurrent={currentOpenDropdown === "salary"}
         onToggle={() => handleDropdownToggle("salary")}
       />
-
-      <CustomLocationSearch update={setLocation} />
     </div>
   );
 }

@@ -1,11 +1,11 @@
 /* CUSTOM DROPDOWN */
-.container {
+.dropcontainer {
   position: relative;
 }
 .selection {
   border-radius: var(--border-rad-large);
-  background-color: var(--primary);
-  color: var(--main-white);
+  background-color: var(--clr-accent-primary-2);
+  color: var(--accent-primary);
   padding: 0.75rem;
   border: none;
   width: 100%;
@@ -22,6 +22,7 @@
 }
 .selection p {
   font-weight: 500;
+  font-family: var(--body-style);
 }
 .dropdown {
   position: absolute;
@@ -29,13 +30,13 @@
   padding: 0.5rem;
   top: 110%;
   background-color: var(--main-white);
+  border: solid 0.5px var(--accent-grey);
   border-radius: var(--border-rad-large);
-  box-shadow: var(--box-shadow);
   display: grid;
   gap: 0.5rem;
   z-index: 3;
 
-  height: 200px;
+  height: 150px;
   overflow-y: scroll;
 
   display: flex;
@@ -43,6 +44,9 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 0.75rem;
+}
+.dropdown::-webkit-scrollbar {
+  display: none;
 }
 .item {
   width: 100%;
@@ -61,6 +65,7 @@
 }
 .item p {
   text-align: left;
+  font-family: var(--body-style);
 }
 .item svg {
   width: 10px;
@@ -73,21 +78,49 @@
 }
 
 /* CUSTOM LOCATION SEARCH */
+.locdropdown {
+  position: absolute;
+  width: 100%;
+  padding: 0.5rem;
+  top: 150%;
+  background-color: var(--main-white);
+  border: solid 0.5px var(--accent-grey);
+  border-radius: var(--border-rad-large);
+  display: grid;
+  gap: 0.5rem;
+  z-index: 3;
+
+  height: 250px;
+  overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.75rem;
+}
+.locdropdown::-webkit-scrollbar {
+  display: none;
+}
 .locationItem {
+  width: 100%;
   border: none;
-  padding: 0.75rem;
+  height: 40px;
+  padding: 0.5rem 0.75rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 1rem;
   background-color: transparent;
   cursor: pointer;
-
+  color: var(--accent-grey);
   transition: var(--transition-out);
   color: var(--accent-black);
+  border-radius: var(--border-rad-large);
 }
 .locationItem:hover {
-  color: var(--accent-primary);
+  color: var(--accent-grey);
+  background-color: var(--accent-white);
   transition: var(--transition-in);
 }
 .locationItem svg {
@@ -95,7 +128,7 @@
   height: 12px;
 }
 .locationItem p {
-  font-size: var(--body-text);
+  font-family: var(--body-style);
 }
 
 /* INFINITE SCROLL COMPONENT */
