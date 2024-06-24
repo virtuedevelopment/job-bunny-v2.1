@@ -1,4 +1,5 @@
 "use client";
+
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation"; // for incoming searches
 import React, { useState, useEffect, useCallback } from "react";
@@ -26,21 +27,15 @@ function debounce(func, wait) {
   };
 }
 
-// export const metadata = {
-//   title: seo_config.search.title,
-//   description: seo_config.search.description,
-//   keywords: seo_config.search.keywords,
-//   author: seo_config.search.author,
-// };
-
 export default function GuestSearch() {
   //states
   const router = useRouter();
   const searchParams = useSearchParams();
   const [routeTrigger, setRouteTrigger] = useState(false);
 
-  const [searchValue, setSearchValue] = useState();
-  const [searchError, setSearchError] = useState();
+  const [searchValue, setSearchValue] = useState("");
+  const [location, setLocation] = useState(null);
+  const [searchError, setSearchError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [jobTitles, setJobTitles] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -61,18 +56,21 @@ export default function GuestSearch() {
       setShowDropdown(false);
     }
   };
+
   const checkKey = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       getResults();
     }
   };
+
   const selectSuggestion = (suggestion) => {
     setSearchValue(suggestion); // Update the search state
     setJobTitles([]); // remove suggestions
     setShowDropdown(false); // Close the dropdown
     getResults();
   };
+
   const closeModal = () => {
     setModalTrigger(!modalTrigger);
   };
@@ -126,7 +124,9 @@ export default function GuestSearch() {
     // set request body here
     const requestBody = {
       job_title: searchValue,
-      filters: {},
+      filters: {
+        location: location,
+      },
     };
 
     //execute request
@@ -156,13 +156,23 @@ export default function GuestSearch() {
     //set route search to search params
     const redirectSearch = async () => {
       const query = searchParams.get("search") || "";
+      const locationParam = searchParams.get("location");
       setSearchValue(query);
+      if (locationParam) {
+        try {
+          const parsedLocation = JSON.parse(locationParam);
+          setLocation(parsedLocation);
+        } catch (error) {
+          console.error("Error parsing location parameter:", error);
+        }
+      }
       if (query) {
         setRouteTrigger(true);
       }
     };
     redirectSearch();
   }, [searchParams]);
+
   useEffect(() => {
     const routeSearch = async () => {
       if (routeTrigger && searchValue) {

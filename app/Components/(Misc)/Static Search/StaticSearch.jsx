@@ -1,28 +1,44 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import styles from "./staticS.module.css";
+import { MapPin } from "lucide-react";
+
+import CustomLocationSearch from "../Interactive/CustomLocationSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export default function StaticSearch() {
   const { data, status } = useSession();
   const [search, setSearch] = useState("");
+  const [location, setLocation] = useState(null);
+  const [showLocation, setShowLocation] = useState(true);
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const router = useRouter();
+
   const sendToRoute = (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     const effectiveSearch = encodeURIComponent(search);
+    const locationParam = location
+      ? `&location=${encodeURIComponent(JSON.stringify(location))}`
+      : "";
 
     if (data && data.user) {
-      router.push(`/dashboard/search?search=${effectiveSearch}`);
+      router.push(
+        `/dashboard/search?search=${effectiveSearch}${locationParam}`
+      );
     } else {
-      router.push(`/search?search=${effectiveSearch}`);
+      router.push(`/search?search=${effectiveSearch}${locationParam}`);
     }
+  };
+
+  const showLocDropdown = () => {
+    setShowLocation(!showLocation);
   };
 
   function debounce(func, wait) {
@@ -36,6 +52,7 @@ export default function StaticSearch() {
       timeout = setTimeout(later, wait);
     };
   }
+
   const debouncedApiCall = debounce(async (input) => {
     try {
       const response = await fetch(
@@ -60,6 +77,7 @@ export default function StaticSearch() {
       console.error("Error fetching job title suggestions:", error);
     }
   }, 30); // Adjust debounce time as needed
+
   const selectSuggestion = (suggestion) => {
     if (data && data.user) {
       router.push(`/dashboard/search?search=${suggestion}`);
@@ -67,6 +85,7 @@ export default function StaticSearch() {
       router.push(`/search?search=${suggestion}`);
     }
   };
+
   const setSearchValue = (value) => {
     const searchValue = typeof value === "string" ? value : value.target.value;
     setSearch(searchValue);
@@ -85,6 +104,14 @@ export default function StaticSearch() {
   return (
     <form onSubmit={sendToRoute} className={styles.inputbox}>
       <div className={styles.input}>
+        <button
+          onClick={showLocDropdown}
+          type="button"
+          className={styles.location_select}
+        >
+          <MapPin />
+        </button>
+
         <input
           onChange={setSearchValue}
           type="text"
@@ -93,7 +120,7 @@ export default function StaticSearch() {
           placeholder="Search.."
         />
 
-        <button type="submit">
+        <button className={styles.search_submit} type="submit">
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
       </div>
@@ -109,6 +136,12 @@ export default function StaticSearch() {
               {suggestion}
             </button>
           ))}
+        </div>
+      )}
+
+      {showLocation && (
+        <div className={styles.location}>
+          <CustomLocationSearch update={setLocation} />
         </div>
       )}
     </form>

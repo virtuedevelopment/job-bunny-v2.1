@@ -1,4 +1,5 @@
 "use client";
+
 import { useSession } from "next-auth/react";
 import seo_config from "@/_data/seo";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,13 +30,6 @@ function debounce(func, wait) {
   };
 }
 
-// export const metadata = {
-//   title: seo_config.searchEngine.title,
-//   description: seo_config.searchEngine.description,
-//   keywords: seo_config.searchEngine.keywords,
-//   author: seo_config.searchEngine.author,
-// };
-
 export default function Search() {
   //search params from other page
   const searchParams = useSearchParams();
@@ -47,20 +41,21 @@ export default function Search() {
   const [searchValue, setSearchValue] = useState(""); //the search value
   const [jobTitles, setJobTitles] = useState([]); //suggested job titles
   const [start, setStart] = useState(0); //index for searching
-  const [searchError, setSearchError] = useState(); //dealing with search issues
+  const [searchError, setSearchError] = useState(""); //dealing with search issues
   const [isLoading, setIsLoading] = useState(false); // for suspense loading
 
-  const [location, setLocation] = useState({}); //location state set by customLocationSearch
+  const [location, setLocation] = useState(null); //location state set by customLocationSearch
   const [filters, setFilters] = useState({}); //managed by the filterbox component
   const [filterToggle, setFilterToggle] = useState(false); //toggle filter box showing
   const [showDropdown, setShowDropdown] = useState(false); // To control the visibility of the dropdown
   const [results, setResults] = useState([]); //result list for job search
   const [count, setCount] = useState(0);
 
-  //Utilitiy functions
+  //Utility functions
   const toggleFilter = () => {
     setFilterToggle(!filterToggle);
   };
+
   const setFilter = useCallback(({ name, value }) => {
     setFilters((currentFilters) => {
       const updatedFilters = { ...currentFilters };
@@ -75,6 +70,7 @@ export default function Search() {
       return updatedFilters;
     });
   }, []);
+
   const setSearch = (value) => {
     const search = typeof value === "string" ? value : value.target.value;
     setSearchValue(search); // This is the correct usage
@@ -94,6 +90,7 @@ export default function Search() {
       getResults();
     }
   };
+
   const selectSuggestion = (suggestion) => {
     setSearchValue(suggestion); // Update the search state
     setJobTitles([]); // remove suggestions
@@ -176,11 +173,9 @@ export default function Search() {
       filters: activeFilters,
     };
 
-    if (Object.keys(location).length > 0) {
+    if (location) {
       requestBody.filters.location = location;
     }
-
-    console.log(requestBody);
 
     //execute request
     const response = await fetch(apiEndpoint, {
@@ -206,6 +201,7 @@ export default function Search() {
       setIsLoading(false);
     }
   };
+
   const updateResults = async () => {
     //this function updates the list of results with new entries it is triggered by the child component.
     // the child component has both the results state and this function
@@ -261,13 +257,23 @@ export default function Search() {
     //set route search to search params
     const redirectSearch = async () => {
       const query = searchParams.get("search") || "";
+      const locationParam = searchParams.get("location");
       setSearchValue(query);
+      if (locationParam) {
+        try {
+          const parsedLocation = JSON.parse(locationParam);
+          setLocation(parsedLocation);
+        } catch (error) {
+          console.error("Error parsing location parameter:", error);
+        }
+      }
       if (query) {
         setRouteTrigger(true);
       }
     };
     redirectSearch();
   }, [searchParams]);
+
   useEffect(() => {
     const routeSearch = async () => {
       if (routeTrigger && searchValue) {
@@ -297,7 +303,6 @@ export default function Search() {
                 <div
                   style={{
                     position: "relative",
-                    // borderRight: "solid 0.5px var(--accent-grey)",
                   }}
                 >
                   <input
@@ -325,10 +330,14 @@ export default function Search() {
                   )}
                 </div>
 
-                <CustomLocationSearch update={setLocation} />
+                <CustomLocationSearch value={location} update={setLocation} />
               </div>
 
-              {searchError && <small id={styles.error} className="error">{searchError}</small>}
+              {searchError && (
+                <small id={styles.error} className="error">
+                  {searchError}
+                </small>
+              )}
             </div>
 
             <button

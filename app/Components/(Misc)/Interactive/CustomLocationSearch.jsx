@@ -4,7 +4,7 @@ import styles from "./interactive.module.css";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function CustomLocationSearch({ update }) {
+export default function CustomLocationSearch({ update, value }) {
   const [locationInput, setLocationInput] = useState("");
   const [dropdown, setDropdown] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -82,6 +82,14 @@ export default function CustomLocationSearch({ update }) {
     update(updateObject);
     setDropdownVisible(false); // Optionally hide the dropdown after selection
   };
+
+  useEffect(() => {
+    if (value) {
+      let loc = `${value.city}, ${value.state}, ${value.country}`;
+
+      setLocationInput(loc);
+    }
+  }, [value]);
 
   return (
     <>

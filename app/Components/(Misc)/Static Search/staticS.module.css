@@ -13,19 +13,18 @@
 
 .inputbox input {
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 400;
   padding: var(--button-padding-small);
   border-radius: var(--border-rad-small);
-  color: var(--accent-black);
+  color: var(--accent-grey);
   width: 100%;
   outline: none;
   border: none;
   background-color: transparent;
-  font-weight: 700;
   font-family: var(--body-style);
 }
 .inputbox input::placeholder {
-  color: var(--accent-black);
+  color: var(--accent-grey);
 }
 
 .inputbox .input {
@@ -33,7 +32,7 @@
   display: flex;
 }
 
-.inputbox button {
+.inputbox .search_submit {
   padding: 0.5rem;
   background-color: transparent;
   border: none;
@@ -41,7 +40,7 @@
   transition: var(--tranisition-out);
   cursor: pointer;
 }
-.inputbox button:hover {
+.inputbox .search_submit:hover {
   transition: var(--tranisition-in);
   color: var(--primary);
 }
@@ -59,8 +58,31 @@
 .dropdown button {
   width: 100%;
   text-align: start;
+  cursor: pointer;
+  padding: 0.5rem;
+  border: none;
+  background-color: transparent;
   color: var(--accent-black);
   font-family: var(--body-style);
+  transition: var(--tranisition-out);
+}
+.dropdown button:hover{
+  color: var(--primary);
+}
+
+.location {
+  width: 100%;
+}
+.location_select {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0.25rem;
+}
+.location_select svg {
+  width: 20px;
+  height: 16px;
+  color: var(--primary);
 }
 
 @media (max-width: 1200px) {
