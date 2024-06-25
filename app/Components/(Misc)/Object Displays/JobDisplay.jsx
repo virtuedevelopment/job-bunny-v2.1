@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import AutoApplyButton from "../Interactive/AutoApplyButton";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./display.module.css";
@@ -11,7 +12,7 @@ import {
   faClock,
   faStar,
   faBriefcase,
-  faCompass
+  faCompass,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function JobDisplay({ job, index }) {
@@ -46,6 +47,9 @@ export default function JobDisplay({ job, index }) {
     <>
       {job && (
         <Link target="_blank" className={styles.jobItem} href={job.job_Url}>
+          
+          <AutoApplyButton />
+
           <span className={premium ? styles.jobtagPremium : styles.jobtag}>
             {premium ? (
               <>
@@ -63,8 +67,16 @@ export default function JobDisplay({ job, index }) {
           <h3>{job.job_title}</h3>
 
           <span className={styles.location}>
-            {job.company && (<p><FontAwesomeIcon icon={faBriefcase}/> {job.company}</p>)}
-            {job.location && (<p><FontAwesomeIcon icon={faCompass}/> {job.location}</p>)}
+            {job.company && (
+              <p>
+                <FontAwesomeIcon icon={faBriefcase} /> {job.company}
+              </p>
+            )}
+            {job.location && (
+              <p>
+                <FontAwesomeIcon icon={faCompass} /> {job.location}
+              </p>
+            )}
           </span>
 
           <div className={styles.details}>

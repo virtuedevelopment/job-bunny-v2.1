@@ -1096,18 +1096,18 @@ export default function SignUpForm() {
           back={previousStep}
         />
       )}
-      {step == 6 && (
+      {/* {step == 6 && (
         <Resume
           user={user}
           next={nextStep}
           back={previousStep}
           input={handleInputChange}
         />
-      )}
-      {step == 7 && (
+      )} */}
+      {step == 6 && (
         <ProfileLoading user={user} next={nextStep} submit={onSubmit} />
       )}
-      {step == 8 && <Verification user={user} />}
+      {step == 7 && <Verification user={user} />}
     </div>
   );
 }

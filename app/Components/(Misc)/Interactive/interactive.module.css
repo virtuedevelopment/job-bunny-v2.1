@@ -362,6 +362,31 @@
   font-family: var(--body-style);
 }
 
+.auto_app_btn {
+  position: absolute;
+  right: 1rem;
+  border-radius: 999px;
+  border: none;
+  background-color: var(--clr-accent-primary-2);
+  color: var(--accent-black);
+  transition: var(--transition-out);
+  font-family: var(--body-style);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  gap: 0.5rem;
+  font-size: 12px;
+}
+.auto_app_btn:hover {
+  background-color: var(--accent-secondary);
+}
+.auto_app_btn svg {
+  width: 12px;
+  height: 12px;
+}
+
 @media (max-width: 750px) {
   .modalControl {
     width: 90%;

@@ -71,6 +71,7 @@
 .signUpFormBox form p {
   padding: 0.75rem 0;
   color: var(--accent-black);
+  font-family: var(--body-style);
   line-height: 2;
 }
 .signUpFormBox .verification {
@@ -182,12 +183,12 @@
 .jobTitleDisplay small {
   width: 100%;
   text-align: center;
-  background-color: var(--primary);
+  background-color: var(--clr-accent-primary-2);
   border-radius: var(--border-rad-small);
-  font-size: var(--tiny-text);
-  color: var(--accent-white);
+  font-family: var(--body-style);
+  color: var(--accent-primary);
   transition: var(--transition-out);
-  padding: 0.75rem 2rem;
+  padding: 0.5rem 1.5rem;
   cursor: pointer;
 }
 .jobTitleDisplay small:hover {
@@ -207,12 +208,12 @@
 .skillsDisplay small {
   width: 100%;
   text-align: center;
-  background-color: var(--primary);
-  font-size: var(--tiny-text);
+  background-color: var(--clr-accent-primary-2);
   border-radius: var(--border-rad-small);
-  color: var(--accent-white);
+  font-family: var(--body-style);
+  color: var(--accent-primary);
   transition: var(--transition-out);
-  padding: 0.75rem 2rem;
+  padding: 0.5rem 1.5rem;
   cursor: pointer;
 }
 .skillsDisplay small:hover {
