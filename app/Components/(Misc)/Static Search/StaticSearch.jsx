@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export default function StaticSearch() {
-  const { data, status } = useSession();
+  const { data } = useSession();
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState(null);
   const [showLocation, setShowLocation] = useState(true);
@@ -79,10 +79,17 @@ export default function StaticSearch() {
   }, 30); // Adjust debounce time as needed
 
   const selectSuggestion = (suggestion) => {
+    const effectiveSearch = encodeURIComponent(suggestion);
+    const locationParam = location
+      ? `&location=${encodeURIComponent(JSON.stringify(location))}`
+      : "";
+
     if (data && data.user) {
-      router.push(`/dashboard/search?search=${suggestion}`);
+      router.push(
+        `/dashboard/search?search=${effectiveSearch}${locationParam}`
+      );
     } else {
-      router.push(`/search?search=${suggestion}`);
+      router.push(`/search?search=${effectiveSearch}${locationParam}`);
     }
   };
 
@@ -104,25 +111,33 @@ export default function StaticSearch() {
   return (
     <form onSubmit={sendToRoute} className={styles.inputbox}>
       <div className={styles.input}>
-        <button
-          onClick={showLocDropdown}
-          type="button"
-          className={styles.location_select}
-        >
-          <MapPin />
-        </button>
+        <div className={styles.input_option}>
+          <input
+            onChange={setSearchValue}
+            type="text"
+            name="search"
+            value={search}
+            placeholder="Search.."
+          />
 
-        <input
-          onChange={setSearchValue}
-          type="text"
-          name="search"
-          value={search}
-          placeholder="Search.."
-        />
+          <button className={styles.search_submit} type="submit">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
+        </div>
 
-        <button className={styles.search_submit} type="submit">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </button>
+        <div className={styles.input_option}>
+          <div className={styles.location}>
+            <CustomLocationSearch update={setLocation} />
+          </div>
+
+          <button
+            onClick={showLocDropdown}
+            type="button"
+            className={styles.location_select}
+          >
+            <MapPin />
+          </button>
+        </div>
       </div>
 
       {showDropdown && autocompleteSuggestions.length > 0 && (
@@ -131,17 +146,11 @@ export default function StaticSearch() {
             <button
               key={index}
               type="button"
-              onClick={(e) => selectSuggestion(suggestion, e)}
+              onClick={() => selectSuggestion(suggestion)}
             >
               {suggestion}
             </button>
           ))}
-        </div>
-      )}
-
-      {showLocation && (
-        <div className={styles.location}>
-          <CustomLocationSearch update={setLocation} />
         </div>
       )}
     </form>
