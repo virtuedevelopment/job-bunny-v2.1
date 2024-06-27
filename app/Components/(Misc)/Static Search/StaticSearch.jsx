@@ -125,7 +125,7 @@ export default function StaticSearch() {
           </button>
         </div>
 
-        <div className={styles.input_option}>
+        <div id={styles.loc} className={styles.input_option}>
           <div className={styles.location}>
             <CustomLocationSearch update={setLocation} />
           </div>

@@ -29,7 +29,6 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
 }
 
 .inputbox .search_submit {
@@ -93,6 +92,10 @@
   width: 100%;
 }
 
+#loc{
+  border-left: solid 0.5px var(--accent-grey);
+}
+
 @media (max-width: 1200px) {
   .inputbox {
     width: 100%;
@@ -107,5 +110,11 @@
 
   .inputbox .input{
     grid-template-columns: 1fr;
+  }
+
+  #loc{
+    margin-top: 0.15rem;
+    border-left: none;
+    border-top: 0.5px solid var(--accent-grey);
   }
 }
